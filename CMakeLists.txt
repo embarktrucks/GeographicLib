@@ -597,6 +597,11 @@ endif ()
 
 include (CPack)
 
+catkin_package(
+    INCLUDE_DIRS include/GeographicLib
+    LIBRARIES ${PROJECT_LIBRARIES}
+)
+
 # Another maintainer-specific target is building the source distribution
 # via the target dist.  This calls package_source to make a tar.gz file.
 # However this needs to be touched up to support the vanilla Makefiles
