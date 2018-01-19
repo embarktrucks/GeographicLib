@@ -1,22 +1,22 @@
 /**
  * \file Geoid.cpp
- * \brief Implementation for GeographicLib::Geoid class
+ * \brief Implementation for geographic_lib::Geoid class
  *
  * Copyright (c) Charles Karney (2009-2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/Geoid.hpp>
+#include <geographic_lib/Geoid.hpp>
 // For getenv
 #include <cstdlib>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/Utility.hpp>
 
 #if !defined(GEOGRAPHICLIB_DATA)
 #  if defined(_WIN32)
-#    define GEOGRAPHICLIB_DATA "C:/ProgramData/GeographicLib"
+#    define GEOGRAPHICLIB_DATA "C:/ProgramData/geographic_lib"
 #  else
-#    define GEOGRAPHICLIB_DATA "/usr/local/share/GeographicLib"
+#    define GEOGRAPHICLIB_DATA "/usr/local/share/geographic_lib"
 #  endif
 #endif
 
@@ -29,7 +29,7 @@
 #  pragma warning (disable: 4996)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -506,4 +506,4 @@ namespace GeographicLib {
     return !name.empty() ? name : string(GEOGRAPHICLIB_GEOID_DEFAULT_NAME);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

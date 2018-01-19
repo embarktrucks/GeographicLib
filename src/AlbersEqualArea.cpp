@@ -1,20 +1,20 @@
 /**
  * \file AlbersEqualArea.cpp
- * \brief Implementation for GeographicLib::AlbersEqualArea class
+ * \brief Implementation for geographic_lib::AlbersEqualArea class
  *
  * Copyright (c) Charles Karney (2010-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/AlbersEqualArea.hpp>
+#include <geographic_lib/AlbersEqualArea.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
 #  pragma warning (disable: 4127)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -442,4 +442,4 @@ namespace GeographicLib {
     _k2 = Math::sq(_k0);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

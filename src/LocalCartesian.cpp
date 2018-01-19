@@ -1,15 +1,15 @@
 /**
  * \file LocalCartesian.cpp
- * \brief Implementation for GeographicLib::LocalCartesian class
+ * \brief Implementation for geographic_lib::LocalCartesian class
  *
  * Copyright (c) Charles Karney (2008-2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/LocalCartesian.hpp>
+#include <geographic_lib/LocalCartesian.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -59,4 +59,4 @@ namespace GeographicLib {
       MatrixMultiply(M);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

@@ -1,16 +1,16 @@
 /**
  * \file Georef.cpp
- * \brief Implementation for GeographicLib::Georef class
+ * \brief Implementation for geographic_lib::Georef class
  *
  * Copyright (c) Charles Karney (2015-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/Georef.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/Georef.hpp>
+#include <geographic_lib/Utility.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -133,4 +133,4 @@ namespace GeographicLib {
     prec = prec1;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

@@ -1,16 +1,16 @@
 /**
  * \file GARS.cpp
- * \brief Implementation for GeographicLib::GARS class
+ * \brief Implementation for geographic_lib::GARS class
  *
  * Copyright (c) Charles Karney (2015-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/GARS.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/GARS.hpp>
+#include <geographic_lib/Utility.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -119,4 +119,4 @@ namespace GeographicLib {
     prec = prec1;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

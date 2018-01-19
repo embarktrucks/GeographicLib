@@ -1,20 +1,20 @@
 /**
  * \file Math.cpp
- * \brief Implementation for GeographicLib::Math class
+ * \brief Implementation for geographic_lib::Math class
  *
  * Copyright (c) Charles Karney (2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/Math.hpp>
+#include <geographic_lib/Math.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
 #  pragma warning (disable: 4127)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -60,4 +60,4 @@ namespace GeographicLib {
   template Math::real Math::tauf<Math::real>(Math::real, Math::real);
   /// \endcond
 
-} // namespace GeographicLib
+} // namespace geographic_lib

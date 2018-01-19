@@ -1,23 +1,23 @@
 /**
  * \file GravityModel.cpp
- * \brief Implementation for GeographicLib::GravityModel class
+ * \brief Implementation for geographic_lib::GravityModel class
  *
  * Copyright (c) Charles Karney (2011-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/GravityModel.hpp>
+#include <geographic_lib/GravityModel.hpp>
 #include <fstream>
-#include <GeographicLib/SphericalEngine.hpp>
-#include <GeographicLib/GravityCircle.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/SphericalEngine.hpp>
+#include <geographic_lib/GravityCircle.hpp>
+#include <geographic_lib/Utility.hpp>
 
 #if !defined(GEOGRAPHICLIB_DATA)
 #  if defined(_WIN32)
-#    define GEOGRAPHICLIB_DATA "C:/ProgramData/GeographicLib"
+#    define GEOGRAPHICLIB_DATA "C:/ProgramData/geographic_lib"
 #  else
-#    define GEOGRAPHICLIB_DATA "/usr/local/share/GeographicLib"
+#    define GEOGRAPHICLIB_DATA "/usr/local/share/geographic_lib"
 #  endif
 #endif
 
@@ -30,7 +30,7 @@
 #  pragma warning (disable: 4996)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -359,4 +359,4 @@ namespace GeographicLib {
     return !name.empty() ? name : string(GEOGRAPHICLIB_GRAVITY_DEFAULT_NAME);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

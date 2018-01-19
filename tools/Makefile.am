@@ -23,129 +23,129 @@ bin_PROGRAMS = CartConvert \
 
 CartConvert_SOURCES = CartConvert.cpp \
 	../man/CartConvert.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/Geocentric.hpp \
-	../include/GeographicLib/LocalCartesian.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/Geocentric.hpp \
+	../include/geographic_lib/LocalCartesian.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/Utility.hpp
 ConicProj_SOURCES = ConicProj.cpp \
 	../man/ConicProj.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/AlbersEqualArea.hpp \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/LambertConformalConic.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/AlbersEqualArea.hpp \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/LambertConformalConic.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/Utility.hpp
 GeoConvert_SOURCES = GeoConvert.cpp \
 	../man/GeoConvert.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/GeoCoords.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/UTMUPS.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/GeoCoords.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/UTMUPS.hpp \
+	../include/geographic_lib/Utility.hpp
 GeodSolve_SOURCES = GeodSolve.cpp \
 	../man/GeodSolve.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/Geodesic.hpp \
-	../include/GeographicLib/GeodesicExact.hpp \
-	../include/GeographicLib/GeodesicLine.hpp \
-	../include/GeographicLib/GeodesicLineExact.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/Geodesic.hpp \
+	../include/geographic_lib/GeodesicExact.hpp \
+	../include/geographic_lib/GeodesicLine.hpp \
+	../include/geographic_lib/GeodesicLineExact.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/Utility.hpp
 GeodesicProj_SOURCES = GeodesicProj.cpp \
 	../man/GeodesicProj.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/AzimuthalEquidistant.hpp \
-	../include/GeographicLib/CassiniSoldner.hpp \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/Geodesic.hpp \
-	../include/GeographicLib/GeodesicLine.hpp \
-	../include/GeographicLib/Gnomonic.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/AzimuthalEquidistant.hpp \
+	../include/geographic_lib/CassiniSoldner.hpp \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/Geodesic.hpp \
+	../include/geographic_lib/GeodesicLine.hpp \
+	../include/geographic_lib/Gnomonic.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/Utility.hpp
 GeoidEval_SOURCES = GeoidEval.cpp \
 	../man/GeoidEval.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/GeoCoords.hpp \
-	../include/GeographicLib/Geoid.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/UTMUPS.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/GeoCoords.hpp \
+	../include/geographic_lib/Geoid.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/UTMUPS.hpp \
+	../include/geographic_lib/Utility.hpp
 Gravity_SOURCES = Gravity.cpp \
 	../man/Gravity.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/CircularEngine.hpp \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/Geocentric.hpp \
-	../include/GeographicLib/GravityCircle.hpp \
-	../include/GeographicLib/GravityModel.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/NormalGravity.hpp \
-	../include/GeographicLib/SphericalEngine.hpp \
-	../include/GeographicLib/SphericalHarmonic.hpp \
-	../include/GeographicLib/SphericalHarmonic1.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/CircularEngine.hpp \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/Geocentric.hpp \
+	../include/geographic_lib/GravityCircle.hpp \
+	../include/geographic_lib/GravityModel.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/NormalGravity.hpp \
+	../include/geographic_lib/SphericalEngine.hpp \
+	../include/geographic_lib/SphericalHarmonic.hpp \
+	../include/geographic_lib/SphericalHarmonic1.hpp \
+	../include/geographic_lib/Utility.hpp
 MagneticField_SOURCES = MagneticField.cpp \
 	../man/MagneticField.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/CircularEngine.hpp \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/Geocentric.hpp \
-	../include/GeographicLib/MagneticCircle.hpp \
-	../include/GeographicLib/MagneticModel.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/SphericalEngine.hpp \
-	../include/GeographicLib/SphericalHarmonic.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/CircularEngine.hpp \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/Geocentric.hpp \
+	../include/geographic_lib/MagneticCircle.hpp \
+	../include/geographic_lib/MagneticModel.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/SphericalEngine.hpp \
+	../include/geographic_lib/SphericalHarmonic.hpp \
+	../include/geographic_lib/Utility.hpp
 Planimeter_SOURCES = Planimeter.cpp \
 	../man/Planimeter.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/Accumulator.hpp \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/Ellipsoid.hpp \
-	../include/GeographicLib/GeoCoords.hpp \
-	../include/GeographicLib/Geodesic.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/PolygonArea.hpp \
-	../include/GeographicLib/UTMUPS.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/Accumulator.hpp \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/Ellipsoid.hpp \
+	../include/geographic_lib/GeoCoords.hpp \
+	../include/geographic_lib/Geodesic.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/PolygonArea.hpp \
+	../include/geographic_lib/UTMUPS.hpp \
+	../include/geographic_lib/Utility.hpp
 RhumbSolve_SOURCES = RhumbSolve.cpp \
 	../man/RhumbSolve.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/Ellipsoid.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/Ellipsoid.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/Utility.hpp
 TransverseMercatorProj_SOURCES = TransverseMercatorProj.cpp \
 	../man/TransverseMercatorProj.usage \
-	../include/GeographicLib/Config.h \
-	../include/GeographicLib/Constants.hpp \
-	../include/GeographicLib/DMS.hpp \
-	../include/GeographicLib/EllipticFunction.hpp \
-	../include/GeographicLib/Math.hpp \
-	../include/GeographicLib/TransverseMercator.hpp \
-	../include/GeographicLib/TransverseMercatorExact.hpp \
-	../include/GeographicLib/Utility.hpp
+	../include/geographic_lib/Config.h \
+	../include/geographic_lib/Constants.hpp \
+	../include/geographic_lib/DMS.hpp \
+	../include/geographic_lib/EllipticFunction.hpp \
+	../include/geographic_lib/Math.hpp \
+	../include/geographic_lib/TransverseMercator.hpp \
+	../include/geographic_lib/TransverseMercatorExact.hpp \
+	../include/geographic_lib/Utility.hpp
 
 sbin_SCRIPTS = geographiclib-get-geoids \
 	geographiclib-get-gravity \
 	geographiclib-get-magnetic
 
-geographiclib_data = $(datadir)/GeographicLib
+geographiclib_data = $(datadir)/geographic_lib
 geographiclib-get-geoids: geographiclib-get-geoids.sh
 	sed -e "s%@GEOGRAPHICLIB_DATA@%$(geographiclib_data)%" $< > $@
 	chmod +x $@

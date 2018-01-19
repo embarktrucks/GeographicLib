@@ -26,7 +26,7 @@ LIBPATH = ../src
 # LIBPATH = $(PREFIX)/lib
 
 PREFIX = /usr/local
-GEOGRAPHICLIB_DATA = $(PREFIX)/share/GeographicLib
+GEOGRAPHICLIB_DATA = $(PREFIX)/share/geographic_lib
 
 CC = g++ -g
 CXXFLAGS = -g -Wall -Wextra -O3 -std=c++0x
@@ -38,7 +38,7 @@ EXTRALIBS =
 $(PROGRAMS): $(LIBPATH)/$(LIBRARY)
 	$(CC) $(LDFLAGS) -o $@ $@.o $(LDLIBS) $(EXTRALIBS)
 
-VPATH = ../include/GeographicLib ../man
+VPATH = ../include/geographic_lib ../man
 
 clean:
 	rm -f *.o $(SCRIPTS)

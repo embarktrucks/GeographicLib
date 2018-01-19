@@ -1,19 +1,19 @@
 /**
  * \file UTMUPS.cpp
- * \brief Implementation for GeographicLib::UTMUPS class
+ * \brief Implementation for geographic_lib::UTMUPS class
  *
  * Copyright (c) Charles Karney (2008-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/UTMUPS.hpp>
-#include <GeographicLib/MGRS.hpp>
-#include <GeographicLib/PolarStereographic.hpp>
-#include <GeographicLib/TransverseMercator.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/UTMUPS.hpp>
+#include <geographic_lib/MGRS.hpp>
+#include <geographic_lib/PolarStereographic.hpp>
+#include <geographic_lib/TransverseMercator.hpp>
+#include <geographic_lib/Utility.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -178,11 +178,11 @@ namespace GeographicLib {
     if (zonein != zoneout) {
       // Determine lat, lon
       real lat, lon;
-      GeographicLib::UTMUPS::Reverse(zonein, northpin, xin, yin, lat, lon);
+      geographic_lib::UTMUPS::Reverse(zonein, northpin, xin, yin, lat, lon);
       // Try converting to zoneout
       real x, y;
       int zone1;
-      GeographicLib::UTMUPS::Forward(lat, lon, zone1, northp, x, y,
+      geographic_lib::UTMUPS::Forward(lat, lon, zone1, northp, x, y,
                                      zoneout == UTMUPS::MATCH
                                      ? zonein : zoneout);
       if (zone1 == 0 && northp != northpout)
@@ -297,4 +297,4 @@ namespace GeographicLib {
 
   Math::real UTMUPS::UTMShift() { return real(MGRS::utmNshift_); }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

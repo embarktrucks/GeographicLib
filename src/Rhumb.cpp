@@ -1,6 +1,6 @@
 /**
  * \file Rhumb.cpp
- * \brief Implementation for GeographicLib::Rhumb and GeographicLib::RhumbLine
+ * \brief Implementation for geographic_lib::Rhumb and geographic_lib::RhumbLine
  * classes
  *
  * Copyright (c) Charles Karney (2014-2017) <charles@karney.com> and licensed
@@ -9,9 +9,9 @@
  **********************************************************************/
 
 #include <algorithm>
-#include <GeographicLib/Rhumb.hpp>
+#include <geographic_lib/Rhumb.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -381,4 +381,4 @@ namespace GeographicLib {
     if (outmask & LONGITUDE) lon2 = lon2x;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

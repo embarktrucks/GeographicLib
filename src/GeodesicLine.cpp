@@ -1,6 +1,6 @@
 /**
  * \file GeodesicLine.cpp
- * \brief Implementation for GeographicLib::GeodesicLine class
+ * \brief Implementation for geographic_lib::GeodesicLine class
  *
  * Copyright (c) Charles Karney (2009-2016) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
@@ -26,9 +26,9 @@
  * - s and c prefixes mean sin and cos
  **********************************************************************/
 
-#include <GeographicLib/GeodesicLine.hpp>
+#include <geographic_lib/GeodesicLine.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -318,4 +318,4 @@ namespace GeographicLib {
     arcmode ? SetArc(s13_a13) : SetDistance(s13_a13);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

@@ -6,7 +6,7 @@ all: $(LIBRARY)
 INCLUDEPATH = ../include
 
 PREFIX = /usr/local
-GEOGRAPHICLIB_DATA = $(PREFIX)/share/GeographicLib
+GEOGRAPHICLIB_DATA = $(PREFIX)/share/geographic_lib
 
 MODULES = Accumulator \
 	AlbersEqualArea \
@@ -65,7 +65,7 @@ LDFLAGS = $(LIBRARY)
 $(LIBRARY): $(OBJECTS)
 	$(AR) r $@ $?
 
-VPATH = ../include/GeographicLib
+VPATH = ../include/geographic_lib
 
 INSTALL = install -b
 

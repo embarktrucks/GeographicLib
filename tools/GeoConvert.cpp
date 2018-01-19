@@ -13,10 +13,10 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <GeographicLib/GeoCoords.hpp>
-#include <GeographicLib/DMS.hpp>
-#include <GeographicLib/Utility.hpp>
-#include <GeographicLib/MGRS.hpp>
+#include <geographic_lib/GeoCoords.hpp>
+#include <geographic_lib/DMS.hpp>
+#include <geographic_lib/Utility.hpp>
+#include <geographic_lib/MGRS.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
@@ -27,7 +27,7 @@
 
 int main(int argc, const char* const argv[]) {
   try {
-    using namespace GeographicLib;
+    using namespace geographic_lib;
     typedef Math::real real;
     Utility::set_digits();
     enum { GEOGRAPHIC, DMS, UTMUPS, MGRS, CONVERGENCE };
@@ -130,7 +130,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         cdelim = argv[m];
       } else if (arg == "--version") {
-        std::cout << argv[0] << ": GeographicLib version "
+        std::cout << argv[0] << ": geographic_lib version "
                   << GEOGRAPHICLIB_VERSION_STRING << "\n";
         MGRS::Check();
         return 0;

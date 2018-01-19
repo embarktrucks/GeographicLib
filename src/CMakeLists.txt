@@ -3,8 +3,8 @@
 # Include all the .cpp files in the library.
 file (GLOB SOURCES [A-Za-z]*.cpp)
 file (GLOB HEADERS
-  ${PROJECT_BINARY_DIR}/include/GeographicLib/Config.h
-  ../include/GeographicLib/[A-Za-z]*.hpp)
+  ${PROJECT_BINARY_DIR}/include/geographic_lib/Config.h
+  ../include/geographic_lib/[A-Za-z]*.hpp)
 
 # Define the library and specify whether it is shared or not.
 if (GEOGRAPHICLIB_SHARED_LIB)

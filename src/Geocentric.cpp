@@ -1,15 +1,15 @@
 /**
  * \file Geocentric.cpp
- * \brief Implementation for GeographicLib::Geocentric class
+ * \brief Implementation for geographic_lib::Geocentric class
  *
  * Copyright (c) Charles Karney (2008-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/Geocentric.hpp>
+#include <geographic_lib/Geocentric.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -169,4 +169,4 @@ namespace GeographicLib {
     M[2] =  clam * cphi; M[5] =  slam * cphi; M[8] = sphi;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

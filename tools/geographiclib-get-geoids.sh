@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Download geoid datasets for use by GeographicLib::Geoid.  This is
+# Download geoid datasets for use by geographic_lib::Geoid.  This is
 # modeled on a similar script geographiclib-datasets-download by
 # Francesco P. Lovergine <frankie@debian.org>
 #
@@ -20,7 +20,7 @@ usage() {
 usage: $0 [-p parentdir] [-d] [-h] $MODEL...
 
 This program downloads and installs the datasets used by the
-GeographicLib::$CLASS class and the $TOOL tool to compute geoid
+geographic_lib::$CLASS class and the $TOOL tool to compute geoid
 heights.  These datasets are NGA earth gravity models evaluated on a
 rectangular grid in latitude and longitude.  $MODEL is one of more of the
 names from this table:

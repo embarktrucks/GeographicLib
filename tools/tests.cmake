@@ -1,4 +1,4 @@
-# Here are the tests for GeographicLib
+# Here are the tests for geographic_lib
 
 enable_testing ()
 if (DEFINED ENV{GEOGRAPHICLIB_DATA})
@@ -18,7 +18,7 @@ set_tests_properties (GeoConvert0 PROPERTIES PASS_REGULAR_EXPRESSION
 # I/O for boost-quadmath has a bug where precision 0 is interpreted as
 # printed all the digits of the number (instead of printing the integer
 # portion).  Problem reported on 2014-06-07:
-# https://svn.boost.org/trac/boost/ticket/10103.  GeographicLib 1.42
+# https://svn.boost.org/trac/boost/ticket/10103.  geographic_lib 1.42
 # includes a workaround for this bug.
 add_test (NAME GeoConvert1 COMMAND GeoConvert -d --input-string "38smb")
 set_tests_properties (GeoConvert1 PROPERTIES PASS_REGULAR_EXPRESSION

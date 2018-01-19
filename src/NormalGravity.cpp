@@ -1,20 +1,20 @@
 /**
  * \file NormalGravity.cpp
- * \brief Implementation for GeographicLib::NormalGravity class
+ * \brief Implementation for geographic_lib::NormalGravity class
  *
  * Copyright (c) Charles Karney (2011-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/NormalGravity.hpp>
+#include <geographic_lib/NormalGravity.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
 #  pragma warning (disable: 4127)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -315,4 +315,4 @@ namespace GeographicLib {
     return (e2 - K * f1 * f2 / Qf(f < 0 ? -e2 : e2 / f2, f < 0)) / 3;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

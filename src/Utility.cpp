@@ -1,6 +1,6 @@
 /**
  * \file Utility.cpp
- * \brief Implementation for GeographicLib::Utility class
+ * \brief Implementation for geographic_lib::Utility class
  *
  * Copyright (c) Charles Karney (2011) <charles@karney.com> and licensed under
  * the MIT/X11 License.  For more information, see
@@ -8,14 +8,14 @@
  **********************************************************************/
 
 #include <cstdlib>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/Utility.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about unsafe use of getenv
 #  pragma warning (disable: 4996)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -58,4 +58,4 @@ namespace GeographicLib {
     return Math::set_digits(ndigits);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

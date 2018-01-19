@@ -1,4 +1,4 @@
-project (GeographicLib)
+project (geographic_lib)
 
 # Version information
 set (PROJECT_VERSION_MAJOR 1)
@@ -427,8 +427,8 @@ endif ()
 
 # Create a Config.h to expose system information to the compiler
 configure_file (
-  include/GeographicLib/Config.h.in
-  include/GeographicLib/Config.h
+  include/geographic_lib/Config.h.in
+  include/geographic_lib/Config.h
   @ONLY)
 
 # The documentation depends on doxygen.
@@ -493,7 +493,7 @@ set_property (GLOBAL PROPERTY USE_FOLDERS ON)
 
 # The list of subdirectories to process
 add_subdirectory (src)
-add_subdirectory (include/GeographicLib)
+add_subdirectory (include/geographic_lib)
 add_subdirectory (tools)
 add_subdirectory (man)
 add_subdirectory (doc)
@@ -598,7 +598,7 @@ endif ()
 include (CPack)
 
 catkin_package(
-    INCLUDE_DIRS include/GeographicLib
+    INCLUDE_DIRS include/geographic_lib
     LIBRARIES ${PROJECT_LIBRARIES}
 )
 

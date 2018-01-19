@@ -1,18 +1,18 @@
 /**
  * \file MagneticCircle.cpp
- * \brief Implementation for GeographicLib::MagneticCircle class
+ * \brief Implementation for geographic_lib::MagneticCircle class
  *
  * Copyright (c) Charles Karney (2011-2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/MagneticCircle.hpp>
+#include <geographic_lib/MagneticCircle.hpp>
 #include <fstream>
 #include <sstream>
-#include <GeographicLib/Geocentric.hpp>
+#include <geographic_lib/Geocentric.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -49,4 +49,4 @@ namespace GeographicLib {
     Bz *= - _a;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Download gravity models for use by GeographicLib::GravityModel.
+# Download gravity models for use by geographic_lib::GravityModel.
 #
 # Copyright (c) Charles Karney (2011) <charles@karney.com> and licensed
 # under the MIT/X11 License.  For more information, see
@@ -18,7 +18,7 @@ usage() {
 usage: $0 [-p parentdir] [-d] [-h] $MODEL...
 
 This program downloads and installs the datasets used by the
-GeographicLib::$CLASS class and the $TOOL tool to compute
+geographic_lib::$CLASS class and the $TOOL tool to compute
 gravity fields.  $MODEL is one of more of the names from this
 table:
 

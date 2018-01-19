@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Download magnetic models for use by GeographicLib::MagneticModel.
+# Download magnetic models for use by geographic_lib::MagneticModel.
 #
 # Copyright (c) Charles Karney (2011-2015) <charles@karney.com> and
 # licensed under the MIT/X11 License.  For more information, see
@@ -18,7 +18,7 @@ usage() {
 usage: $0 [-p parentdir] [-d] [-h] $MODEL...
 
 This program downloads and installs the datasets used by the
-GeographicLib::$CLASS class and the $TOOL tool to compute
+geographic_lib::$CLASS class and the $TOOL tool to compute
 magnetic fields.  $MODEL is one of more of the names from this
 table:
 

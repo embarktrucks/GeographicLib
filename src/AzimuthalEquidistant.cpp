@@ -1,15 +1,15 @@
 /**
  * \file AzimuthalEquidistant.cpp
- * \brief Implementation for GeographicLib::AzimuthalEquidistant class
+ * \brief Implementation for geographic_lib::AzimuthalEquidistant class
  *
  * Copyright (c) Charles Karney (2009-2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/AzimuthalEquidistant.hpp>
+#include <geographic_lib/AzimuthalEquidistant.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -38,4 +38,4 @@ namespace GeographicLib {
     rk = !(sig <= eps_) ? m / s : 1;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib
