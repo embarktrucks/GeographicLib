@@ -1,16 +1,16 @@
 /**
  * \file Geohash.cpp
- * \brief Implementation for GeographicLib::Geohash class
+ * \brief Implementation for geographic_lib::Geohash class
  *
  * Copyright (c) Charles Karney (2012-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/Geohash.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/Geohash.hpp>
+#include <geographic_lib/Utility.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -99,4 +99,4 @@ namespace GeographicLib {
     len = len1;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

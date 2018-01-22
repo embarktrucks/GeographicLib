@@ -1,6 +1,6 @@
 /**
  * \file TransverseMercatorExact.cpp
- * \brief Implementation for GeographicLib::TransverseMercatorExact class
+ * \brief Implementation for geographic_lib::TransverseMercatorExact class
  *
  * Copyright (c) Charles Karney (2008-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
@@ -39,14 +39,14 @@
  * are noted in the code.
  **********************************************************************/
 
-#include <GeographicLib/TransverseMercatorExact.hpp>
+#include <geographic_lib/TransverseMercatorExact.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
 #  pragma warning (disable: 4127)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -459,4 +459,4 @@ namespace GeographicLib {
     k *= _k0;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

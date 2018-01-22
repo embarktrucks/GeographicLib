@@ -1,20 +1,20 @@
 /**
  * \file GeodesicExactC4.cpp
- * \brief Implementation for GeographicLib::GeodesicExact::rawC4coeff
+ * \brief Implementation for geographic_lib::GeodesicExact::rawC4coeff
  *
  * Copyright (c) Charles Karney (2014-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  *
  * This function is split from the rest of the implementation of
- * GeographicLib::GeodesicExact in order to work around a problem with the
+ * geographic_lib::GeodesicExact in order to work around a problem with the
  * Visual Studio 12 compiler reported on 2014-07-14
  * http://connect.microsoft.com/VisualStudio/feedback/details/920594
  **********************************************************************/
 
-#include <GeographicLib/GeodesicExact.hpp>
+#include <geographic_lib/GeodesicExact.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -7303,4 +7303,4 @@ namespace GeographicLib {
       throw GeographicErr("C4 misalignment");
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

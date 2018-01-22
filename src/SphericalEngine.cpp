@@ -1,6 +1,6 @@
 /**
  * \file SphericalEngine.cpp
- * \brief Implementation for GeographicLib::SphericalEngine class
+ * \brief Implementation for geographic_lib::SphericalEngine class
  *
  * Copyright (c) Charles Karney (2011-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
@@ -130,9 +130,9 @@
  * cartesian coordinates.
  **********************************************************************/
 
-#include <GeographicLib/SphericalEngine.hpp>
-#include <GeographicLib/CircularEngine.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/SphericalEngine.hpp>
+#include <geographic_lib/CircularEngine.hpp>
+#include <geographic_lib/Utility.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
@@ -140,7 +140,7 @@
 #  pragma warning (disable: 4127 4701)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -481,4 +481,4 @@ namespace GeographicLib {
   (const coeff[], const real[], real, real, real);
   /// \endcond
 
-} // namespace GeographicLib
+} // namespace geographic_lib

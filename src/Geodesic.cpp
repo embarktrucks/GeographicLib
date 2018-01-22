@@ -1,6 +1,6 @@
 /**
  * \file Geodesic.cpp
- * \brief Implementation for GeographicLib::Geodesic class
+ * \brief Implementation for geographic_lib::Geodesic class
  *
  * Copyright (c) Charles Karney (2009-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
@@ -26,8 +26,8 @@
  * - s and c prefixes mean sin and cos
  **********************************************************************/
 
-#include <GeographicLib/Geodesic.hpp>
-#include <GeographicLib/GeodesicLine.hpp>
+#include <geographic_lib/Geodesic.hpp>
+#include <geographic_lib/GeodesicLine.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about potentially uninitialized local variables and
@@ -35,7 +35,7 @@
 #  pragma warning (disable: 4701 4127)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -1913,4 +1913,4 @@ namespace GeographicLib {
     // Post condition: o == sizeof(coeff) / sizeof(real) && k == nC4x_
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

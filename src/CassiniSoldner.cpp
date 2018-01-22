@@ -1,15 +1,15 @@
 /**
  * \file CassiniSoldner.cpp
- * \brief Implementation for GeographicLib::CassiniSoldner class
+ * \brief Implementation for geographic_lib::CassiniSoldner class
  *
  * Copyright (c) Charles Karney (2009-2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/CassiniSoldner.hpp>
+#include <geographic_lib/CassiniSoldner.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -86,4 +86,4 @@ namespace GeographicLib {
     _earth.Direct(lat1, lon1, azi0 + 90, x, lat, lon, azi, rk, t);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

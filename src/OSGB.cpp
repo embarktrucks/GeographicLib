@@ -1,16 +1,16 @@
 /**
  * \file OSGB.cpp
- * \brief Implementation for GeographicLib::OSGB class
+ * \brief Implementation for geographic_lib::OSGB class
  *
  * Copyright (c) Charles Karney (2010-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/OSGB.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/OSGB.hpp>
+#include <geographic_lib/Utility.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -165,4 +165,4 @@ namespace GeographicLib {
                           + Utility::str(maxy_/1000) + "km)");
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

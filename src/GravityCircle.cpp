@@ -1,18 +1,18 @@
 /**
  * \file GravityCircle.cpp
- * \brief Implementation for GeographicLib::GravityCircle class
+ * \brief Implementation for geographic_lib::GravityCircle class
  *
  * Copyright (c) Charles Karney (2011-2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/GravityCircle.hpp>
+#include <geographic_lib/GravityCircle.hpp>
 #include <fstream>
 #include <sstream>
-#include <GeographicLib/Geocentric.hpp>
+#include <geographic_lib/Geocentric.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -124,4 +124,4 @@ namespace GeographicLib {
     return T;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

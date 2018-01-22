@@ -13,12 +13,12 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <GeographicLib/Geodesic.hpp>
-#include <GeographicLib/GeodesicLine.hpp>
-#include <GeographicLib/GeodesicExact.hpp>
-#include <GeographicLib/GeodesicLineExact.hpp>
-#include <GeographicLib/DMS.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/Geodesic.hpp>
+#include <geographic_lib/GeodesicLine.hpp>
+#include <geographic_lib/GeodesicExact.hpp>
+#include <geographic_lib/GeodesicLineExact.hpp>
+#include <geographic_lib/DMS.hpp>
+#include <geographic_lib/Utility.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
@@ -28,11 +28,11 @@
 
 #include "GeodSolve.usage"
 
-typedef GeographicLib::Math::real real;
+typedef geographic_lib::Math::real real;
 
 std::string LatLonString(real lat, real lon, int prec, bool dms, char dmssep,
                          bool longfirst) {
-  using namespace GeographicLib;
+  using namespace geographic_lib;
   std::string
     latstr = dms ? DMS::Encode(lat, prec + 5, DMS::LATITUDE, dmssep) :
     DMS::Encode(lat, prec + 5, DMS::NUMBER),
@@ -43,14 +43,14 @@ std::string LatLonString(real lat, real lon, int prec, bool dms, char dmssep,
 }
 
 std::string AzimuthString(real azi, int prec, bool dms, char dmssep) {
-  using namespace GeographicLib;
+  using namespace geographic_lib;
   return dms ? DMS::Encode(azi, prec + 5, DMS::AZIMUTH, dmssep) :
     DMS::Encode(azi, prec + 5, DMS::NUMBER);
 }
 
 std::string DistanceStrings(real s12, real a12,
                             bool full, bool arcmode, int prec, bool dms) {
-  using namespace GeographicLib;
+  using namespace geographic_lib;
   std::string s;
   if (full || !arcmode)
     s += Utility::str(s12, prec);
@@ -62,13 +62,13 @@ std::string DistanceStrings(real s12, real a12,
 }
 
 real ReadDistance(const std::string& s, bool arcmode) {
-  using namespace GeographicLib;
+  using namespace geographic_lib;
   return arcmode ? DMS::DecodeAngle(s) : Utility::val<real>(s);
 }
 
 int main(int argc, const char* const argv[]) {
   try {
-    using namespace GeographicLib;
+    using namespace geographic_lib;
     enum { NONE = 0, LINE, DIRECT, INVERSE };
     Utility::set_digits();
     bool inverse = false, arcmode = false,
@@ -194,7 +194,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         cdelim = argv[m];
       } else if (arg == "--version") {
-        std::cout << argv[0] << ": GeographicLib version "
+        std::cout << argv[0] << ": geographic_lib version "
                   << GEOGRAPHICLIB_VERSION_STRING << "\n";
         return 0;
       } else

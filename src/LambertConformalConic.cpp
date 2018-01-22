@@ -1,15 +1,15 @@
 /**
  * \file LambertConformalConic.cpp
- * \brief Implementation for GeographicLib::LambertConformalConic class
+ * \brief Implementation for geographic_lib::LambertConformalConic class
  *
  * Copyright (c) Charles Karney (2010-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/LambertConformalConic.hpp>
+#include <geographic_lib/LambertConformalConic.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -452,4 +452,4 @@ namespace GeographicLib {
     _k0 *= k;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

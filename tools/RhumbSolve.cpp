@@ -15,9 +15,9 @@
 #include <fstream>
 #include <cmath>
 #include <limits>
-#include <GeographicLib/Rhumb.hpp>
-#include <GeographicLib/DMS.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/Rhumb.hpp>
+#include <geographic_lib/DMS.hpp>
+#include <geographic_lib/Utility.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
@@ -27,12 +27,12 @@
 
 #include "RhumbSolve.usage"
 
-using namespace GeographicLib;
+using namespace geographic_lib;
 typedef Math::real real;
 
 std::string LatLonString(real lat, real lon, int prec, bool dms, char dmssep,
                          bool longfirst) {
-  using namespace GeographicLib;
+  using namespace geographic_lib;
   std::string
     latstr = dms ? DMS::Encode(lat, prec + 5, DMS::LATITUDE, dmssep) :
     DMS::Encode(lat, prec + 5, DMS::NUMBER),
@@ -130,7 +130,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         cdelim = argv[m];
       } else if (arg == "--version") {
-        std::cout << argv[0] << ": GeographicLib version "
+        std::cout << argv[0] << ": geographic_lib version "
                   << GEOGRAPHICLIB_VERSION_STRING << "\n";
         return 0;
       } else

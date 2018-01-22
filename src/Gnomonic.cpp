@@ -1,13 +1,13 @@
 /**
  * \file Gnomonic.cpp
- * \brief Implementation for GeographicLib::Gnomonic class
+ * \brief Implementation for geographic_lib::Gnomonic class
  *
  * Copyright (c) Charles Karney (2010-2015) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/Gnomonic.hpp>
+#include <geographic_lib/Gnomonic.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about potentially uninitialized local variables and
@@ -15,7 +15,7 @@
 #  pragma warning (disable: 4701 4127)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -80,4 +80,4 @@ namespace GeographicLib {
     return;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

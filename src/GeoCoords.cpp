@@ -1,18 +1,18 @@
 /**
  * \file GeoCoords.cpp
- * \brief Implementation for GeographicLib::GeoCoords class
+ * \brief Implementation for geographic_lib::GeoCoords class
  *
  * Copyright (c) Charles Karney (2008-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/GeoCoords.hpp>
-#include <GeographicLib/MGRS.hpp>
-#include <GeographicLib/DMS.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/GeoCoords.hpp>
+#include <geographic_lib/MGRS.hpp>
+#include <geographic_lib/DMS.hpp>
+#include <geographic_lib/Utility.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -173,4 +173,4 @@ namespace GeographicLib {
       throw GeographicErr("Hemisphere mixup");
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

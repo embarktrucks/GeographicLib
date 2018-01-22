@@ -1,15 +1,15 @@
 /**
  * \file CircularEngine.cpp
- * \brief Implementation for GeographicLib::CircularEngine class
+ * \brief Implementation for geographic_lib::CircularEngine class
  *
  * Copyright (c) Charles Karney (2011) <charles@karney.com> and licensed under
  * the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/CircularEngine.hpp>
+#include <geographic_lib/CircularEngine.hpp>
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -93,4 +93,4 @@ namespace GeographicLib {
     return vc;
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

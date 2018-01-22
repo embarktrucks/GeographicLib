@@ -1,23 +1,23 @@
 /**
  * \file MagneticModel.cpp
- * \brief Implementation for GeographicLib::MagneticModel class
+ * \brief Implementation for geographic_lib::MagneticModel class
  *
  * Copyright (c) Charles Karney (2011-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-#include <GeographicLib/MagneticModel.hpp>
+#include <geographic_lib/MagneticModel.hpp>
 #include <fstream>
-#include <GeographicLib/SphericalEngine.hpp>
-#include <GeographicLib/MagneticCircle.hpp>
-#include <GeographicLib/Utility.hpp>
+#include <geographic_lib/SphericalEngine.hpp>
+#include <geographic_lib/MagneticCircle.hpp>
+#include <geographic_lib/Utility.hpp>
 
 #if !defined(GEOGRAPHICLIB_DATA)
 #  if defined(_WIN32)
-#    define GEOGRAPHICLIB_DATA "C:/ProgramData/GeographicLib"
+#    define GEOGRAPHICLIB_DATA "C:/ProgramData/geographic_lib"
 #  else
-#    define GEOGRAPHICLIB_DATA "/usr/local/share/GeographicLib"
+#    define GEOGRAPHICLIB_DATA "/usr/local/share/geographic_lib"
 #  endif
 #endif
 
@@ -30,7 +30,7 @@
 #  pragma warning (disable: 4996)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -266,4 +266,4 @@ namespace GeographicLib {
     return !name.empty() ? name : string(GEOGRAPHICLIB_MAGNETIC_DEFAULT_NAME);
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib

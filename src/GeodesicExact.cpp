@@ -1,6 +1,6 @@
 /**
  * \file GeodesicExact.cpp
- * \brief Implementation for GeographicLib::GeodesicExact class
+ * \brief Implementation for geographic_lib::GeodesicExact class
  *
  * Copyright (c) Charles Karney (2012-2017) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
@@ -26,8 +26,8 @@
  * - s and c prefixes mean sin and cos
  **********************************************************************/
 
-#include <GeographicLib/GeodesicExact.hpp>
-#include <GeographicLib/GeodesicLineExact.hpp>
+#include <geographic_lib/GeodesicExact.hpp>
+#include <geographic_lib/GeodesicLineExact.hpp>
 
 #if defined(_MSC_VER)
 // Squelch warnings about potentially uninitialized local variables and
@@ -35,7 +35,7 @@
 #  pragma warning (disable: 4701 4127)
 #endif
 
-namespace GeographicLib {
+namespace geographic_lib {
 
   using namespace std;
 
@@ -928,4 +928,4 @@ namespace GeographicLib {
       throw GeographicErr("C4 misalignment");
   }
 
-} // namespace GeographicLib
+} // namespace geographic_lib
