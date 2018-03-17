@@ -10,35 +10,33 @@
  **********************************************************************/
 #pragma once
 
-namespace NETGeographicLib
-{
-  /**
-   * \brief .NET Wrapper for GeographicLib::GARS
-   *
-   * This class allows .NET applications to access GeographicLib::GARS.
-   *
-   * The Global Area Reference System is described in
-   * - https://en.wikipedia.org/wiki/Global_Area_Reference_System
-   * - http://earth-info.nga.mil/GandG/coordsys/grids/gars.html
-   * .
-   * It provides a compact string representation of a geographic area
-   * (expressed as latitude and longitude).  The classes Georef and Geohash
-   * implement similar compact representations.
-   *
-   * C# Example:
-   * \include example-GARS.cs
-   * Managed C++ Example:
-   * \include example-GARS.cpp
-   * Visual Basic Example:
-   * \include example-GARS.vb
-   **********************************************************************/
-  public ref class GARS
-  {
+namespace NETGeographicLib {
+/**
+ * \brief .NET Wrapper for GeographicLib::GARS
+ *
+ * This class allows .NET applications to access GeographicLib::GARS.
+ *
+ * The Global Area Reference System is described in
+ * - https://en.wikipedia.org/wiki/Global_Area_Reference_System
+ * - http://earth-info.nga.mil/GandG/coordsys/grids/gars.html
+ * .
+ * It provides a compact string representation of a geographic area
+ * (expressed as latitude and longitude).  The classes Georef and Geohash
+ * implement similar compact representations.
+ *
+ * C# Example:
+ * \include example-GARS.cs
+ * Managed C++ Example:
+ * \include example-GARS.cpp
+ * Visual Basic Example:
+ * \include example-GARS.vb
+ **********************************************************************/
+public
+ref class GARS {
     // all memebers of this class are static so the constructor is hidden.
-      GARS() {}
+    GARS() {}
 
-  public:
-
+ public:
     /**
      * Convert from geographic coordinates to GARS.
      *
@@ -57,7 +55,8 @@ namespace NETGeographicLib
      * If \e lat or \e lon is NaN, then \e gars is set to "INVALID".
      **********************************************************************/
     static void Forward(double lat, double lon, int prec,
-        [System::Runtime::InteropServices::Out] System::String^% gars);
+                        [System::Runtime::InteropServices::Out] System::String ^
+                            % gars);
 
     /**
      * Convert from GARS to geographic coordinates.
@@ -79,11 +78,11 @@ namespace NETGeographicLib
      * If the first 3 characters of \e gars are "INV", then \e lat and \e lon
      * are set to NaN and \e prec is unchanged.
      **********************************************************************/
-    static void Reverse( System::String^ gars,
-        [System::Runtime::InteropServices::Out] double% lat,
-        [System::Runtime::InteropServices::Out] double% lon,
-        [System::Runtime::InteropServices::Out] int% prec,
-        bool centerp);
+    static void Reverse(System::String ^ gars,
+                        [System::Runtime::InteropServices::Out] double % lat,
+                        [System::Runtime::InteropServices::Out] double % lon,
+                        [System::Runtime::InteropServices::Out] int % prec,
+                        bool centerp);
 
     /**
      * The angular resolution of a GARS.
@@ -105,5 +104,5 @@ namespace NETGeographicLib
      * The returned length is in the range [0, 2].
      **********************************************************************/
     static int Precision(double res);
-  };
+};
 }  // namespace NETGeographicLib

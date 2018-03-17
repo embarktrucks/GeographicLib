@@ -4,6 +4,7 @@
 #if defined(__cplusplus)
 extern "C"
 #endif
-double HeightAboveEllipsoid(double lat, double lon, double h);
+    double
+    HeightAboveEllipsoid(double lat, double lon, double h);
 
-#endif  /* CGEOID_H */
+#endif /* CGEOID_H */

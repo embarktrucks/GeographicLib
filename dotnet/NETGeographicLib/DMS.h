@@ -10,77 +10,76 @@
  **********************************************************************/
 #pragma once
 
-namespace NETGeographicLib
-{
-  /**
-   * \brief .NET wrapper for GeographicLib::DMS.
-   *
-   * Parse a string representing degree, minutes, and seconds and return the
-   * angle in degrees and format an angle in degrees as degree, minutes, and
-   * seconds.  In addition, handle NANs and infinities on input and output.
-   *
-   * C# Example:
-   * \include example-DMS.cs
-   * Managed C++ Example:
-   * \include example-DMS.cpp
-   * Visual Basic Example:
-   * \include example-DMS.vb
-   **********************************************************************/
-public ref class DMS
-{
-public:
+namespace NETGeographicLib {
+/**
+ * \brief .NET wrapper for GeographicLib::DMS.
+ *
+ * Parse a string representing degree, minutes, and seconds and return the
+ * angle in degrees and format an angle in degrees as degree, minutes, and
+ * seconds.  In addition, handle NANs and infinities on input and output.
+ *
+ * C# Example:
+ * \include example-DMS.cs
+ * Managed C++ Example:
+ * \include example-DMS.cpp
+ * Visual Basic Example:
+ * \include example-DMS.vb
+ **********************************************************************/
+public
+ref class DMS {
+ public:
     /**
      * Indicator for presence of hemisphere indicator (N/S/E/W) on latitudes
      * and longitudes.
      **********************************************************************/
     enum class Flag {
-      /**
-       * No indicator present.
-       * @hideinitializer
-       **********************************************************************/
-      NONE = 0,
-      /**
-       * Latitude indicator (N/S) present.
-       * @hideinitializer
-       **********************************************************************/
-      LATITUDE = 1,
-      /**
-       * Longitude indicator (E/W) present.
-       * @hideinitializer
-       **********************************************************************/
-      LONGITUDE = 2,
-      /**
-       * Used in Encode to indicate output of an azimuth in [000, 360) with no
-       * letter indicator.
-       * @hideinitializer
-       **********************************************************************/
-      AZIMUTH = 3,
-      /**
-       * Used in Encode to indicate output of a plain number.
-       * @hideinitializer
-       **********************************************************************/
-      NUMBER = 4,
+        /**
+         * No indicator present.
+         * @hideinitializer
+         **********************************************************************/
+        NONE = 0,
+        /**
+         * Latitude indicator (N/S) present.
+         * @hideinitializer
+         **********************************************************************/
+        LATITUDE = 1,
+        /**
+         * Longitude indicator (E/W) present.
+         * @hideinitializer
+         **********************************************************************/
+        LONGITUDE = 2,
+        /**
+         * Used in Encode to indicate output of an azimuth in [000, 360) with no
+         * letter indicator.
+         * @hideinitializer
+         **********************************************************************/
+        AZIMUTH = 3,
+        /**
+         * Used in Encode to indicate output of a plain number.
+         * @hideinitializer
+         **********************************************************************/
+        NUMBER = 4,
     };
 
     /**
      * Indicator for trailing units on an angle.
      **********************************************************************/
     enum class Component {
-      /**
-       * Trailing unit is degrees.
-       * @hideinitializer
-       **********************************************************************/
-      DEGREE = 0,
-      /**
-       * Trailing unit is arc minutes.
-       * @hideinitializer
-       **********************************************************************/
-      MINUTE = 1,
-      /**
-       * Trailing unit is arc seconds.
-       * @hideinitializer
-       **********************************************************************/
-      SECOND = 2,
+        /**
+         * Trailing unit is degrees.
+         * @hideinitializer
+         **********************************************************************/
+        DEGREE = 0,
+        /**
+         * Trailing unit is arc minutes.
+         * @hideinitializer
+         **********************************************************************/
+        MINUTE = 1,
+        /**
+         * Trailing unit is arc seconds.
+         * @hideinitializer
+         **********************************************************************/
+        SECOND = 2,
     };
 
     /**
@@ -176,8 +175,8 @@ public:
      * The codes with a leading zero byte, e.g., U+00b0, are accepted in their
      * UTF-8 coded form 0xc2 0xb0 and as a single byte 0xb0.
      **********************************************************************/
-    static double Decode(System::String^ dms,
-        [System::Runtime::InteropServices::Out] Flag% ind);
+    static double Decode(System::String ^ dms,
+                         [System::Runtime::InteropServices::Out] Flag % ind);
 
     /**
      * Convert DMS to an angle.
@@ -191,8 +190,9 @@ public:
      * -3d20' would need to be represented as - DMS::Decode(3.0, 20.0) or
      * DMS::Decode(-3.0, -20.0).
      **********************************************************************/
-    static double Decode(double d, double m, double s )
-    { return d + (m + s/double(60))/double(60); }
+    static double Decode(double d, double m, double s) {
+        return d + (m + s / double(60)) / double(60);
+    }
 
     /**
      * Convert a pair of strings to latitude and longitude.
@@ -217,10 +217,10 @@ public:
      * (N, S, E, W).  If an exception is thrown, \e lat and \e lon are
      * unchanged.
      **********************************************************************/
-    static void DecodeLatLon(System::String^ dmsa, System::String^ dmsb,
-                     [System::Runtime::InteropServices::Out] double% lat,
-                     [System::Runtime::InteropServices::Out] double% lon,
-                     bool longfirst );
+    static void DecodeLatLon(
+        System::String ^ dmsa, System::String ^ dmsb,
+        [System::Runtime::InteropServices::Out] double % lat,
+        [System::Runtime::InteropServices::Out] double % lon, bool longfirst);
 
     /**
      * Convert a string to an angle in degrees.
@@ -233,7 +233,7 @@ public:
      * No hemisphere designator is allowed and no check is done on the range of
      * the result.
      **********************************************************************/
-    static double DecodeAngle(System::String^ angstr);
+    static double DecodeAngle(System::String ^ angstr);
 
     /**
      * Convert a string to an azimuth in degrees.
@@ -247,7 +247,7 @@ public:
      * A hemisphere designator E/W can be used; the result is multiplied by
      * &minus;1 if W is present.
      **********************************************************************/
-    static double DecodeAzimuth(System::String^ azistr);
+    static double DecodeAzimuth(System::String ^ azistr);
 
     /**
      * Convert angle (in degrees) into a DMS string (using d, ', and &quot;).
@@ -276,8 +276,8 @@ public:
      * The integer parts of the minutes and seconds components are always given
      * with 2 digits.
      **********************************************************************/
-    static System::String^ Encode(double angle, Component trailing, unsigned prec,
-                              Flag ind, char dmssep );
+    static System::String ^ Encode(double angle, Component trailing,
+                                   unsigned prec, Flag ind, char dmssep);
 
     /**
      * Convert angle into a DMS string (using d, ', and &quot;) selecting the
@@ -297,8 +297,8 @@ public:
      * facility that DMS::NUMBER represents \e angle as a number in fixed
      * format with precision \e prec.
      **********************************************************************/
-    static System::String^ Encode(double angle, unsigned prec, Flag ind,
-                              char dmssep );
+    static System::String ^
+        Encode(double angle, unsigned prec, Flag ind, char dmssep);
 
     /**
      * Split angle into degrees and minutes
@@ -308,10 +308,10 @@ public:
      * @param[out] m arc minutes.
      **********************************************************************/
     static void Encode(double ang,
-        [System::Runtime::InteropServices::Out] double% d,
-        [System::Runtime::InteropServices::Out] double% m)
-    {
-      d = int(ang); m = 60 * (ang - d);
+                       [System::Runtime::InteropServices::Out] double % d,
+                       [System::Runtime::InteropServices::Out] double % m) {
+        d = int(ang);
+        m = 60 * (ang - d);
     }
 
     /**
@@ -323,12 +323,13 @@ public:
      * @param[out] s arc seconds.
      **********************************************************************/
     static void Encode(double ang,
-        [System::Runtime::InteropServices::Out] double% d,
-        [System::Runtime::InteropServices::Out] double% m,
-        [System::Runtime::InteropServices::Out] double% s)
-    {
-      d = int(ang); ang = 60 * (ang - d);
-      m = int(ang); s = 60 * (ang - m);
+                       [System::Runtime::InteropServices::Out] double % d,
+                       [System::Runtime::InteropServices::Out] double % m,
+                       [System::Runtime::InteropServices::Out] double % s) {
+        d = int(ang);
+        ang = 60 * (ang - d);
+        m = int(ang);
+        s = 60 * (ang - m);
     }
 };
-} // namespace NETGeographicLib
+}  // namespace NETGeographicLib

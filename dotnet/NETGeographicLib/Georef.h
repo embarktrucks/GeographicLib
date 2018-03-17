@@ -10,33 +10,32 @@
  **********************************************************************/
 #pragma once
 
-namespace NETGeographicLib
-{
-  /**
-   * \brief .NET wrapper for GeographicLib::Georef.
-   *
-   * The World Geographic Reference System is described in
-   * - https://en.wikipedia.org/wiki/Georef
-   * - http://earth-info.nga.mil/GandG/coordsys/grids/georef.pdf
-   * .
-   * It provides a compact string representation of a geographic area
-   * (expressed as latitude and longitude).  The classes GARS and Geohash
-   * implement similar compact representations.
-   *
-   * C# Example:
-   * \include example-Georef.cs
-   * Managed C++ Example:
-   * \include example-Georef.cpp
-   * Visual Basic Example:
-   * \include example-Georef.vb
-   **********************************************************************/
-  public ref class Georef
-  {
-  private:
-      // hide the constructor since all members of this class are static.
-      Georef() {}
+namespace NETGeographicLib {
+/**
+ * \brief .NET wrapper for GeographicLib::Georef.
+ *
+ * The World Geographic Reference System is described in
+ * - https://en.wikipedia.org/wiki/Georef
+ * - http://earth-info.nga.mil/GandG/coordsys/grids/georef.pdf
+ * .
+ * It provides a compact string representation of a geographic area
+ * (expressed as latitude and longitude).  The classes GARS and Geohash
+ * implement similar compact representations.
+ *
+ * C# Example:
+ * \include example-Georef.cs
+ * Managed C++ Example:
+ * \include example-Georef.cpp
+ * Visual Basic Example:
+ * \include example-Georef.vb
+ **********************************************************************/
+public
+ref class Georef {
+ private:
+    // hide the constructor since all members of this class are static.
+    Georef() {}
 
-  public:
+ public:
     /**
      * Convert from geographic coordinates to georef.
      *
@@ -61,7 +60,8 @@ namespace NETGeographicLib
      * If \e lat or \e lon is NaN, then \e georef is set to "INVALID".
      **********************************************************************/
     static void Forward(double lat, double lon, int prec,
-        [System::Runtime::InteropServices::Out] System::String^% georef);
+                        [System::Runtime::InteropServices::Out] System::String ^
+                            % georef);
 
     /**
      * Convert from Georef to geographic coordinates.
@@ -89,11 +89,11 @@ namespace NETGeographicLib
      * If the first 3 characters of \e georef are "INV", then \e lat and \e lon
      * are set to NaN and \e prec is unchanged.
      **********************************************************************/
-    static void Reverse( System::String^ georef,
-        [System::Runtime::InteropServices::Out] double% lat,
-        [System::Runtime::InteropServices::Out] double% lon,
-        [System::Runtime::InteropServices::Out] int% prec,
-        bool centerp );
+    static void Reverse(System::String ^ georef,
+                        [System::Runtime::InteropServices::Out] double % lat,
+                        [System::Runtime::InteropServices::Out] double % lon,
+                        [System::Runtime::InteropServices::Out] int % prec,
+                        bool centerp);
 
     /**
      * The angular resolution of a Georef.
@@ -115,5 +115,5 @@ namespace NETGeographicLib
      * The returned length is in the range [0, 11].
      **********************************************************************/
     static int Precision(double res);
-  };
-}
+};
+}  // namespace NETGeographicLib
