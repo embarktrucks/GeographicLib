@@ -47,113 +47,113 @@ namespace NETGeographicLib {
 public
 ref class AzimuthalEquidistant {
  private:
-    // Pointer to the unmanaged GeographicLib::AzimuthalEquidistant
-    const GeographicLib::AzimuthalEquidistant* m_pAzimuthalEquidistant;
+  // Pointer to the unmanaged GeographicLib::AzimuthalEquidistant
+  const GeographicLib::AzimuthalEquidistant* m_pAzimuthalEquidistant;
 
-    // Frees the unmanaged memory when the object is destroyed.
-    !AzimuthalEquidistant();
+  // Frees the unmanaged memory when the object is destroyed.
+  !AzimuthalEquidistant();
 
  public:
-    /**
-     * Default Constructor for AzimuthalEquidistant.
-     * Assumes WGS84 Geodesic
-     **********************************************************************/
-    AzimuthalEquidistant(void);
+  /**
+   * Default Constructor for AzimuthalEquidistant.
+   * Assumes WGS84 Geodesic
+   **********************************************************************/
+  AzimuthalEquidistant(void);
 
-    /**
-     * Constructor for AzimuthalEquidistant.
-     *
-     * @param[in] earth the Geodesic object to use for geodesic calculations.
-     **********************************************************************/
-    AzimuthalEquidistant(Geodesic ^ earth);
+  /**
+   * Constructor for AzimuthalEquidistant.
+   *
+   * @param[in] earth the Geodesic object to use for geodesic calculations.
+   **********************************************************************/
+  AzimuthalEquidistant(Geodesic ^ earth);
 
-    /**
-     * Destructor
-     *
-     * frees unmanaged memory.
-     **********************************************************************/
-    ~AzimuthalEquidistant() { this->!AzimuthalEquidistant(); }
+  /**
+   * Destructor
+   *
+   * frees unmanaged memory.
+   **********************************************************************/
+  ~AzimuthalEquidistant() { this->!AzimuthalEquidistant(); }
 
-    /**
-     * Forward projection, from geographic to azimuthal equidistant.
-     *
-     * @param[in] lat0 latitude of center point of projection (degrees).
-     * @param[in] lon0 longitude of center point of projection (degrees).
-     * @param[in] lat latitude of point (degrees).
-     * @param[in] lon longitude of point (degrees).
-     * @param[out] x easting of point (meters).
-     * @param[out] y northing of point (meters).
-     * @param[out] azi azimuth of geodesic at point (degrees).
-     * @param[out] rk reciprocal of azimuthal scale at point.
-     *
-     * \e lat0 and \e lat should be in the range [&minus;90&deg;, 90&deg;].
-     * The scale of the projection is 1 in the "radial" direction, \e azi
-     * clockwise from true north, and is 1/\e rk in the direction
-     * perpendicular to this.  A call to Forward followed by a call to
-     * Reverse will return the original (\e lat, \e lon) (to within
-     * roundoff).
-     **********************************************************************/
-    void Forward(double lat0, double lon0, double lat, double lon,
-                 [System::Runtime::InteropServices::Out] double % x,
-                 [System::Runtime::InteropServices::Out] double % y,
-                 [System::Runtime::InteropServices::Out] double % azi,
-                 [System::Runtime::InteropServices::Out] double % rk);
+  /**
+   * Forward projection, from geographic to azimuthal equidistant.
+   *
+   * @param[in] lat0 latitude of center point of projection (degrees).
+   * @param[in] lon0 longitude of center point of projection (degrees).
+   * @param[in] lat latitude of point (degrees).
+   * @param[in] lon longitude of point (degrees).
+   * @param[out] x easting of point (meters).
+   * @param[out] y northing of point (meters).
+   * @param[out] azi azimuth of geodesic at point (degrees).
+   * @param[out] rk reciprocal of azimuthal scale at point.
+   *
+   * \e lat0 and \e lat should be in the range [&minus;90&deg;, 90&deg;].
+   * The scale of the projection is 1 in the "radial" direction, \e azi
+   * clockwise from true north, and is 1/\e rk in the direction
+   * perpendicular to this.  A call to Forward followed by a call to
+   * Reverse will return the original (\e lat, \e lon) (to within
+   * roundoff).
+   **********************************************************************/
+  void Forward(double lat0, double lon0, double lat, double lon,
+               [System::Runtime::InteropServices::Out] double % x,
+               [System::Runtime::InteropServices::Out] double % y,
+               [System::Runtime::InteropServices::Out] double % azi,
+               [System::Runtime::InteropServices::Out] double % rk);
 
-    /**
-     * Reverse projection, from azimuthal equidistant to geographic.
-     *
-     * @param[in] lat0 latitude of center point of projection (degrees).
-     * @param[in] lon0 longitude of center point of projection (degrees).
-     * @param[in] x easting of point (meters).
-     * @param[in] y northing of point (meters).
-     * @param[out] lat latitude of point (degrees).
-     * @param[out] lon longitude of point (degrees).
-     * @param[out] azi azimuth of geodesic at point (degrees).
-     * @param[out] rk reciprocal of azimuthal scale at point.
-     *
-     * \e lat0 should be in the range [&minus;90&deg;, 90&deg;].  \e lat
-     * will be in the range [&minus;90&deg;, 90&deg;] and \e lon will be in
-     * the range [&minus;180&deg;, 180&deg;).  The scale of the projection
-     * is 1 in the "radial" direction, \e azi clockwise from true north,
-     * and is 1/\e rk in the direction perpendicular to this.  A call to
-     * Reverse followed by a call to Forward will return the original (\e
-     * x, \e y) (to roundoff) only if the geodesic to (\e x, \e y) is a
-     * shortest path.
-     **********************************************************************/
-    void Reverse(double lat0, double lon0, double x, double y,
-                 [System::Runtime::InteropServices::Out] double % lat,
-                 [System::Runtime::InteropServices::Out] double % lon,
-                 [System::Runtime::InteropServices::Out] double % azi,
-                 [System::Runtime::InteropServices::Out] double % rk);
+  /**
+   * Reverse projection, from azimuthal equidistant to geographic.
+   *
+   * @param[in] lat0 latitude of center point of projection (degrees).
+   * @param[in] lon0 longitude of center point of projection (degrees).
+   * @param[in] x easting of point (meters).
+   * @param[in] y northing of point (meters).
+   * @param[out] lat latitude of point (degrees).
+   * @param[out] lon longitude of point (degrees).
+   * @param[out] azi azimuth of geodesic at point (degrees).
+   * @param[out] rk reciprocal of azimuthal scale at point.
+   *
+   * \e lat0 should be in the range [&minus;90&deg;, 90&deg;].  \e lat
+   * will be in the range [&minus;90&deg;, 90&deg;] and \e lon will be in
+   * the range [&minus;180&deg;, 180&deg;).  The scale of the projection
+   * is 1 in the "radial" direction, \e azi clockwise from true north,
+   * and is 1/\e rk in the direction perpendicular to this.  A call to
+   * Reverse followed by a call to Forward will return the original (\e
+   * x, \e y) (to roundoff) only if the geodesic to (\e x, \e y) is a
+   * shortest path.
+   **********************************************************************/
+  void Reverse(double lat0, double lon0, double x, double y,
+               [System::Runtime::InteropServices::Out] double % lat,
+               [System::Runtime::InteropServices::Out] double % lon,
+               [System::Runtime::InteropServices::Out] double % azi,
+               [System::Runtime::InteropServices::Out] double % rk);
 
-    /**
-     * AzimuthalEquidistant::Forward without returning the azimuth and scale.
-     **********************************************************************/
-    void Forward(double lat0, double lon0, double lat, double lon,
-                 [System::Runtime::InteropServices::Out] double % x,
-                 [System::Runtime::InteropServices::Out] double % y);
+  /**
+   * AzimuthalEquidistant::Forward without returning the azimuth and scale.
+   **********************************************************************/
+  void Forward(double lat0, double lon0, double lat, double lon,
+               [System::Runtime::InteropServices::Out] double % x,
+               [System::Runtime::InteropServices::Out] double % y);
 
-    /**
-     * AzimuthalEquidistant::Reverse without returning the azimuth and scale.
-     **********************************************************************/
-    void Reverse(double lat0, double lon0, double x, double y,
-                 [System::Runtime::InteropServices::Out] double % lat,
-                 [System::Runtime::InteropServices::Out] double % lon);
+  /**
+   * AzimuthalEquidistant::Reverse without returning the azimuth and scale.
+   **********************************************************************/
+  void Reverse(double lat0, double lon0, double x, double y,
+               [System::Runtime::InteropServices::Out] double % lat,
+               [System::Runtime::InteropServices::Out] double % lon);
 
-    /** \name Inspector functions
-     **********************************************************************/
-    ///@{
-    /**
-     * @return \e a the equatorial radius of the ellipsoid (meters).  This is
-     *   the value inherited from the Geodesic object used in the constructor.
-     **********************************************************************/
-    property double MajorRadius { double get(); }
+  /** \name Inspector functions
+   **********************************************************************/
+  ///@{
+  /**
+   * @return \e a the equatorial radius of the ellipsoid (meters).  This is
+   *   the value inherited from the Geodesic object used in the constructor.
+   **********************************************************************/
+  property double MajorRadius { double get(); }
 
-    /**
-     * @return \e f the flattening of the ellipsoid.  This is the value
-     *   inherited from the Geodesic object used in the constructor.
-     **********************************************************************/
-    property double Flattening { double get(); }
-    ///@}
+  /**
+   * @return \e f the flattening of the ellipsoid.  This is the value
+   *   inherited from the Geodesic object used in the constructor.
+   **********************************************************************/
+  property double Flattening { double get(); }
+  ///@}
 };
 }  // namespace NETGeographicLib

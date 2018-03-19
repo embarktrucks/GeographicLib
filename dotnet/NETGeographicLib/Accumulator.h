@@ -45,74 +45,74 @@ accumulator.
 public
 ref class Accumulator {
  private:
-    // Pointer to the unmanaged GeographicLib::Accumulator.
-    GeographicLib::Accumulator<double>* m_pAccumulator;
-    // The finalizer releases the unmanaged object when this class is destroyrd.
-    !Accumulator(void);
+  // Pointer to the unmanaged GeographicLib::Accumulator.
+  GeographicLib::Accumulator<double>* m_pAccumulator;
+  // The finalizer releases the unmanaged object when this class is destroyrd.
+  !Accumulator(void);
 
  public:
-    //! \brief Constructor.
-    Accumulator(void);
-    //! \brief Destructor calls the finalizer.
-    ~Accumulator() { this->!Accumulator(); }
-    /*!
-    \brief Assigns a value to an accumulator.
-    \param[in] a The value to be assigned.
-    */
-    void Assign(double a);
-    //! \brief Returns the accumulated value.
-    double Result();
-    /*!
-    \brief Adds a value to the accumulator.
-    \param[in] a The value to be added.
-    */
-    void Sum(double a);
-    /*!
-    \brief Multiplication by an integer
-    \param[in] i The multiplier.
-    */
-    void Multiply(int i);
-    /*!
-    \brief Equality operator.
-    \param[in] lhs The accumulator.
-    \param[in] a The value to be compared to.
-    \return true if the accumulated value is equal to a.
-    */
-    static bool operator==(Accumulator ^ lhs, double a);
-    /*!
-    \brief Inequality operator.
-    \param[in] lhs The accumulator.
-    \param[in] a The value to be compared to.
-    \return true if the accumulated value is not equal to a.
-    */
-    static bool operator!=(Accumulator ^ lhs, double a);
-    /*!
-    \brief Less than operator.
-    \param[in] lhs The accumulator.
-    \param[in] a The value to be compared to.
-    \return true if the accumulated value is less than a.
-    */
-    static bool operator<(Accumulator ^ lhs, double a);
-    /*!
-    \brief Less than or equal to operator.
-    \param[in] lhs The accumulator.
-    \param[in] a The value to be compared to.
-    \return true if the accumulated value is less than or equal to a.
-    */
-    static bool operator<=(Accumulator ^ lhs, double a);
-    /*!
-    \brief Greater than operator.
-    \param[in] lhs The accumulator.
-    \param[in] a The value to be compared to.
-    \return true if the accumulated value is greater than a.
-    */
-    static bool operator>(Accumulator ^ lhs, double a);
-    /*!
-    \brief Greater than or equal to operator.
-    \param[in] lhs The accumulator.
-    \param[in] a The value to be compared to.
-    \return true if the accumulated value is greater than or equal to a.
-    */
-    static bool operator>=(Accumulator ^ lhs, double a);
+  //! \brief Constructor.
+  Accumulator(void);
+  //! \brief Destructor calls the finalizer.
+  ~Accumulator() { this->!Accumulator(); }
+  /*!
+  \brief Assigns a value to an accumulator.
+  \param[in] a The value to be assigned.
+  */
+  void Assign(double a);
+  //! \brief Returns the accumulated value.
+  double Result();
+  /*!
+  \brief Adds a value to the accumulator.
+  \param[in] a The value to be added.
+  */
+  void Sum(double a);
+  /*!
+  \brief Multiplication by an integer
+  \param[in] i The multiplier.
+  */
+  void Multiply(int i);
+  /*!
+  \brief Equality operator.
+  \param[in] lhs The accumulator.
+  \param[in] a The value to be compared to.
+  \return true if the accumulated value is equal to a.
+  */
+  static bool operator==(Accumulator ^ lhs, double a);
+  /*!
+  \brief Inequality operator.
+  \param[in] lhs The accumulator.
+  \param[in] a The value to be compared to.
+  \return true if the accumulated value is not equal to a.
+  */
+  static bool operator!=(Accumulator ^ lhs, double a);
+  /*!
+  \brief Less than operator.
+  \param[in] lhs The accumulator.
+  \param[in] a The value to be compared to.
+  \return true if the accumulated value is less than a.
+  */
+  static bool operator<(Accumulator ^ lhs, double a);
+  /*!
+  \brief Less than or equal to operator.
+  \param[in] lhs The accumulator.
+  \param[in] a The value to be compared to.
+  \return true if the accumulated value is less than or equal to a.
+  */
+  static bool operator<=(Accumulator ^ lhs, double a);
+  /*!
+  \brief Greater than operator.
+  \param[in] lhs The accumulator.
+  \param[in] a The value to be compared to.
+  \return true if the accumulated value is greater than a.
+  */
+  static bool operator>(Accumulator ^ lhs, double a);
+  /*!
+  \brief Greater than or equal to operator.
+  \param[in] lhs The accumulator.
+  \param[in] a The value to be compared to.
+  \return true if the accumulated value is greater than or equal to a.
+  */
+  static bool operator>=(Accumulator ^ lhs, double a);
 };
 }  // namespace NETGeographicLib

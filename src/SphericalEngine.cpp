@@ -146,291 +146,289 @@ namespace geographic_lib {
 using namespace std;
 
 vector<Math::real>& SphericalEngine::sqrttable() {
-    static vector<real> sqrttable(0);
-    return sqrttable;
+  static vector<real> sqrttable(0);
+  return sqrttable;
 }
 
 template <bool gradp, SphericalEngine::normalization norm, int L>
 Math::real SphericalEngine::Value(const coeff c[], const real f[], real x,
                                   real y, real z, real a, real& gradx,
                                   real& grady, real& gradz) {
-    GEOGRAPHICLIB_STATIC_ASSERT(L > 0, "L must be positive");
-    GEOGRAPHICLIB_STATIC_ASSERT(norm == FULL || norm == SCHMIDT,
-                                "Unknown normalization");
-    int N = c[0].nmx(), M = c[0].mmx();
+  GEOGRAPHICLIB_STATIC_ASSERT(L > 0, "L must be positive");
+  GEOGRAPHICLIB_STATIC_ASSERT(norm == FULL || norm == SCHMIDT,
+                              "Unknown normalization");
+  int N = c[0].nmx(), M = c[0].mmx();
 
-    real p = Math::hypot(x, y),
-         cl = p != 0 ? x / p : 1,  // cos(lambda); at pole, pick lambda = 0
-        sl = p != 0 ? y / p : 0,   // sin(lambda)
-        r = Math::hypot(z, p),
-         t = r != 0 ? z / r : 0,  // cos(theta); at origin, pick theta = pi/2
-        u = r != 0 ? max(p / r, eps()) : 1,  // sin(theta); but avoid the pole
-        q = a / r;
-    real q2 = Math::sq(q), uq = u * q, uq2 = Math::sq(uq), tu = t / u;
-    // Initialize outer sum
-    real vc = 0, vc2 = 0, vs = 0, vs2 = 0;  // v [N + 1], v [N + 2]
-    // vr, vt, vl and similar w variable accumulate the sums for the
-    // derivatives wrt r, theta, and lambda, respectively.
-    real vrc = 0, vrc2 = 0, vrs = 0, vrs2 = 0;  // vr[N + 1], vr[N + 2]
-    real vtc = 0, vtc2 = 0, vts = 0, vts2 = 0;  // vt[N + 1], vt[N + 2]
-    real vlc = 0, vlc2 = 0, vls = 0, vls2 = 0;  // vl[N + 1], vl[N + 2]
-    int k[L];
-    const vector<real>& root(sqrttable());
-    for (int m = M; m >= 0; --m) {  // m = M .. 0
-        // Initialize inner sum
-        real wc = 0, wc2 = 0, ws = 0, ws2 = 0,  // w [N - m + 1], w [N - m + 2]
-            wrc = 0, wrc2 = 0, wrs = 0,
-             wrs2 = 0,  // wr[N - m + 1], wr[N - m + 2]
-            wtc = 0, wtc2 = 0, wts = 0,
-             wts2 = 0;  // wt[N - m + 1], wt[N - m + 2]
-        for (int l = 0; l < L; ++l) k[l] = c[l].index(N, m) + 1;
-        for (int n = N; n >= m; --n) {  // n = N .. m; l = N - m .. 0
-            real w, A, Ax, B, R;        // alpha[l], beta[l + 1]
-            switch (norm) {
-                case FULL:
-                    w = root[2 * n + 1] / (root[n - m + 1] * root[n + m + 1]);
-                    Ax = q * w * root[2 * n + 3];
-                    A = t * Ax;
-                    B = -q2 * root[2 * n + 5] /
-                        (w * root[n - m + 2] * root[n + m + 2]);
-                    break;
-                case SCHMIDT:
-                    w = root[n - m + 1] * root[n + m + 1];
-                    Ax = q * (2 * n + 1) / w;
-                    A = t * Ax;
-                    B = -q2 * w / (root[n - m + 2] * root[n + m + 2]);
-                    break;
-                default:
-                    break;  // To suppress warning message from Visual Studio
-            }
-            R = c[0].Cv(--k[0]);
-            for (int l = 1; l < L; ++l) R += c[l].Cv(--k[l], n, m, f[l]);
-            R *= scale();
-            w = A * wc + B * wc2 + R;
-            wc2 = wc;
-            wc = w;
-            if (gradp) {
-                w = A * wrc + B * wrc2 + (n + 1) * R;
-                wrc2 = wrc;
-                wrc = w;
-                w = A * wtc + B * wtc2 - u * Ax * wc2;
-                wtc2 = wtc;
-                wtc = w;
-            }
-            if (m) {
-                R = c[0].Sv(k[0]);
-                for (int l = 1; l < L; ++l) R += c[l].Sv(k[l], n, m, f[l]);
-                R *= scale();
-                w = A * ws + B * ws2 + R;
-                ws2 = ws;
-                ws = w;
-                if (gradp) {
-                    w = A * wrs + B * wrs2 + (n + 1) * R;
-                    wrs2 = wrs;
-                    wrs = w;
-                    w = A * wts + B * wts2 - u * Ax * ws2;
-                    wts2 = wts;
-                    wts = w;
-                }
-            }
+  real p = Math::hypot(x, y),
+       cl = p != 0 ? x / p : 1,  // cos(lambda); at pole, pick lambda = 0
+    sl = p != 0 ? y / p : 0,     // sin(lambda)
+    r = Math::hypot(z, p),
+       t = r != 0 ? z / r : 0,  // cos(theta); at origin, pick theta = pi/2
+    u = r != 0 ? max(p / r, eps()) : 1,  // sin(theta); but avoid the pole
+    q = a / r;
+  real q2 = Math::sq(q), uq = u * q, uq2 = Math::sq(uq), tu = t / u;
+  // Initialize outer sum
+  real vc = 0, vc2 = 0, vs = 0, vs2 = 0;  // v [N + 1], v [N + 2]
+  // vr, vt, vl and similar w variable accumulate the sums for the
+  // derivatives wrt r, theta, and lambda, respectively.
+  real vrc = 0, vrc2 = 0, vrs = 0, vrs2 = 0;  // vr[N + 1], vr[N + 2]
+  real vtc = 0, vtc2 = 0, vts = 0, vts2 = 0;  // vt[N + 1], vt[N + 2]
+  real vlc = 0, vlc2 = 0, vls = 0, vls2 = 0;  // vl[N + 1], vl[N + 2]
+  int k[L];
+  const vector<real>& root(sqrttable());
+  for (int m = M; m >= 0; --m) {  // m = M .. 0
+    // Initialize inner sum
+    real wc = 0, wc2 = 0, ws = 0, ws2 = 0,  // w [N - m + 1], w [N - m + 2]
+      wrc = 0, wrc2 = 0, wrs = 0,
+         wrs2 = 0,  // wr[N - m + 1], wr[N - m + 2]
+      wtc = 0, wtc2 = 0, wts = 0,
+         wts2 = 0;  // wt[N - m + 1], wt[N - m + 2]
+    for (int l = 0; l < L; ++l) k[l] = c[l].index(N, m) + 1;
+    for (int n = N; n >= m; --n) {  // n = N .. m; l = N - m .. 0
+      real w, A, Ax, B, R;          // alpha[l], beta[l + 1]
+      switch (norm) {
+        case FULL:
+          w = root[2 * n + 1] / (root[n - m + 1] * root[n + m + 1]);
+          Ax = q * w * root[2 * n + 3];
+          A = t * Ax;
+          B = -q2 * root[2 * n + 5] / (w * root[n - m + 2] * root[n + m + 2]);
+          break;
+        case SCHMIDT:
+          w = root[n - m + 1] * root[n + m + 1];
+          Ax = q * (2 * n + 1) / w;
+          A = t * Ax;
+          B = -q2 * w / (root[n - m + 2] * root[n + m + 2]);
+          break;
+        default:
+          break;  // To suppress warning message from Visual Studio
+      }
+      R = c[0].Cv(--k[0]);
+      for (int l = 1; l < L; ++l) R += c[l].Cv(--k[l], n, m, f[l]);
+      R *= scale();
+      w = A * wc + B * wc2 + R;
+      wc2 = wc;
+      wc = w;
+      if (gradp) {
+        w = A * wrc + B * wrc2 + (n + 1) * R;
+        wrc2 = wrc;
+        wrc = w;
+        w = A * wtc + B * wtc2 - u * Ax * wc2;
+        wtc2 = wtc;
+        wtc = w;
+      }
+      if (m) {
+        R = c[0].Sv(k[0]);
+        for (int l = 1; l < L; ++l) R += c[l].Sv(k[l], n, m, f[l]);
+        R *= scale();
+        w = A * ws + B * ws2 + R;
+        ws2 = ws;
+        ws = w;
+        if (gradp) {
+          w = A * wrs + B * wrs2 + (n + 1) * R;
+          wrs2 = wrs;
+          wrs = w;
+          w = A * wts + B * wts2 - u * Ax * ws2;
+          wts2 = wts;
+          wts = w;
         }
-        // Now Sc[m] = wc, Ss[m] = ws
-        // Sc'[m] = wtc, Ss'[m] = wtc
-        if (m) {
-            real v, A, B;  // alpha[m], beta[m + 1]
-            switch (norm) {
-                case FULL:
-                    v = root[2] * root[2 * m + 3] / root[m + 1];
-                    A = cl * v * uq;
-                    B = -v * root[2 * m + 5] / (root[8] * root[m + 2]) * uq2;
-                    break;
-                case SCHMIDT:
-                    v = root[2] * root[2 * m + 1] / root[m + 1];
-                    A = cl * v * uq;
-                    B = -v * root[2 * m + 3] / (root[8] * root[m + 2]) * uq2;
-                    break;
-                default:
-                    break;  // To suppress warning message from Visual Studio
-            }
-            v = A * vc + B * vc2 + wc;
-            vc2 = vc;
-            vc = v;
-            v = A * vs + B * vs2 + ws;
-            vs2 = vs;
-            vs = v;
-            if (gradp) {
-                // Include the terms Sc[m] * P'[m,m](t) and Ss[m] * P'[m,m](t)
-                wtc += m * tu * wc;
-                wts += m * tu * ws;
-                v = A * vrc + B * vrc2 + wrc;
-                vrc2 = vrc;
-                vrc = v;
-                v = A * vrs + B * vrs2 + wrs;
-                vrs2 = vrs;
-                vrs = v;
-                v = A * vtc + B * vtc2 + wtc;
-                vtc2 = vtc;
-                vtc = v;
-                v = A * vts + B * vts2 + wts;
-                vts2 = vts;
-                vts = v;
-                v = A * vlc + B * vlc2 + m * ws;
-                vlc2 = vlc;
-                vlc = v;
-                v = A * vls + B * vls2 - m * wc;
-                vls2 = vls;
-                vls = v;
-            }
-        } else {
-            real A, B, qs;
-            switch (norm) {
-                case FULL:
-                    A = root[3] * uq;         // F[1]/(q*cl) or F[1]/(q*sl)
-                    B = -root[15] / 2 * uq2;  // beta[1]/q
-                    break;
-                case SCHMIDT:
-                    A = uq;
-                    B = -root[3] / 2 * uq2;
-                    break;
-                default:
-                    break;  // To suppress warning message from Visual Studio
-            }
-            qs = q / scale();
-            vc = qs * (wc + A * (cl * vc + sl * vs) + B * vc2);
-            if (gradp) {
-                qs /= r;
-                // The components of the gradient in spherical coordinates are
-                // r: dV/dr
-                // theta: 1/r * dV/dtheta
-                // lambda: 1/(r*u) * dV/dlambda
-                vrc = -qs * (wrc + A * (cl * vrc + sl * vrs) + B * vrc2);
-                vtc = qs * (wtc + A * (cl * vtc + sl * vts) + B * vtc2);
-                vlc = qs / u * (A * (cl * vlc + sl * vls) + B * vlc2);
-            }
-        }
+      }
     }
+    // Now Sc[m] = wc, Ss[m] = ws
+    // Sc'[m] = wtc, Ss'[m] = wtc
+    if (m) {
+      real v, A, B;  // alpha[m], beta[m + 1]
+      switch (norm) {
+        case FULL:
+          v = root[2] * root[2 * m + 3] / root[m + 1];
+          A = cl * v * uq;
+          B = -v * root[2 * m + 5] / (root[8] * root[m + 2]) * uq2;
+          break;
+        case SCHMIDT:
+          v = root[2] * root[2 * m + 1] / root[m + 1];
+          A = cl * v * uq;
+          B = -v * root[2 * m + 3] / (root[8] * root[m + 2]) * uq2;
+          break;
+        default:
+          break;  // To suppress warning message from Visual Studio
+      }
+      v = A * vc + B * vc2 + wc;
+      vc2 = vc;
+      vc = v;
+      v = A * vs + B * vs2 + ws;
+      vs2 = vs;
+      vs = v;
+      if (gradp) {
+        // Include the terms Sc[m] * P'[m,m](t) and Ss[m] * P'[m,m](t)
+        wtc += m * tu * wc;
+        wts += m * tu * ws;
+        v = A * vrc + B * vrc2 + wrc;
+        vrc2 = vrc;
+        vrc = v;
+        v = A * vrs + B * vrs2 + wrs;
+        vrs2 = vrs;
+        vrs = v;
+        v = A * vtc + B * vtc2 + wtc;
+        vtc2 = vtc;
+        vtc = v;
+        v = A * vts + B * vts2 + wts;
+        vts2 = vts;
+        vts = v;
+        v = A * vlc + B * vlc2 + m * ws;
+        vlc2 = vlc;
+        vlc = v;
+        v = A * vls + B * vls2 - m * wc;
+        vls2 = vls;
+        vls = v;
+      }
+    } else {
+      real A, B, qs;
+      switch (norm) {
+        case FULL:
+          A = root[3] * uq;         // F[1]/(q*cl) or F[1]/(q*sl)
+          B = -root[15] / 2 * uq2;  // beta[1]/q
+          break;
+        case SCHMIDT:
+          A = uq;
+          B = -root[3] / 2 * uq2;
+          break;
+        default:
+          break;  // To suppress warning message from Visual Studio
+      }
+      qs = q / scale();
+      vc = qs * (wc + A * (cl * vc + sl * vs) + B * vc2);
+      if (gradp) {
+        qs /= r;
+        // The components of the gradient in spherical coordinates are
+        // r: dV/dr
+        // theta: 1/r * dV/dtheta
+        // lambda: 1/(r*u) * dV/dlambda
+        vrc = -qs * (wrc + A * (cl * vrc + sl * vrs) + B * vrc2);
+        vtc = qs * (wtc + A * (cl * vtc + sl * vts) + B * vtc2);
+        vlc = qs / u * (A * (cl * vlc + sl * vls) + B * vlc2);
+      }
+    }
+  }
 
-    if (gradp) {
-        // Rotate into cartesian (geocentric) coordinates
-        gradx = cl * (u * vrc + t * vtc) - sl * vlc;
-        grady = sl * (u * vrc + t * vtc) + cl * vlc;
-        gradz = t * vrc - u * vtc;
-    }
-    return vc;
+  if (gradp) {
+    // Rotate into cartesian (geocentric) coordinates
+    gradx = cl * (u * vrc + t * vtc) - sl * vlc;
+    grady = sl * (u * vrc + t * vtc) + cl * vlc;
+    gradz = t * vrc - u * vtc;
+  }
+  return vc;
 }
 
 template <bool gradp, SphericalEngine::normalization norm, int L>
 CircularEngine SphericalEngine::Circle(const coeff c[], const real f[], real p,
                                        real z, real a) {
-    GEOGRAPHICLIB_STATIC_ASSERT(L > 0, "L must be positive");
-    GEOGRAPHICLIB_STATIC_ASSERT(norm == FULL || norm == SCHMIDT,
-                                "Unknown normalization");
-    int N = c[0].nmx(), M = c[0].mmx();
+  GEOGRAPHICLIB_STATIC_ASSERT(L > 0, "L must be positive");
+  GEOGRAPHICLIB_STATIC_ASSERT(norm == FULL || norm == SCHMIDT,
+                              "Unknown normalization");
+  int N = c[0].nmx(), M = c[0].mmx();
 
-    real r = Math::hypot(z, p),
-         t = r != 0 ? z / r : 0,  // cos(theta); at origin, pick theta = pi/2
-        u = r != 0 ? max(p / r, eps()) : 1,  // sin(theta); but avoid the pole
-        q = a / r;
-    real q2 = Math::sq(q), tu = t / u;
-    CircularEngine circ(M, gradp, norm, a, r, u, t);
-    int k[L];
-    const vector<real>& root(sqrttable());
-    for (int m = M; m >= 0; --m) {  // m = M .. 0
-        // Initialize inner sum
-        real wc = 0, wc2 = 0, ws = 0, ws2 = 0,  // w [N - m + 1], w [N - m + 2]
-            wrc = 0, wrc2 = 0, wrs = 0,
-             wrs2 = 0,  // wr[N - m + 1], wr[N - m + 2]
-            wtc = 0, wtc2 = 0, wts = 0,
-             wts2 = 0;  // wt[N - m + 1], wt[N - m + 2]
-        for (int l = 0; l < L; ++l) k[l] = c[l].index(N, m) + 1;
-        for (int n = N; n >= m; --n) {  // n = N .. m; l = N - m .. 0
-            real w, A, Ax, B, R;        // alpha[l], beta[l + 1]
-            switch (norm) {
-                case FULL:
-                    w = root[2 * n + 1] / (root[n - m + 1] * root[n + m + 1]);
-                    Ax = q * w * root[2 * n + 3];
-                    A = t * Ax;
-                    B = -q2 * root[2 * n + 5] /
-                        (w * root[n - m + 2] * root[n + m + 2]);
-                    break;
-                case SCHMIDT:
-                    w = root[n - m + 1] * root[n + m + 1];
-                    Ax = q * (2 * n + 1) / w;
-                    A = t * Ax;
-                    B = -q2 * w / (root[n - m + 2] * root[n + m + 2]);
-                    break;
-                default:
-                    break;  // To suppress warning message from Visual Studio
-            }
-            R = c[0].Cv(--k[0]);
-            for (int l = 1; l < L; ++l) R += c[l].Cv(--k[l], n, m, f[l]);
-            R *= scale();
-            w = A * wc + B * wc2 + R;
-            wc2 = wc;
-            wc = w;
-            if (gradp) {
-                w = A * wrc + B * wrc2 + (n + 1) * R;
-                wrc2 = wrc;
-                wrc = w;
-                w = A * wtc + B * wtc2 - u * Ax * wc2;
-                wtc2 = wtc;
-                wtc = w;
-            }
-            if (m) {
-                R = c[0].Sv(k[0]);
-                for (int l = 1; l < L; ++l) R += c[l].Sv(k[l], n, m, f[l]);
-                R *= scale();
-                w = A * ws + B * ws2 + R;
-                ws2 = ws;
-                ws = w;
-                if (gradp) {
-                    w = A * wrs + B * wrs2 + (n + 1) * R;
-                    wrs2 = wrs;
-                    wrs = w;
-                    w = A * wts + B * wts2 - u * Ax * ws2;
-                    wts2 = wts;
-                    wts = w;
-                }
-            }
+  real r = Math::hypot(z, p),
+       t = r != 0 ? z / r : 0,  // cos(theta); at origin, pick theta = pi/2
+    u = r != 0 ? max(p / r, eps()) : 1,  // sin(theta); but avoid the pole
+    q = a / r;
+  real q2 = Math::sq(q), tu = t / u;
+  CircularEngine circ(M, gradp, norm, a, r, u, t);
+  int k[L];
+  const vector<real>& root(sqrttable());
+  for (int m = M; m >= 0; --m) {  // m = M .. 0
+    // Initialize inner sum
+    real wc = 0, wc2 = 0, ws = 0, ws2 = 0,  // w [N - m + 1], w [N - m + 2]
+      wrc = 0, wrc2 = 0, wrs = 0,
+         wrs2 = 0,  // wr[N - m + 1], wr[N - m + 2]
+      wtc = 0, wtc2 = 0, wts = 0,
+         wts2 = 0;  // wt[N - m + 1], wt[N - m + 2]
+    for (int l = 0; l < L; ++l) k[l] = c[l].index(N, m) + 1;
+    for (int n = N; n >= m; --n) {  // n = N .. m; l = N - m .. 0
+      real w, A, Ax, B, R;          // alpha[l], beta[l + 1]
+      switch (norm) {
+        case FULL:
+          w = root[2 * n + 1] / (root[n - m + 1] * root[n + m + 1]);
+          Ax = q * w * root[2 * n + 3];
+          A = t * Ax;
+          B = -q2 * root[2 * n + 5] / (w * root[n - m + 2] * root[n + m + 2]);
+          break;
+        case SCHMIDT:
+          w = root[n - m + 1] * root[n + m + 1];
+          Ax = q * (2 * n + 1) / w;
+          A = t * Ax;
+          B = -q2 * w / (root[n - m + 2] * root[n + m + 2]);
+          break;
+        default:
+          break;  // To suppress warning message from Visual Studio
+      }
+      R = c[0].Cv(--k[0]);
+      for (int l = 1; l < L; ++l) R += c[l].Cv(--k[l], n, m, f[l]);
+      R *= scale();
+      w = A * wc + B * wc2 + R;
+      wc2 = wc;
+      wc = w;
+      if (gradp) {
+        w = A * wrc + B * wrc2 + (n + 1) * R;
+        wrc2 = wrc;
+        wrc = w;
+        w = A * wtc + B * wtc2 - u * Ax * wc2;
+        wtc2 = wtc;
+        wtc = w;
+      }
+      if (m) {
+        R = c[0].Sv(k[0]);
+        for (int l = 1; l < L; ++l) R += c[l].Sv(k[l], n, m, f[l]);
+        R *= scale();
+        w = A * ws + B * ws2 + R;
+        ws2 = ws;
+        ws = w;
+        if (gradp) {
+          w = A * wrs + B * wrs2 + (n + 1) * R;
+          wrs2 = wrs;
+          wrs = w;
+          w = A * wts + B * wts2 - u * Ax * ws2;
+          wts2 = wts;
+          wts = w;
         }
-        if (!gradp)
-            circ.SetCoeff(m, wc, ws);
-        else {
-            // Include the terms Sc[m] * P'[m,m](t) and  Ss[m] * P'[m,m](t)
-            wtc += m * tu * wc;
-            wts += m * tu * ws;
-            circ.SetCoeff(m, wc, ws, wrc, wrs, wtc, wts);
-        }
+      }
     }
+    if (!gradp)
+      circ.SetCoeff(m, wc, ws);
+    else {
+      // Include the terms Sc[m] * P'[m,m](t) and  Ss[m] * P'[m,m](t)
+      wtc += m * tu * wc;
+      wts += m * tu * ws;
+      circ.SetCoeff(m, wc, ws, wrc, wrs, wtc, wts);
+    }
+  }
 
-    return circ;
+  return circ;
 }
 
 void SphericalEngine::RootTable(int N) {
-    // Need square roots up to max(2 * N + 5, 15).
-    vector<real>& root(sqrttable());
-    int L = max(2 * N + 5, 15) + 1, oldL = int(root.size());
-    if (oldL >= L) return;
-    root.resize(L);
-    for (int l = oldL; l < L; ++l) root[l] = sqrt(real(l));
+  // Need square roots up to max(2 * N + 5, 15).
+  vector<real>& root(sqrttable());
+  int L = max(2 * N + 5, 15) + 1, oldL = int(root.size());
+  if (oldL >= L) return;
+  root.resize(L);
+  for (int l = oldL; l < L; ++l) root[l] = sqrt(real(l));
 }
 
 void SphericalEngine::coeff::readcoeffs(std::istream& stream, int& N, int& M,
                                         std::vector<real>& C,
                                         std::vector<real>& S) {
-    int nm[2];
-    Utility::readarray<int, int, false>(stream, nm, 2);
-    N = nm[0];
-    M = nm[1];
-    if (!(N >= M && M >= -1 && N * M >= 0))
-        // The last condition is that M = -1 implies N = -1 and vice versa.
-        throw GeographicErr("Bad degree and order " + Utility::str(N) + " " +
-                            Utility::str(M));
-    C.resize(SphericalEngine::coeff::Csize(N, M));
-    Utility::readarray<double, real, false>(stream, C);
-    S.resize(SphericalEngine::coeff::Ssize(N, M));
-    Utility::readarray<double, real, false>(stream, S);
-    return;
+  int nm[2];
+  Utility::readarray<int, int, false>(stream, nm, 2);
+  N = nm[0];
+  M = nm[1];
+  if (!(N >= M && M >= -1 && N * M >= 0))
+    // The last condition is that M = -1 implies N = -1 and vice versa.
+    throw GeographicErr("Bad degree and order " + Utility::str(N) + " " +
+                        Utility::str(M));
+  C.resize(SphericalEngine::coeff::Csize(N, M));
+  Utility::readarray<double, real, false>(stream, C);
+  S.resize(SphericalEngine::coeff::Ssize(N, M));
+  Utility::readarray<double, real, false>(stream, S);
+  return;
 }
 
 /// \cond SKIP

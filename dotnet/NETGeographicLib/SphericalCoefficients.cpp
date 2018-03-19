@@ -16,15 +16,15 @@ using namespace NETGeographicLib;
 
 //*****************************************************************************
 SphericalCoefficients::SphericalCoefficients(
-    const GeographicLib::SphericalEngine::coeff& c) {
-    m_N = c.N();
-    m_nmx = c.nmx();
-    m_mmx = c.mmx();
-    int csize = Csize(c.nmx(), c.mmx());
-    int ssize = Ssize(c.nmx(), c.mmx());
-    int offset = csize - ssize;
-    m_C = gcnew array<double>(csize);
-    m_S = gcnew array<double>(ssize);
-    for (int i = 0; i < csize; i++) m_C[i] = c.Cv(i);
-    for (int i = 0; i < ssize; i++) m_S[i] = c.Sv(i + offset);
+  const GeographicLib::SphericalEngine::coeff& c) {
+  m_N = c.N();
+  m_nmx = c.nmx();
+  m_mmx = c.mmx();
+  int csize = Csize(c.nmx(), c.mmx());
+  int ssize = Ssize(c.nmx(), c.mmx());
+  int offset = csize - ssize;
+  m_C = gcnew array<double>(csize);
+  m_S = gcnew array<double>(ssize);
+  for (int i = 0; i < csize; i++) m_C[i] = c.Cv(i);
+  for (int i = 0; i < ssize; i++) m_S[i] = c.Sv(i + offset);
 }

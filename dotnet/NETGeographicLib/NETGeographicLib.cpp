@@ -18,15 +18,15 @@ using namespace NETGeographicLib;
 
 //*****************************************************************************
 std::string StringConvert::ManagedToUnmanaged(System::String ^ s) {
-    System::IntPtr buffer = Marshal::StringToHGlobalAnsi(s);
-    std::string output(reinterpret_cast<const char*>(buffer.ToPointer()));
-    Marshal::FreeHGlobal(buffer);
-    return output;
+  System::IntPtr buffer = Marshal::StringToHGlobalAnsi(s);
+  std::string output(reinterpret_cast<const char*>(buffer.ToPointer()));
+  Marshal::FreeHGlobal(buffer);
+  return output;
 }
 
 //*****************************************************************************
 System::String ^ VersionInfo::GetString() {
-    return gcnew System::String(GEOGRAPHICLIB_VERSION_STRING);
+  return gcnew System::String(GEOGRAPHICLIB_VERSION_STRING);
 }
 
 //*****************************************************************************
@@ -40,6 +40,6 @@ int VersionInfo::Patch() { return GEOGRAPHICLIB_VERSION_PATCH; }
 
 //*****************************************************************************
 double Utility::FractionalYear(System::String ^ s) {
-    return GeographicLib::Utility::fractionalyear<double>(
-        StringConvert::ManagedToUnmanaged(s));
+  return GeographicLib::Utility::fractionalyear<double>(
+    StringConvert::ManagedToUnmanaged(s));
 }

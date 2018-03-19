@@ -53,89 +53,89 @@ namespace NETGeographicLib {
 public
 ref class CircularEngine {
  private:
-    // pointer to the unmanaged GeographicLib::CircularEngine
-    const GeographicLib::CircularEngine* m_pCircularEngine;
+  // pointer to the unmanaged GeographicLib::CircularEngine
+  const GeographicLib::CircularEngine* m_pCircularEngine;
 
-    // The finalizer frees the unmanaged memory when the object is destroyed.
-    !CircularEngine();
+  // The finalizer frees the unmanaged memory when the object is destroyed.
+  !CircularEngine();
 
  public:
-    /**
-     * The constructor.
-     *
-     * This constructor should not be used in .NET applications.
-     * Use SphericalHarmonic::Circle, SphericalHarmonic1::Circle or
-     * SphericalHarmonic2::Circle to create instances of this class.
-     *
-     * @param[in] c The unmanaged CircularEngine to be copied.
-     **********************************************************************/
-    CircularEngine(const GeographicLib::CircularEngine& c);
+  /**
+   * The constructor.
+   *
+   * This constructor should not be used in .NET applications.
+   * Use SphericalHarmonic::Circle, SphericalHarmonic1::Circle or
+   * SphericalHarmonic2::Circle to create instances of this class.
+   *
+   * @param[in] c The unmanaged CircularEngine to be copied.
+   **********************************************************************/
+  CircularEngine(const GeographicLib::CircularEngine& c);
 
-    /**
-     * The destructor calls the finalizer
-     **********************************************************************/
-    ~CircularEngine() { this->!CircularEngine(); }
+  /**
+   * The destructor calls the finalizer
+   **********************************************************************/
+  ~CircularEngine() { this->!CircularEngine(); }
 
-    /**
-     * Evaluate the sum for a particular longitude given in terms of its
-     * cosine and sine.
-     *
-     * @param[in] coslon the cosine of the longitude.
-     * @param[in] sinlon the sine of the longitude.
-     * @return \e V the value of the sum.
-     *
-     * The arguments must satisfy <i>coslon</i><sup>2</sup> +
-     * <i>sinlon</i><sup>2</sup> = 1.
-     **********************************************************************/
-    double LongitudeSum(double coslon, double sinlon);
+  /**
+   * Evaluate the sum for a particular longitude given in terms of its
+   * cosine and sine.
+   *
+   * @param[in] coslon the cosine of the longitude.
+   * @param[in] sinlon the sine of the longitude.
+   * @return \e V the value of the sum.
+   *
+   * The arguments must satisfy <i>coslon</i><sup>2</sup> +
+   * <i>sinlon</i><sup>2</sup> = 1.
+   **********************************************************************/
+  double LongitudeSum(double coslon, double sinlon);
 
-    /**
-     * Evaluate the sum for a particular longitude.
-     *
-     * @param[in] lon the longitude (degrees).
-     * @return \e V the value of the sum.
-     **********************************************************************/
-    double LongitudeSum(double lon);
+  /**
+   * Evaluate the sum for a particular longitude.
+   *
+   * @param[in] lon the longitude (degrees).
+   * @return \e V the value of the sum.
+   **********************************************************************/
+  double LongitudeSum(double lon);
 
-    /**
-     * Evaluate the sum and its gradient for a particular longitude given in
-     * terms of its cosine and sine.
-     *
-     * @param[in] coslon the cosine of the longitude.
-     * @param[in] sinlon the sine of the longitude.
-     * @param[out] gradx \e x component of the gradient.
-     * @param[out] grady \e y component of the gradient.
-     * @param[out] gradz \e z component of the gradient.
-     * @return \e V the value of the sum.
-     *
-     * The gradients will only be computed if the CircularEngine object was
-     * created with this capability (e.g., via \e gradp = true in
-     * SphericalHarmonic::Circle).  If not, \e gradx, etc., will not be
-     * touched.  The arguments must satisfy <i>coslon</i><sup>2</sup> +
-     * <i>sinlon</i><sup>2</sup> = 1.
-     **********************************************************************/
-    double LongitudeSum(double coslon, double sinlon,
-                        [System::Runtime::InteropServices::Out] double % gradx,
-                        [System::Runtime::InteropServices::Out] double % grady,
-                        [System::Runtime::InteropServices::Out] double % gradz);
+  /**
+   * Evaluate the sum and its gradient for a particular longitude given in
+   * terms of its cosine and sine.
+   *
+   * @param[in] coslon the cosine of the longitude.
+   * @param[in] sinlon the sine of the longitude.
+   * @param[out] gradx \e x component of the gradient.
+   * @param[out] grady \e y component of the gradient.
+   * @param[out] gradz \e z component of the gradient.
+   * @return \e V the value of the sum.
+   *
+   * The gradients will only be computed if the CircularEngine object was
+   * created with this capability (e.g., via \e gradp = true in
+   * SphericalHarmonic::Circle).  If not, \e gradx, etc., will not be
+   * touched.  The arguments must satisfy <i>coslon</i><sup>2</sup> +
+   * <i>sinlon</i><sup>2</sup> = 1.
+   **********************************************************************/
+  double LongitudeSum(double coslon, double sinlon,
+                      [System::Runtime::InteropServices::Out] double % gradx,
+                      [System::Runtime::InteropServices::Out] double % grady,
+                      [System::Runtime::InteropServices::Out] double % gradz);
 
-    /**
-     * Evaluate the sum and its gradient for a particular longitude.
-     *
-     * @param[in] lon the longitude (degrees).
-     * @param[out] gradx \e x component of the gradient.
-     * @param[out] grady \e y component of the gradient.
-     * @param[out] gradz \e z component of the gradient.
-     * @return \e V the value of the sum.
-     *
-     * The gradients will only be computed if the CircularEngine object was
-     * created with this capability (e.g., via \e gradp = true in
-     * SphericalHarmonic::Circle).  If not, \e gradx, etc., will not be
-     * touched.
-     **********************************************************************/
-    double LongitudeSum(double lon,
-                        [System::Runtime::InteropServices::Out] double % gradx,
-                        [System::Runtime::InteropServices::Out] double % grady,
-                        [System::Runtime::InteropServices::Out] double % gradz);
+  /**
+   * Evaluate the sum and its gradient for a particular longitude.
+   *
+   * @param[in] lon the longitude (degrees).
+   * @param[out] gradx \e x component of the gradient.
+   * @param[out] grady \e y component of the gradient.
+   * @param[out] gradz \e z component of the gradient.
+   * @return \e V the value of the sum.
+   *
+   * The gradients will only be computed if the CircularEngine object was
+   * created with this capability (e.g., via \e gradp = true in
+   * SphericalHarmonic::Circle).  If not, \e gradx, etc., will not be
+   * touched.
+   **********************************************************************/
+  double LongitudeSum(double lon,
+                      [System::Runtime::InteropServices::Out] double % gradx,
+                      [System::Runtime::InteropServices::Out] double % grady,
+                      [System::Runtime::InteropServices::Out] double % gradz);
 };
 }  // namespace NETGeographicLib

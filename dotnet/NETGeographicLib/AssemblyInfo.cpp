@@ -17,8 +17,8 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyCompanyAttribute("Open Source")];
 [assembly:AssemblyProductAttribute("NETGeographic")];
 [assembly:AssemblyCopyrightAttribute(
-              "GeographicLib copyright (c) Charles Karney "
-              "2013\nNETGeographicLib copyright (c) Scott Heiman 2013")];
+            "GeographicLib copyright (c) Charles Karney "
+            "2013\nNETGeographicLib copyright (c) Scott Heiman 2013")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 

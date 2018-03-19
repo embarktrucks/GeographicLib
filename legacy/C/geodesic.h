@@ -152,9 +152,9 @@
    #endif
  * @endcode
  **********************************************************************/
-#define GEODESIC_VERSION                                                 \
-    GEODESIC_VERSION_NUM(GEODESIC_VERSION_MAJOR, GEODESIC_VERSION_MINOR, \
-                         GEODESIC_VERSION_PATCH)
+#define GEODESIC_VERSION                                               \
+  GEODESIC_VERSION_NUM(GEODESIC_VERSION_MAJOR, GEODESIC_VERSION_MINOR, \
+                       GEODESIC_VERSION_PATCH)
 
 #if defined(__cplusplus)
 extern "C" {
@@ -165,12 +165,12 @@ extern "C" {
  * initialized by geod_init() before use.
  **********************************************************************/
 struct geod_geodesic {
-    double a; /**< the equatorial radius */
-    double f; /**< the flattening */
-    /**< @cond SKIP */
-    double f1, e2, ep2, n, b, c2, etol2;
-    double A3x[6], C3x[15], C4x[21];
-    /**< @endcond */
+  double a; /**< the equatorial radius */
+  double f; /**< the flattening */
+  /**< @cond SKIP */
+  double f1, e2, ep2, n, b, c2, etol2;
+  double A3x[6], C3x[15], C4x[21];
+  /**< @endcond */
 };
 
 /**
@@ -179,21 +179,21 @@ struct geod_geodesic {
  * or geod_inverseline() before use.
  **********************************************************************/
 struct geod_geodesicline {
-    double lat1;  /**< the starting latitude */
-    double lon1;  /**< the starting longitude */
-    double azi1;  /**< the starting azimuth */
-    double a;     /**< the equatorial radius */
-    double f;     /**< the flattening */
-    double salp1; /**< sine of \e azi1 */
-    double calp1; /**< cosine of \e azi1 */
-    double a13;   /**< arc length to reference point */
-    double s13;   /**< distance to reference point */
-    /**< @cond SKIP */
-    double b, c2, f1, salp0, calp0, k2, ssig1, csig1, dn1, stau1, ctau1, somg1,
-        comg1, A1m1, A2m1, A3c, B11, B21, B31, A4, B41;
-    double C1a[6 + 1], C1pa[6 + 1], C2a[6 + 1], C3a[6], C4a[6];
-    /**< @endcond */
-    unsigned caps; /**< the capabilities */
+  double lat1;  /**< the starting latitude */
+  double lon1;  /**< the starting longitude */
+  double azi1;  /**< the starting azimuth */
+  double a;     /**< the equatorial radius */
+  double f;     /**< the flattening */
+  double salp1; /**< sine of \e azi1 */
+  double calp1; /**< cosine of \e azi1 */
+  double a13;   /**< arc length to reference point */
+  double s13;   /**< distance to reference point */
+  /**< @cond SKIP */
+  double b, c2, f1, salp0, calp0, k2, ssig1, csig1, dn1, stau1, ctau1, somg1,
+    comg1, A1m1, A2m1, A3c, B11, B21, B31, A4, B41;
+  double C1a[6 + 1], C1pa[6 + 1], C2a[6 + 1], C3a[6], C4a[6];
+  /**< @endcond */
+  unsigned caps; /**< the capabilities */
 };
 
 /**
@@ -202,17 +202,17 @@ struct geod_geodesicline {
  * initialized by geod_polygon_init() before use.
  **********************************************************************/
 struct geod_polygon {
-    double lat; /**< the current latitude */
-    double lon; /**< the current longitude */
-    /**< @cond SKIP */
-    double lat0;
-    double lon0;
-    double A[2];
-    double P[2];
-    int polyline;
-    int crossings;
-    /**< @endcond */
-    unsigned num; /**< the number of points so far */
+  double lat; /**< the current latitude */
+  double lon; /**< the current longitude */
+  /**< @cond SKIP */
+  double lat0;
+  double lon0;
+  double A[2];
+  double P[2];
+  int polyline;
+  int crossings;
+  /**< @endcond */
+  unsigned num; /**< the number of points so far */
 };
 
 /**
@@ -864,19 +864,19 @@ void geod_polygonarea(const struct geod_geodesic* g, double lats[],
  * mask values for the \e caps argument to geod_lineinit().
  **********************************************************************/
 enum geod_mask {
-    GEOD_NONE = 0U,                     /**< Calculate nothing */
-    GEOD_LATITUDE = 1U << 7 | 0U,       /**< Calculate latitude */
-    GEOD_LONGITUDE = 1U << 8 | 1U << 3, /**< Calculate longitude */
-    GEOD_AZIMUTH = 1U << 9 | 0U,        /**< Calculate azimuth */
-    GEOD_DISTANCE = 1U << 10 | 1U << 0, /**< Calculate distance */
-    GEOD_DISTANCE_IN =
-        1U << 11 | 1U << 0 | 1U << 1, /**< Allow distance as input  */
-    GEOD_REDUCEDLENGTH =
-        1U << 12 | 1U << 0 | 1U << 2, /**< Calculate reduced length */
-    GEOD_GEODESICSCALE =
-        1U << 13 | 1U << 0 | 1U << 2, /**< Calculate geodesic scale */
-    GEOD_AREA = 1U << 14 | 1U << 4,   /**< Calculate reduced length */
-    GEOD_ALL = 0x7F80U | 0x1FU        /**< Calculate everything */
+  GEOD_NONE = 0U,                     /**< Calculate nothing */
+  GEOD_LATITUDE = 1U << 7 | 0U,       /**< Calculate latitude */
+  GEOD_LONGITUDE = 1U << 8 | 1U << 3, /**< Calculate longitude */
+  GEOD_AZIMUTH = 1U << 9 | 0U,        /**< Calculate azimuth */
+  GEOD_DISTANCE = 1U << 10 | 1U << 0, /**< Calculate distance */
+  GEOD_DISTANCE_IN =
+    1U << 11 | 1U << 0 | 1U << 1, /**< Allow distance as input  */
+  GEOD_REDUCEDLENGTH =
+    1U << 12 | 1U << 0 | 1U << 2, /**< Calculate reduced length */
+  GEOD_GEODESICSCALE =
+    1U << 13 | 1U << 0 | 1U << 2, /**< Calculate geodesic scale */
+  GEOD_AREA = 1U << 14 | 1U << 4, /**< Calculate reduced length */
+  GEOD_ALL = 0x7F80U | 0x1FU      /**< Calculate everything */
 };
 
 /**
@@ -884,9 +884,9 @@ enum geod_mask {
  * geod_genposition()
  **********************************************************************/
 enum geod_flags {
-    GEOD_NOFLAGS = 0U,          /**< No flags */
-    GEOD_ARCMODE = 1U << 0,     /**< Position given in terms of arc distance */
-    GEOD_LONG_UNROLL = 1U << 15 /**< Unroll the longitude */
+  GEOD_NOFLAGS = 0U,          /**< No flags */
+  GEOD_ARCMODE = 1U << 0,     /**< Position given in terms of arc distance */
+  GEOD_LONG_UNROLL = 1U << 15 /**< Unroll the longitude */
 };
 
 #if defined(__cplusplus)

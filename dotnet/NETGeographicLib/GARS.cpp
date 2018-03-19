@@ -17,34 +17,34 @@ using namespace NETGeographicLib;
 
 //*****************************************************************************
 void GARS::Forward(double lat, double lon, int prec, System::String ^ % gars) {
-    try {
-        std::string l;
-        GeographicLib::GARS::Forward(lat, lon, prec, l);
-        gars = gcnew System::String(l.c_str());
-    } catch (const std::exception& xcpt) {
-        throw gcnew GeographicErr(xcpt.what());
-    }
+  try {
+    std::string l;
+    GeographicLib::GARS::Forward(lat, lon, prec, l);
+    gars = gcnew System::String(l.c_str());
+  } catch (const std::exception& xcpt) {
+    throw gcnew GeographicErr(xcpt.what());
+  }
 }
 
 //*****************************************************************************
 void GARS::Reverse(System::String ^ gars, double % lat, double % lon,
                    int % prec, bool centerp) {
-    try {
-        double llat, llon;
-        int lprec;
-        GeographicLib::GARS::Reverse(StringConvert::ManagedToUnmanaged(gars),
-                                     llat, llon, lprec, centerp);
-        lat = llat;
-        lon = llon;
-        prec = lprec;
-    } catch (const std::exception& err) {
-        throw gcnew GeographicErr(err.what());
-    }
+  try {
+    double llat, llon;
+    int lprec;
+    GeographicLib::GARS::Reverse(StringConvert::ManagedToUnmanaged(gars), llat,
+                                 llon, lprec, centerp);
+    lat = llat;
+    lon = llon;
+    prec = lprec;
+  } catch (const std::exception& err) {
+    throw gcnew GeographicErr(err.what());
+  }
 }
 
 //*****************************************************************************
 double GARS::Resolution(int prec) {
-    return GeographicLib::GARS::Resolution(prec);
+  return GeographicLib::GARS::Resolution(prec);
 }
 
 //*****************************************************************************

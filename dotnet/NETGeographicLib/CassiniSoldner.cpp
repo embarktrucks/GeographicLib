@@ -17,109 +17,109 @@
 using namespace NETGeographicLib;
 
 const char BADALLOC[] =
-    "Failed to allocate memory for a GeographicLib::CassiniSoldner";
+  "Failed to allocate memory for a GeographicLib::CassiniSoldner";
 
 //*****************************************************************************
 CassiniSoldner::!CassiniSoldner() {
-    if (m_pCassiniSoldner != NULL) {
-        delete m_pCassiniSoldner;
-        m_pCassiniSoldner = NULL;
-    }
+  if (m_pCassiniSoldner != NULL) {
+    delete m_pCassiniSoldner;
+    m_pCassiniSoldner = NULL;
+  }
 }
 
 //*****************************************************************************
 CassiniSoldner::CassiniSoldner(double lat0, double lon0) {
-    try {
-        m_pCassiniSoldner =
-            new GeographicLib::CassiniSoldner(GeographicLib::Geodesic::WGS84());
-        m_pCassiniSoldner->Reset(lat0, lon0);
-    } catch (std::bad_alloc) {
-        throw gcnew GeographicErr(BADALLOC);
-    }
+  try {
+    m_pCassiniSoldner =
+      new GeographicLib::CassiniSoldner(GeographicLib::Geodesic::WGS84());
+    m_pCassiniSoldner->Reset(lat0, lon0);
+  } catch (std::bad_alloc) {
+    throw gcnew GeographicErr(BADALLOC);
+  }
 }
 
 //*****************************************************************************
 CassiniSoldner::CassiniSoldner(double lat0, double lon0, Geodesic ^ earth) {
-    try {
-        const GeographicLib::Geodesic* pGeodesic =
-            reinterpret_cast<const GeographicLib::Geodesic*>(
-                earth->GetUnmanaged()->ToPointer());
-        m_pCassiniSoldner = new GeographicLib::CassiniSoldner(*pGeodesic);
-        m_pCassiniSoldner->Reset(lat0, lon0);
-    } catch (std::bad_alloc) {
-        throw gcnew GeographicErr(BADALLOC);
-    }
+  try {
+    const GeographicLib::Geodesic* pGeodesic =
+      reinterpret_cast<const GeographicLib::Geodesic*>(
+        earth->GetUnmanaged()->ToPointer());
+    m_pCassiniSoldner = new GeographicLib::CassiniSoldner(*pGeodesic);
+    m_pCassiniSoldner->Reset(lat0, lon0);
+  } catch (std::bad_alloc) {
+    throw gcnew GeographicErr(BADALLOC);
+  }
 }
 
 //*****************************************************************************
 void CassiniSoldner::Reset(double lat0, double lon0) {
-    m_pCassiniSoldner->Reset(lat0, lon0);
+  m_pCassiniSoldner->Reset(lat0, lon0);
 }
 
 //*****************************************************************************
 void CassiniSoldner::Forward(
-    double lat, double lon, [System::Runtime::InteropServices::Out] double % x,
-    [System::Runtime::InteropServices::Out] double % y,
-    [System::Runtime::InteropServices::Out] double % azi,
-    [System::Runtime::InteropServices::Out] double % rk) {
-    double lx, ly, lazi, lrk;
-    m_pCassiniSoldner->Forward(lat, lon, lx, ly, lazi, lrk);
-    x = lx;
-    y = ly;
-    azi = lazi;
-    rk = lrk;
+  double lat, double lon, [System::Runtime::InteropServices::Out] double % x,
+  [System::Runtime::InteropServices::Out] double % y,
+  [System::Runtime::InteropServices::Out] double % azi,
+  [System::Runtime::InteropServices::Out] double % rk) {
+  double lx, ly, lazi, lrk;
+  m_pCassiniSoldner->Forward(lat, lon, lx, ly, lazi, lrk);
+  x = lx;
+  y = ly;
+  azi = lazi;
+  rk = lrk;
 }
 
 //*****************************************************************************
 void CassiniSoldner::Reverse(
-    double x, double y, [System::Runtime::InteropServices::Out] double % lat,
-    [System::Runtime::InteropServices::Out] double % lon,
-    [System::Runtime::InteropServices::Out] double % azi,
-    [System::Runtime::InteropServices::Out] double % rk) {
-    double llat, llon, lazi, lrk;
-    m_pCassiniSoldner->Reverse(x, y, llat, llon, lazi, lrk);
-    lat = llat;
-    lon = llon;
-    azi = lazi;
-    rk = lrk;
+  double x, double y, [System::Runtime::InteropServices::Out] double % lat,
+  [System::Runtime::InteropServices::Out] double % lon,
+  [System::Runtime::InteropServices::Out] double % azi,
+  [System::Runtime::InteropServices::Out] double % rk) {
+  double llat, llon, lazi, lrk;
+  m_pCassiniSoldner->Reverse(x, y, llat, llon, lazi, lrk);
+  lat = llat;
+  lon = llon;
+  azi = lazi;
+  rk = lrk;
 }
 //*****************************************************************************
 void CassiniSoldner::Forward(double lat, double lon,
                              [System::Runtime::InteropServices::Out] double % x,
                              [System::Runtime::InteropServices::Out] double %
-                                 y) {
-    double lx, ly, azi, rk;
-    m_pCassiniSoldner->Forward(lat, lon, lx, ly, azi, rk);
-    x = lx;
-    y = ly;
+                               y) {
+  double lx, ly, azi, rk;
+  m_pCassiniSoldner->Forward(lat, lon, lx, ly, azi, rk);
+  x = lx;
+  y = ly;
 }
 
 //*****************************************************************************
 void CassiniSoldner::Reverse(
-    double x, double y, [System::Runtime::InteropServices::Out] double % lat,
-    [System::Runtime::InteropServices::Out] double % lon) {
-    double llat, llon, lazi, lrk;
-    m_pCassiniSoldner->Reverse(x, y, llat, llon, lazi, lrk);
-    lat = llat;
-    lon = llon;
+  double x, double y, [System::Runtime::InteropServices::Out] double % lat,
+  [System::Runtime::InteropServices::Out] double % lon) {
+  double llat, llon, lazi, lrk;
+  m_pCassiniSoldner->Reverse(x, y, llat, llon, lazi, lrk);
+  lat = llat;
+  lon = llon;
 }
 
 //*****************************************************************************
 double CassiniSoldner::LatitudeOrigin::get() {
-    return m_pCassiniSoldner->LatitudeOrigin();
+  return m_pCassiniSoldner->LatitudeOrigin();
 }
 
 //*****************************************************************************
 double CassiniSoldner::LongitudeOrigin::get() {
-    return m_pCassiniSoldner->LongitudeOrigin();
+  return m_pCassiniSoldner->LongitudeOrigin();
 }
 
 //*****************************************************************************
 double CassiniSoldner::MajorRadius::get() {
-    return m_pCassiniSoldner->MajorRadius();
+  return m_pCassiniSoldner->MajorRadius();
 }
 
 //*****************************************************************************
 double CassiniSoldner::Flattening::get() {
-    return m_pCassiniSoldner->Flattening();
+  return m_pCassiniSoldner->Flattening();
 }

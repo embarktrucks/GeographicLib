@@ -7,9 +7,9 @@ using namespace std;
 using namespace GeographicLib;
 
 int main() {
-    try {
-        throw GeographicErr("Test throwing an exception");
-    } catch (const GeographicErr& e) {
-        cout << "Caught exception: " << e.what() << "\n";
-    }
+  try {
+    throw GeographicErr("Test throwing an exception");
+  } catch (const GeographicErr& e) {
+    cout << "Caught exception: " << e.what() << "\n";
+  }
 }

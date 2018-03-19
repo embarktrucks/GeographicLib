@@ -16,45 +16,45 @@
 using namespace NETGeographicLib;
 
 const char BADALLOC[] =
-    "Failed to allocate memory for the GeographicLib::EllipticFunction.";
+  "Failed to allocate memory for the GeographicLib::EllipticFunction.";
 
 //*****************************************************************************
 EllipticFunction::EllipticFunction(double k2, double alpha2) {
-    try {
-        m_pEllipticFunction = new GeographicLib::EllipticFunction(k2, alpha2);
-    } catch (std::bad_alloc) {
-        throw gcnew GeographicErr(BADALLOC);
-    }
+  try {
+    m_pEllipticFunction = new GeographicLib::EllipticFunction(k2, alpha2);
+  } catch (std::bad_alloc) {
+    throw gcnew GeographicErr(BADALLOC);
+  }
 }
 
 //*****************************************************************************
 EllipticFunction::EllipticFunction(double k2, double alpha2, double kp2,
                                    double alphap2) {
-    try {
-        m_pEllipticFunction =
-            new GeographicLib::EllipticFunction(k2, alpha2, kp2, alphap2);
-    } catch (std::bad_alloc err) {
-        throw gcnew GeographicErr(BADALLOC);
-    }
+  try {
+    m_pEllipticFunction =
+      new GeographicLib::EllipticFunction(k2, alpha2, kp2, alphap2);
+  } catch (std::bad_alloc err) {
+    throw gcnew GeographicErr(BADALLOC);
+  }
 }
 
 //*****************************************************************************
 EllipticFunction::!EllipticFunction() {
-    if (m_pEllipticFunction != NULL) {
-        delete m_pEllipticFunction;
-        m_pEllipticFunction = NULL;
-    }
+  if (m_pEllipticFunction != NULL) {
+    delete m_pEllipticFunction;
+    m_pEllipticFunction = NULL;
+  }
 }
 
 //*****************************************************************************
 void EllipticFunction::Reset(double k2, double alpha2) {
-    m_pEllipticFunction->Reset(k2, alpha2);
+  m_pEllipticFunction->Reset(k2, alpha2);
 }
 
 //*****************************************************************************
 void EllipticFunction::Reset(double k2, double alpha2, double kp2,
                              double alphap2) {
-    m_pEllipticFunction->Reset(k2, alpha2, kp2, alphap2);
+  m_pEllipticFunction->Reset(k2, alpha2, kp2, alphap2);
 }
 
 //*****************************************************************************
@@ -104,119 +104,119 @@ double EllipticFunction::H(double phi) { return m_pEllipticFunction->H(phi); }
 
 //*****************************************************************************
 double EllipticFunction::F(double sn, double cn, double dn) {
-    return m_pEllipticFunction->F(sn, cn, dn);
+  return m_pEllipticFunction->F(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::E(double sn, double cn, double dn) {
-    return m_pEllipticFunction->E(sn, cn, dn);
+  return m_pEllipticFunction->E(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::Pi(double sn, double cn, double dn) {
-    return m_pEllipticFunction->Pi(sn, cn, dn);
+  return m_pEllipticFunction->Pi(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::D(double sn, double cn, double dn) {
-    return m_pEllipticFunction->D(sn, cn, dn);
+  return m_pEllipticFunction->D(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::G(double sn, double cn, double dn) {
-    return m_pEllipticFunction->G(sn, cn, dn);
+  return m_pEllipticFunction->G(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::H(double sn, double cn, double dn) {
-    return m_pEllipticFunction->H(sn, cn, dn);
+  return m_pEllipticFunction->H(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::deltaF(double sn, double cn, double dn) {
-    return m_pEllipticFunction->deltaF(sn, cn, dn);
+  return m_pEllipticFunction->deltaF(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::deltaE(double sn, double cn, double dn) {
-    return m_pEllipticFunction->deltaE(sn, cn, dn);
+  return m_pEllipticFunction->deltaE(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::deltaEinv(double stau, double ctau) {
-    return m_pEllipticFunction->deltaEinv(stau, ctau);
+  return m_pEllipticFunction->deltaEinv(stau, ctau);
 }
 
 //*****************************************************************************
 double EllipticFunction::deltaPi(double sn, double cn, double dn) {
-    return m_pEllipticFunction->deltaPi(sn, cn, dn);
+  return m_pEllipticFunction->deltaPi(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::deltaD(double sn, double cn, double dn) {
-    return m_pEllipticFunction->deltaD(sn, cn, dn);
+  return m_pEllipticFunction->deltaD(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::deltaG(double sn, double cn, double dn) {
-    return m_pEllipticFunction->deltaG(sn, cn, dn);
+  return m_pEllipticFunction->deltaG(sn, cn, dn);
 }
 
 //*****************************************************************************
 double EllipticFunction::deltaH(double sn, double cn, double dn) {
-    return m_pEllipticFunction->deltaH(sn, cn, dn);
+  return m_pEllipticFunction->deltaH(sn, cn, dn);
 }
 
 //*****************************************************************************
 void EllipticFunction::sncndn(
-    double x, [System::Runtime::InteropServices::Out] double % sn,
-    [System::Runtime::InteropServices::Out] double % cn,
-    [System::Runtime::InteropServices::Out] double % dn) {
-    double lsn, lcn, ldn;
-    m_pEllipticFunction->sncndn(x, lsn, lcn, ldn);
-    sn = lsn;
-    cn = lcn;
-    dn = ldn;
+  double x, [System::Runtime::InteropServices::Out] double % sn,
+  [System::Runtime::InteropServices::Out] double % cn,
+  [System::Runtime::InteropServices::Out] double % dn) {
+  double lsn, lcn, ldn;
+  m_pEllipticFunction->sncndn(x, lsn, lcn, ldn);
+  sn = lsn;
+  cn = lcn;
+  dn = ldn;
 }
 
 //*****************************************************************************
 double EllipticFunction::Delta(double sn, double cn) {
-    return m_pEllipticFunction->Delta(sn, cn);
+  return m_pEllipticFunction->Delta(sn, cn);
 }
 
 //*****************************************************************************
 double EllipticFunction::RF(double x, double y, double z) {
-    return GeographicLib::EllipticFunction::RF(x, y, z);
+  return GeographicLib::EllipticFunction::RF(x, y, z);
 }
 
 //*****************************************************************************
 double EllipticFunction::RF(double x, double y) {
-    return GeographicLib::EllipticFunction::RF(x, y);
+  return GeographicLib::EllipticFunction::RF(x, y);
 }
 
 //*****************************************************************************
 double EllipticFunction::RC(double x, double y) {
-    return GeographicLib::EllipticFunction::RC(x, y);
+  return GeographicLib::EllipticFunction::RC(x, y);
 }
 
 //*****************************************************************************
 double EllipticFunction::RG(double x, double y, double z) {
-    return GeographicLib::EllipticFunction::RG(x, y, z);
+  return GeographicLib::EllipticFunction::RG(x, y, z);
 }
 
 //*****************************************************************************
 double EllipticFunction::RG(double x, double y) {
-    return GeographicLib::EllipticFunction::RG(x, y);
+  return GeographicLib::EllipticFunction::RG(x, y);
 }
 
 //*****************************************************************************
 double EllipticFunction::RJ(double x, double y, double z, double p) {
-    return GeographicLib::EllipticFunction::RJ(x, y, z, p);
+  return GeographicLib::EllipticFunction::RJ(x, y, z, p);
 }
 
 //*****************************************************************************
 double EllipticFunction::RD(double x, double y, double z) {
-    return GeographicLib::EllipticFunction::RD(x, y, z);
+  return GeographicLib::EllipticFunction::RD(x, y, z);
 }
 
 //*****************************************************************************
@@ -230,5 +230,5 @@ double EllipticFunction::alpha2::get() { return m_pEllipticFunction->alpha2(); }
 
 //*****************************************************************************
 double EllipticFunction::alphap2::get() {
-    return m_pEllipticFunction->alpha2();
+  return m_pEllipticFunction->alpha2();
 }
