@@ -9,21 +9,21 @@
  * See the <a href="GeodSolve.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/Geodesic.hpp>
-#include <geographic_lib/GeodesicLine.hpp>
-#include <geographic_lib/GeodesicExact.hpp>
-#include <geographic_lib/GeodesicLineExact.hpp>
 #include <geographic_lib/DMS.hpp>
+#include <geographic_lib/Geodesic.hpp>
+#include <geographic_lib/GeodesicExact.hpp>
+#include <geographic_lib/GeodesicLine.hpp>
+#include <geographic_lib/GeodesicLineExact.hpp>
 #include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
 // uninitialized local variables
-#  pragma warning (disable: 4127 4701)
+#pragma warning(disable : 4127 4701)
 #endif
 
 #include "GeodSolve.usage"
@@ -33,29 +33,25 @@ typedef geographic_lib::Math::real real;
 std::string LatLonString(real lat, real lon, int prec, bool dms, char dmssep,
                          bool longfirst) {
   using namespace geographic_lib;
-  std::string
-    latstr = dms ? DMS::Encode(lat, prec + 5, DMS::LATITUDE, dmssep) :
-    DMS::Encode(lat, prec + 5, DMS::NUMBER),
-    lonstr = dms ? DMS::Encode(lon, prec + 5, DMS::LONGITUDE, dmssep) :
-    DMS::Encode(lon, prec + 5, DMS::NUMBER);
-  return
-    (longfirst ? lonstr : latstr) + " " + (longfirst ? latstr : lonstr);
+  std::string latstr = dms ? DMS::Encode(lat, prec + 5, DMS::LATITUDE, dmssep)
+                           : DMS::Encode(lat, prec + 5, DMS::NUMBER),
+              lonstr = dms ? DMS::Encode(lon, prec + 5, DMS::LONGITUDE, dmssep)
+                           : DMS::Encode(lon, prec + 5, DMS::NUMBER);
+  return (longfirst ? lonstr : latstr) + " " + (longfirst ? latstr : lonstr);
 }
 
 std::string AzimuthString(real azi, int prec, bool dms, char dmssep) {
   using namespace geographic_lib;
-  return dms ? DMS::Encode(azi, prec + 5, DMS::AZIMUTH, dmssep) :
-    DMS::Encode(azi, prec + 5, DMS::NUMBER);
+  return dms ? DMS::Encode(azi, prec + 5, DMS::AZIMUTH, dmssep)
+             : DMS::Encode(azi, prec + 5, DMS::NUMBER);
 }
 
-std::string DistanceStrings(real s12, real a12,
-                            bool full, bool arcmode, int prec, bool dms) {
+std::string DistanceStrings(real s12, real a12, bool full, bool arcmode,
+                            int prec, bool dms) {
   using namespace geographic_lib;
   std::string s;
-  if (full || !arcmode)
-    s += Utility::str(s12, prec);
-  if (full)
-    s += " ";
+  if (full || !arcmode) s += Utility::str(s12, prec);
+  if (full) s += " ";
   if (full || arcmode)
     s += DMS::Encode(a12, prec + 5, dms ? DMS::NONE : DMS::NUMBER);
   return s;
@@ -71,13 +67,10 @@ int main(int argc, const char* const argv[]) {
     using namespace geographic_lib;
     enum { NONE = 0, LINE, DIRECT, INVERSE };
     Utility::set_digits();
-    bool inverse = false, arcmode = false,
-      dms = false, full = false, exact = false, unroll = false,
-      longfirst = false, azi2back = false, fraction = false,
-      arcmodeline = false;
-    real
-      a = Constants::WGS84_a(),
-      f = Constants::WGS84_f();
+    bool inverse = false, arcmode = false, dms = false, full = false,
+         exact = false, unroll = false, longfirst = false, azi2back = false,
+         fraction = false, arcmodeline = false;
+    real a = Constants::WGS84_a(), f = Constants::WGS84_f();
     real lat1, lon1, azi1, lat2, lon2, azi2, s12, m12, a12, M12, M21, S12,
       mult = 1;
     int linecalc = NONE, prec = 3;
@@ -93,7 +86,7 @@ int main(int argc, const char* const argv[]) {
         arcmode = !arcmode;
       else if (arg == "-F")
         fraction = true;
-      else if (arg == "-L" || arg == "-l") { // -l is DEPRECATED
+      else if (arg == "-L" || arg == "-l") {  // -l is DEPRECATED
         inverse = false;
         linecalc = LINE;
         if (m + 3 >= argc) return usage(1, true);
@@ -101,8 +94,7 @@ int main(int argc, const char* const argv[]) {
           DMS::DecodeLatLon(std::string(argv[m + 1]), std::string(argv[m + 2]),
                             lat1, lon1, longfirst);
           azi1 = DMS::DecodeAzimuth(std::string(argv[m + 3]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -L: " << e.what() << "\n";
           return 1;
         }
@@ -117,8 +109,7 @@ int main(int argc, const char* const argv[]) {
           azi1 = DMS::DecodeAzimuth(std::string(argv[m + 3]));
           s12 = ReadDistance(std::string(argv[m + 4]), arcmode);
           arcmodeline = arcmode;
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -D: " << e.what() << "\n";
           return 1;
         }
@@ -132,8 +123,7 @@ int main(int argc, const char* const argv[]) {
                             lat1, lon1, longfirst);
           DMS::DecodeLatLon(std::string(argv[m + 3]), std::string(argv[m + 4]),
                             lat2, lon2, longfirst);
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -I: " << e.what() << "\n";
           return 1;
         }
@@ -143,8 +133,7 @@ int main(int argc, const char* const argv[]) {
         try {
           a = Utility::val<real>(std::string(argv[m + 1]));
           f = Utility::fract<real>(std::string(argv[m + 2]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -e: " << e.what() << "\n";
           return 1;
         }
@@ -167,8 +156,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -218,14 +206,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -240,38 +227,43 @@ int main(int argc, const char* const argv[]) {
 
     // GeodesicExact mask values are the same as Geodesic
     unsigned outmask = Geodesic::LATITUDE | Geodesic::LONGITUDE |
-      Geodesic::AZIMUTH;        // basic output quantities
-    outmask |= inverse ? Geodesic::DISTANCE : // distance-related flags
-      (arcmode ? Geodesic::NONE : Geodesic::DISTANCE_IN);
+                       Geodesic::AZIMUTH;      // basic output quantities
+    outmask |= inverse ? Geodesic::DISTANCE :  // distance-related flags
+                 (arcmode ? Geodesic::NONE : Geodesic::DISTANCE_IN);
     // longitude unrolling
     outmask |= unroll ? Geodesic::LONG_UNROLL : Geodesic::NONE;
-    // full output -- don't use Geodesic::ALL since this includes DISTANCE_IN
+    // full output -- don't use Geodesic::ALL since this includes
+    // DISTANCE_IN
     outmask |= full ? (Geodesic::DISTANCE | Geodesic::REDUCEDLENGTH |
-                       Geodesic::GEODESICSCALE | Geodesic::AREA) :
-      Geodesic::NONE;
+                       Geodesic::GEODESICSCALE | Geodesic::AREA)
+                    : Geodesic::NONE;
 
-    const Geodesic      geods(a, f);
+    const Geodesic geods(a, f);
     const GeodesicExact geode(a, f);
-    GeodesicLine      ls;
+    GeodesicLine ls;
     GeodesicLineExact le;
     if (linecalc) {
       if (linecalc == LINE) fraction = false;
       if (exact) {
-        le = linecalc == DIRECT ?
-          geode.GenDirectLine(lat1, lon1, azi1, arcmodeline, s12, outmask) :
-          linecalc == INVERSE ?
-          geode.InverseLine(lat1, lon1, lat2, lon2, outmask) :
-          // linecalc == LINE
-          geode.Line(lat1, lon1, azi1, outmask);
+        le =
+          linecalc == DIRECT
+            ? geode.GenDirectLine(lat1, lon1, azi1, arcmodeline, s12, outmask)
+            : linecalc == INVERSE
+                ? geode.InverseLine(lat1, lon1, lat2, lon2, outmask)
+                :
+                // linecalc == LINE
+                geode.Line(lat1, lon1, azi1, outmask);
         mult = fraction ? le.GenDistance(arcmode) : 1;
         if (linecalc == INVERSE) azi1 = le.Azimuth();
       } else {
-        ls = linecalc == DIRECT ?
-          geods.GenDirectLine(lat1, lon1, azi1, arcmodeline, s12, outmask) :
-          linecalc == INVERSE ?
-          geods.InverseLine(lat1, lon1, lat2, lon2, outmask) :
-          // linecalc == LINE
-          geods.Line(lat1, lon1, azi1, outmask);
+        ls =
+          linecalc == DIRECT
+            ? geods.GenDirectLine(lat1, lon1, azi1, arcmodeline, s12, outmask)
+            : linecalc == INVERSE
+                ? geods.InverseLine(lat1, lon1, lat2, lon2, outmask)
+                :
+                // linecalc == LINE
+                geods.Line(lat1, lon1, azi1, outmask);
         mult = fraction ? ls.GenDistance(arcmode) : 1;
         if (linecalc == INVERSE) azi1 = ls.Azimuth();
       }
@@ -293,19 +285,18 @@ int main(int argc, const char* const argv[]) {
             s = s.substr(0, m);
           }
         }
-        str.clear(); str.str(s);
+        str.clear();
+        str.str(s);
         if (inverse) {
           if (!(str >> slat1 >> slon1 >> slat2 >> slon2))
             throw GeographicErr("Incomplete input: " + s);
-          if (str >> strc)
-            throw GeographicErr("Extraneous input: " + strc);
+          if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
           DMS::DecodeLatLon(slat1, slon1, lat1, lon1, longfirst);
           DMS::DecodeLatLon(slat2, slon2, lat2, lon2, longfirst);
-          a12 = exact ?
-            geode.GenInverse(lat1, lon1, lat2, lon2, outmask,
-                             s12, azi1, azi2, m12, M12, M21, S12) :
-            geods.GenInverse(lat1, lon1, lat2, lon2, outmask,
-                             s12, azi1, azi2, m12, M12, M21, S12);
+          a12 = exact ? geode.GenInverse(lat1, lon1, lat2, lon2, outmask, s12,
+                                         azi1, azi2, m12, M12, M21, S12)
+                      : geods.GenInverse(lat1, lon1, lat2, lon2, outmask, s12,
+                                         azi1, azi2, m12, M12, M21, S12);
           if (full) {
             if (unroll) {
               real e;
@@ -322,75 +313,67 @@ int main(int argc, const char* const argv[]) {
           if (full)
             *output << LatLonString(lat2, lon2, prec, dms, dmssep, longfirst)
                     << " ";
-          if (azi2back)
-            azi2 += azi2 >= 0 ? -180 : 180;
+          if (azi2back) azi2 += azi2 >= 0 ? -180 : 180;
           *output << AzimuthString(azi2, prec, dms, dmssep) << " "
                   << DistanceStrings(s12, a12, full, arcmode, prec, dms);
           if (full)
-            *output << " " << Utility::str(m12, prec)
-                    << " " << Utility::str(M12, prec+7)
-                    << " " << Utility::str(M21, prec+7)
-                    << " " << Utility::str(S12, std::max(prec-7, 0));
+            *output << " " << Utility::str(m12, prec) << " "
+                    << Utility::str(M12, prec + 7) << " "
+                    << Utility::str(M21, prec + 7) << " "
+                    << Utility::str(S12, std::max(prec - 7, 0));
           *output << eol;
         } else {
           if (linecalc) {
-            if (!(str >> ss12))
-              throw GeographicErr("Incomplete input: " + s);
-            if (str >> strc)
-              throw GeographicErr("Extraneous input: " + strc);
+            if (!(str >> ss12)) throw GeographicErr("Incomplete input: " + s);
+            if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
             // In fraction mode input is read as a distance
             s12 = ReadDistance(ss12, !fraction && arcmode) * mult;
-            a12 = exact ?
-              le.GenPosition(arcmode, s12, outmask,
-                             lat2, lon2, azi2, s12, m12, M12, M21, S12) :
-              ls.GenPosition(arcmode, s12, outmask,
-                             lat2, lon2, azi2, s12, m12, M12, M21, S12);
+            a12 = exact ? le.GenPosition(arcmode, s12, outmask, lat2, lon2,
+                                         azi2, s12, m12, M12, M21, S12)
+                        : ls.GenPosition(arcmode, s12, outmask, lat2, lon2,
+                                         azi2, s12, m12, M12, M21, S12);
           } else {
             if (!(str >> slat1 >> slon1 >> sazi1 >> ss12))
               throw GeographicErr("Incomplete input: " + s);
-            if (str >> strc)
-              throw GeographicErr("Extraneous input: " + strc);
+            if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
             DMS::DecodeLatLon(slat1, slon1, lat1, lon1, longfirst);
             azi1 = DMS::DecodeAzimuth(sazi1);
             s12 = ReadDistance(ss12, arcmode);
-            a12 = exact ?
-              geode.GenDirect(lat1, lon1, azi1, arcmode, s12, outmask,
-                              lat2, lon2, azi2, s12, m12, M12, M21, S12) :
-              geods.GenDirect(lat1, lon1, azi1, arcmode, s12, outmask,
-                              lat2, lon2, azi2, s12, m12, M12, M21, S12);
+            a12 =
+              exact
+                ? geode.GenDirect(lat1, lon1, azi1, arcmode, s12, outmask, lat2,
+                                  lon2, azi2, s12, m12, M12, M21, S12)
+                : geods.GenDirect(lat1, lon1, azi1, arcmode, s12, outmask, lat2,
+                                  lon2, azi2, s12, m12, M12, M21, S12);
           }
           if (full)
-            *output
-              << LatLonString(lat1, unroll ? lon1 : Math::AngNormalize(lon1),
-                              prec, dms, dmssep, longfirst)
-              << " " << AzimuthString(azi1, prec, dms, dmssep) << " ";
-          if (azi2back)
-            azi2 += azi2 >= 0 ? -180 : 180;
+            *output << LatLonString(lat1,
+                                    unroll ? lon1 : Math::AngNormalize(lon1),
+                                    prec, dms, dmssep, longfirst)
+                    << " " << AzimuthString(azi1, prec, dms, dmssep) << " ";
+          if (azi2back) azi2 += azi2 >= 0 ? -180 : 180;
           *output << LatLonString(lat2, lon2, prec, dms, dmssep, longfirst)
                   << " " << AzimuthString(azi2, prec, dms, dmssep);
           if (full)
             *output << " "
                     << DistanceStrings(s12, a12, full, arcmode, prec, dms)
-                    << " " << Utility::str(m12, prec)
-                    << " " << Utility::str(M12, prec+7)
-                    << " " << Utility::str(M21, prec+7)
-                    << " " << Utility::str(S12, std::max(prec-7, 0));
+                    << " " << Utility::str(m12, prec) << " "
+                    << Utility::str(M12, prec + 7) << " "
+                    << Utility::str(M21, prec + 7) << " "
+                    << Utility::str(S12, std::max(prec - 7, 0));
           *output << eol;
         }
-      }
-      catch (const std::exception& e) {
+      } catch (const std::exception& e) {
         // Write error message cout so output lines match input lines
         *output << "ERROR: " << e.what() << "\n";
         retval = 1;
       }
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

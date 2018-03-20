@@ -1,8 +1,8 @@
 // Example of using the GeographicLib::Ellipsoid class
 
-#include <iostream>
-#include <exception>
 #include <GeographicLib/Ellipsoid.hpp>
+#include <exception>
+#include <iostream>
 
 using namespace std;
 using namespace GeographicLib;
@@ -17,8 +17,7 @@ int main() {
          << wgs84.InverseAuthalicLatitude(30) << "\n";
     cout << "The northernmost edge of a square Mercator map is at latitude "
          << wgs84.InverseIsometricLatitude(180) << "\n";
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

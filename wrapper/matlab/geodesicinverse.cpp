@@ -15,24 +15,24 @@
 // mex -I../include -L../windows/Release
 //    -lGeographic geodesicinverse.cpp
 
-#include <algorithm>
+#include <mex.h>
 #include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/GeodesicExact.hpp>
-#include <mex.h>
+#include <algorithm>
 
 using namespace std;
 using namespace GeographicLib;
 
-template<class G> void
-compute(double a, double f, mwSize m, const double* latlong,
-        double* geodesic, double* aux) {
+template <class G>
+void compute(double a, double f, mwSize m, const double* latlong,
+             double* geodesic, double* aux) {
   const double* lat1 = latlong;
   const double* lon1 = latlong + m;
-  const double* lat2 = latlong + 2*m;
-  const double* lon2 = latlong + 3*m;
+  const double* lat2 = latlong + 2 * m;
+  const double* lon2 = latlong + 3 * m;
   double* azi1 = geodesic;
   double* azi2 = geodesic + m;
-  double* s12 = geodesic + 2*m;
+  double* s12 = geodesic + 2 * m;
   double* a12 = NULL;
   double* m12 = NULL;
   double* M12 = NULL;
@@ -41,9 +41,9 @@ compute(double a, double f, mwSize m, const double* latlong,
   if (aux) {
     a12 = aux;
     m12 = aux + m;
-    M12 = aux + 2*m;
-    M21 = aux + 3*m;
-    S12 = aux + 4*m;
+    M12 = aux + 2 * m;
+    M21 = aux + 3 * m;
+    S12 = aux + 4 * m;
   }
 
   const G g(a, f);
@@ -51,19 +51,15 @@ compute(double a, double f, mwSize m, const double* latlong,
     if (abs(lat1[i]) <= 90 && lon1[i] >= -540 && lon1[i] < 540 &&
         abs(lat2[i]) <= 90 && lon2[i] >= -540 && lon2[i] < 540) {
       if (aux)
-        a12[i] = g.Inverse(lat1[i], lon1[i], lat2[i], lon2[i],
-                           s12[i], azi1[i], azi2[i],
-                           m12[i], M12[i], M21[i], S12[i]);
+        a12[i] = g.Inverse(lat1[i], lon1[i], lat2[i], lon2[i], s12[i], azi1[i],
+                           azi2[i], m12[i], M12[i], M21[i], S12[i]);
       else
-        g.Inverse(lat1[i], lon1[i], lat2[i], lon2[i],
-                  s12[i], azi1[i], azi2[i]);
+        g.Inverse(lat1[i], lon1[i], lat2[i], lon2[i], s12[i], azi1[i], azi2[i]);
     }
   }
 }
 
-void mexFunction( int nlhs, mxArray* plhs[],
-                  int nrhs, const mxArray* prhs[] ) {
-
+void mexFunction(int nlhs, mxArray* plhs[], int nrhs, const mxArray* prhs[]) {
   if (nrhs < 1)
     mexErrMsgTxt("One input argument required.");
   else if (nrhs > 3)
@@ -73,7 +69,7 @@ void mexFunction( int nlhs, mxArray* plhs[],
   else if (nlhs > 2)
     mexErrMsgTxt("More than two output arguments specified.");
 
-  if (!( mxIsDouble(prhs[0]) && !mxIsComplex(prhs[0]) ))
+  if (!(mxIsDouble(prhs[0]) && !mxIsComplex(prhs[0])))
     mexErrMsgTxt("latlong coordinates are not of type double.");
 
   if (mxGetN(prhs[0]) != 4)
@@ -81,12 +77,12 @@ void mexFunction( int nlhs, mxArray* plhs[],
 
   double a = Constants::WGS84_a<double>(), f = Constants::WGS84_f<double>();
   if (nrhs == 3) {
-    if (!( mxIsDouble(prhs[1]) && !mxIsComplex(prhs[1]) &&
-           mxGetNumberOfElements(prhs[1]) == 1 ))
+    if (!(mxIsDouble(prhs[1]) && !mxIsComplex(prhs[1]) &&
+          mxGetNumberOfElements(prhs[1]) == 1))
       mexErrMsgTxt("Equatorial radius is not a real scalar.");
     a = mxGetScalar(prhs[1]);
-    if (!( mxIsDouble(prhs[2]) && !mxIsComplex(prhs[2]) &&
-           mxGetNumberOfElements(prhs[2]) == 1 ))
+    if (!(mxIsDouble(prhs[2]) && !mxIsComplex(prhs[2]) &&
+          mxGetNumberOfElements(prhs[2]) == 1))
       mexErrMsgTxt("Flattening is not a real scalar.");
     f = mxGetScalar(prhs[2]);
   }
@@ -96,21 +92,18 @@ void mexFunction( int nlhs, mxArray* plhs[],
   const double* latlong = mxGetPr(prhs[0]);
 
   double* geodesic = mxGetPr(plhs[0] = mxCreateDoubleMatrix(m, 3, mxREAL));
-  std::fill(geodesic, geodesic + 3*m, Math::NaN<double>());
+  std::fill(geodesic, geodesic + 3 * m, Math::NaN<double>());
 
   double* aux =
-    nlhs == 2 ? mxGetPr(plhs[1] = mxCreateDoubleMatrix(m, 5, mxREAL)) :
-    NULL;
-  if (aux)
-    std::fill(aux, aux + 5*m, Math::NaN<double>());
+    nlhs == 2 ? mxGetPr(plhs[1] = mxCreateDoubleMatrix(m, 5, mxREAL)) : NULL;
+  if (aux) std::fill(aux, aux + 5 * m, Math::NaN<double>());
 
   try {
     if (std::abs(f) <= 0.02)
       compute<Geodesic>(a, f, m, latlong, geodesic, aux);
     else
       compute<GeodesicExact>(a, f, m, latlong, geodesic, aux);
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     mexErrMsgTxt(e.what());
   }
 }

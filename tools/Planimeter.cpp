@@ -9,19 +9,19 @@
  * See the <a href="Planimeter.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/PolygonArea.hpp>
 #include <geographic_lib/DMS.hpp>
-#include <geographic_lib/Utility.hpp>
-#include <geographic_lib/GeoCoords.hpp>
 #include <geographic_lib/Ellipsoid.hpp>
+#include <geographic_lib/GeoCoords.hpp>
+#include <geographic_lib/PolygonArea.hpp>
+#include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
-#  pragma warning (disable: 4127)
+#pragma warning(disable : 4127)
 #endif
 
 #include "Planimeter.usage"
@@ -32,9 +32,7 @@ int main(int argc, const char* const argv[]) {
     typedef Math::real real;
     Utility::set_digits();
     enum { GEODESIC, EXACT, AUTHALIC, RHUMB };
-    real
-      a = Constants::WGS84_a(),
-      f = Constants::WGS84_f();
+    real a = Constants::WGS84_a(), f = Constants::WGS84_f();
     bool reverse = false, sign = true, polyline = false, longfirst = false;
     int linetype = GEODESIC;
     int prec = 6;
@@ -54,8 +52,7 @@ int main(int argc, const char* const argv[]) {
         try {
           a = Utility::val<real>(std::string(argv[m + 1]));
           f = Utility::fract<real>(std::string(argv[m + 2]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -e: " << e.what() << "\n";
           return 1;
         }
@@ -66,8 +63,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -123,14 +119,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -177,16 +172,17 @@ int main(int argc, const char* const argv[]) {
           p.Reset(s, true, longfirst);
           if (Math::isnan(p.Latitude()) || Math::isnan(p.Longitude()))
             endpoly = true;
-        }
-        catch (const GeographicErr&) {
+        } catch (const GeographicErr&) {
           endpoly = true;
         }
       }
       if (endpoly) {
-        num =
-          linetype == EXACT ? polye.Compute(reverse, sign, perimeter, area) :
-          linetype == RHUMB ? polyr.Compute(reverse, sign, perimeter, area) :
-          poly.Compute(reverse, sign, perimeter, area); // geodesic + authalic
+        num = linetype == EXACT
+                ? polye.Compute(reverse, sign, perimeter, area)
+                : linetype == RHUMB
+                    ? polyr.Compute(reverse, sign, perimeter, area)
+                    : poly.Compute(reverse, sign, perimeter,
+                                   area);  // geodesic + authalic
         if (num > 0) {
           *output << num << " " << Utility::str(perimeter, prec);
           if (!polyline) {
@@ -194,22 +190,24 @@ int main(int argc, const char* const argv[]) {
           }
           *output << eol;
         }
-        linetype == EXACT ? polye.Clear() :
-          linetype == RHUMB ? polyr.Clear() : poly.Clear();
+        linetype == EXACT ? polye.Clear()
+                          : linetype == RHUMB ? polyr.Clear() : poly.Clear();
         eol = "\n";
       } else {
-        linetype == EXACT ? polye.AddPoint(p.Latitude(), p.Longitude()) :
-          linetype == RHUMB ? polyr.AddPoint(p.Latitude(), p.Longitude()) :
-          poly.AddPoint(linetype == AUTHALIC ?
-                        ellip.AuthalicLatitude(p.Latitude()) :
-                        p.Latitude(),
-                        p.Longitude());
+        linetype == EXACT
+          ? polye.AddPoint(p.Latitude(), p.Longitude())
+          : linetype == RHUMB
+              ? polyr.AddPoint(p.Latitude(), p.Longitude())
+              : poly.AddPoint(linetype == AUTHALIC
+                                ? ellip.AuthalicLatitude(p.Latitude())
+                                : p.Latitude(),
+                              p.Longitude());
       }
     }
-    num =
-      linetype == EXACT ? polye.Compute(reverse, sign, perimeter, area) :
-      linetype == RHUMB ? polyr.Compute(reverse, sign, perimeter, area) :
-      poly.Compute(reverse, sign, perimeter, area);
+    num = linetype == EXACT
+            ? polye.Compute(reverse, sign, perimeter, area)
+            : linetype == RHUMB ? polyr.Compute(reverse, sign, perimeter, area)
+                                : poly.Compute(reverse, sign, perimeter, area);
     if (num > 0) {
       *output << num << " " << Utility::str(perimeter, prec);
       if (!polyline) {
@@ -217,16 +215,14 @@ int main(int argc, const char* const argv[]) {
       }
       *output << eol;
     }
-    linetype == EXACT ? polye.Clear() :
-      linetype == RHUMB ? polyr.Clear() : poly.Clear();
+    linetype == EXACT ? polye.Clear()
+                      : linetype == RHUMB ? polyr.Clear() : poly.Clear();
     eol = "\n";
     return 0;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

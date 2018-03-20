@@ -1,10 +1,10 @@
 // Example of using the GeographicLib::MGRS class
 
-#include <iostream>
-#include <exception>
-#include <string>
-#include <GeographicLib/UTMUPS.hpp>
 #include <GeographicLib/MGRS.hpp>
+#include <GeographicLib/UTMUPS.hpp>
+#include <exception>
+#include <iostream>
+#include <string>
 
 using namespace std;
 using namespace GeographicLib;
@@ -14,7 +14,7 @@ int main() {
     // See also example-GeoCoords.cpp
     {
       // Sample forward calculation
-      double lat = 33.3, lon = 44.4; // Baghdad
+      double lat = 33.3, lon = 44.4;  // Baghdad
       int zone;
       bool northp;
       double x, y;
@@ -34,8 +34,7 @@ int main() {
       UTMUPS::Reverse(zone, northp, x, y, lat, lon);
       cout << prec << " " << lat << " " << lon << "\n";
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

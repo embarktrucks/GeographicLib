@@ -1,9 +1,9 @@
 // Example of using the GeographicLib::Geodesic class
 
-#include <iostream>
-#include <exception>
-#include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/Constants.hpp>
+#include <GeographicLib/Geodesic.hpp>
+#include <exception>
+#include <iostream>
 
 using namespace std;
 using namespace GeographicLib;
@@ -21,15 +21,13 @@ int main() {
     }
     {
       // Sample inverse calculation, JFK to LHR
-      double
-        lat1 = 40.6, lon1 = -73.8, // JFK Airport
-        lat2 = 51.6, lon2 = -0.5;  // LHR Airport
+      double lat1 = 40.6, lon1 = -73.8,  // JFK Airport
+        lat2 = 51.6, lon2 = -0.5;        // LHR Airport
       double s12;
       geod.Inverse(lat1, lon1, lat2, lon2, s12);
       cout << s12 << "\n";
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

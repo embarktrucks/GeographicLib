@@ -9,19 +9,19 @@
  * See the <a href="ConicProj.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/LambertConformalConic.hpp>
 #include <geographic_lib/AlbersEqualArea.hpp>
 #include <geographic_lib/DMS.hpp>
+#include <geographic_lib/LambertConformalConic.hpp>
 #include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
 // uninitialized local variables
-#  pragma warning (disable: 4127 4701)
+#pragma warning(disable : 4127 4701)
 #endif
 
 #include "ConicProj.usage"
@@ -33,9 +33,7 @@ int main(int argc, const char* const argv[]) {
     Utility::set_digits();
     bool lcc = false, albers = false, reverse = false, longfirst = false;
     real lat1 = 0, lat2 = 0, lon0 = 0, k1 = 1;
-    real
-      a = Constants::WGS84_a(),
-      f = Constants::WGS84_f();
+    real a = Constants::WGS84_a(), f = Constants::WGS84_f();
     int prec = 6;
     std::string istring, ifile, ofile, cdelim;
     char lsep = ';';
@@ -52,13 +50,11 @@ int main(int argc, const char* const argv[]) {
           for (int i = 0; i < 2; ++i) {
             DMS::flag ind;
             (i ? lat2 : lat1) = DMS::Decode(std::string(argv[++m]), ind);
-            if (ind == DMS::LONGITUDE)
-              throw GeographicErr("Bad hemisphere");
+            if (ind == DMS::LONGITUDE) throw GeographicErr("Bad hemisphere");
           }
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding arguments of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding arguments of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-l") {
@@ -66,23 +62,20 @@ int main(int argc, const char* const argv[]) {
         try {
           DMS::flag ind;
           lon0 = DMS::Decode(std::string(argv[m]), ind);
-          if (ind == DMS::LATITUDE)
-            throw GeographicErr("Bad hemisphere");
+          if (ind == DMS::LATITUDE) throw GeographicErr("Bad hemisphere");
           lon0 = Math::AngNormalize(lon0);
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding argument of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding argument of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-k") {
         if (++m == argc) return usage(1, true);
         try {
           k1 = Utility::val<real>(std::string(argv[m]));
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding argument of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding argument of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-e") {
@@ -90,8 +83,7 @@ int main(int argc, const char* const argv[]) {
         try {
           a = Utility::val<real>(std::string(argv[m + 1]));
           f = Utility::fract<real>(std::string(argv[m + 2]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -e: " << e.what() << "\n";
           return 1;
         }
@@ -102,8 +94,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -151,14 +142,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -179,10 +169,9 @@ int main(int argc, const char* const argv[]) {
 
     const LambertConformalConic lproj =
       lcc ? LambertConformalConic(a, f, lat1, lat2, k1)
-      : LambertConformalConic(1, 0, 0, 0, 1);
-    const AlbersEqualArea aproj =
-      albers ? AlbersEqualArea(a, f, lat1, lat2, k1)
-      : AlbersEqualArea(1, 0, 0, 0, 1);
+          : LambertConformalConic(1, 0, 0, 0, 1);
+    const AlbersEqualArea aproj = albers ? AlbersEqualArea(a, f, lat1, lat2, k1)
+                                         : AlbersEqualArea(1, 0, 0, 0, 1);
 
     // Max precision = 10: 0.1 nm in distance, 10^-15 deg (= 0.11 nm),
     // 10^-11 sec (= 0.3 nm).
@@ -200,7 +189,8 @@ int main(int argc, const char* const argv[]) {
             s = s.substr(0, m);
           }
         }
-        str.clear(); str.str(s);
+        str.clear();
+        str.str(s);
         real lat, lon, x, y, gamma, k;
         if (!(str >> stra >> strb))
           throw GeographicErr("Incomplete input: " + s);
@@ -209,8 +199,7 @@ int main(int argc, const char* const argv[]) {
           y = Utility::val<real>(strb);
         } else
           DMS::DecodeLatLon(stra, strb, lat, lon, longfirst);
-        if (str >> strc)
-          throw GeographicErr("Extraneous input: " + strc);
+        if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
         if (reverse) {
           if (lcc)
             lproj.Reverse(lon0, x, y, lat, lon, gamma, k);
@@ -225,24 +214,20 @@ int main(int argc, const char* const argv[]) {
             lproj.Forward(lon0, lat, lon, x, y, gamma, k);
           else
             aproj.Forward(lon0, lat, lon, x, y, gamma, k);
-          *output << Utility::str(x, prec) << " "
-                  << Utility::str(y, prec) << " "
-                  << Utility::str(gamma, prec + 6) << " "
+          *output << Utility::str(x, prec) << " " << Utility::str(y, prec)
+                  << " " << Utility::str(gamma, prec + 6) << " "
                   << Utility::str(k, prec + 6) << eol;
         }
-      }
-      catch (const std::exception& e) {
+      } catch (const std::exception& e) {
         *output << "ERROR: " << e.what() << "\n";
         retval = 1;
       }
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

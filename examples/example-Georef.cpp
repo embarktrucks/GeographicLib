@@ -1,10 +1,10 @@
 // Example of using the GeographicLib::GARS class
 
-#include <iostream>
-#include <iomanip>
-#include <exception>
-#include <string>
 #include <GeographicLib/Georef.hpp>
+#include <exception>
+#include <iomanip>
+#include <iostream>
+#include <string>
 
 using namespace std;
 using namespace GeographicLib;
@@ -13,7 +13,7 @@ int main() {
   try {
     {
       // Sample forward calculation
-      double lat = 57.64911, lon = 10.40744; // Jutland
+      double lat = 57.64911, lon = 10.40744;  // Jutland
       string georef;
       for (int prec = -1; prec <= 11; ++prec) {
         Georef::Forward(lat, lon, prec, georef);
@@ -33,8 +33,7 @@ int main() {
       Georef::Reverse(georef, lat, lon, prec);
       cout << prec << " " << lat << " " << lon << "\n";
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

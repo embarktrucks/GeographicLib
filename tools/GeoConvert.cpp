@@ -9,18 +9,18 @@
  * See the <a href="GeoConvert.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/GeoCoords.hpp>
 #include <geographic_lib/DMS.hpp>
-#include <geographic_lib/Utility.hpp>
+#include <geographic_lib/GeoCoords.hpp>
 #include <geographic_lib/MGRS.hpp>
+#include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
-#  pragma warning (disable: 4127)
+#pragma warning(disable : 4127)
 #endif
 
 #include "GeoConvert.usage"
@@ -63,8 +63,7 @@ int main(int argc, const char* const argv[]) {
         try {
           UTMUPS::DecodeZone(zonestr, zone, northp);
           sethemisphere = true;
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::istringstream str(zonestr);
           char c;
           if (!(str >> zone) || (str >> c)) {
@@ -101,8 +100,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -155,14 +153,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -193,39 +190,34 @@ int main(int argc, const char* const argv[]) {
         p.Reset(s, centerp, longfirst);
         p.SetAltZone(zone);
         switch (outputmode) {
-        case GEOGRAPHIC:
-          os = p.GeoRepresentation(prec, longfirst);
-          break;
-        case DMS:
-          os = p.DMSRepresentation(prec, longfirst, dmssep);
-          break;
-        case UTMUPS:
-          os = (sethemisphere
-                ? p.AltUTMUPSRepresentation(northp, prec, abbrev)
-                : p.AltUTMUPSRepresentation(prec, abbrev));
-          break;
-        case MGRS:
-          os = p.AltMGRSRepresentation(prec);
-          break;
-        case CONVERGENCE:
-          {
-            real
-              gamma = p.AltConvergence(),
-              k = p.AltScale();
+          case GEOGRAPHIC:
+            os = p.GeoRepresentation(prec, longfirst);
+            break;
+          case DMS:
+            os = p.DMSRepresentation(prec, longfirst, dmssep);
+            break;
+          case UTMUPS:
+            os =
+              (sethemisphere ? p.AltUTMUPSRepresentation(northp, prec, abbrev)
+                             : p.AltUTMUPSRepresentation(prec, abbrev));
+            break;
+          case MGRS:
+            os = p.AltMGRSRepresentation(prec);
+            break;
+          case CONVERGENCE: {
+            real gamma = p.AltConvergence(), k = p.AltScale();
             int prec1 = std::max(-5, std::min(Math::extra_digits() + 8, prec));
-            os = Utility::str(gamma, prec1 + 5) + " "
-              + Utility::str(k, prec1 + 7);
+            os =
+              Utility::str(gamma, prec1 + 5) + " " + Utility::str(k, prec1 + 7);
           }
         }
-        if (latch &&
-            zone < UTMUPS::MINZONE && p.AltZone() >= UTMUPS::MINZONE) {
+        if (latch && zone < UTMUPS::MINZONE && p.AltZone() >= UTMUPS::MINZONE) {
           zone = p.AltZone();
           northp = p.Northp();
           sethemisphere = true;
           latch = false;
         }
-      }
-      catch (const std::exception& e) {
+      } catch (const std::exception& e) {
         // Write error message to cout so output lines match input lines
         os = std::string("ERROR: ") + e.what();
         retval = 1;
@@ -233,12 +225,10 @@ int main(int argc, const char* const argv[]) {
       *output << os << eol;
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

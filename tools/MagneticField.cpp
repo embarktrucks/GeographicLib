@@ -9,18 +9,18 @@
  * See the <a href="MagneticField.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/MagneticModel.hpp>
-#include <geographic_lib/MagneticCircle.hpp>
 #include <geographic_lib/DMS.hpp>
+#include <geographic_lib/MagneticCircle.hpp>
+#include <geographic_lib/MagneticModel.hpp>
 #include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions
-#  pragma warning (disable: 4127)
+#pragma warning(disable : 4127)
 #endif
 
 #include "MagneticField.usage"
@@ -54,10 +54,9 @@ int main(int argc, const char* const argv[]) {
           time = Utility::fractionalyear<real>(std::string(argv[m]));
           timeset = true;
           circle = false;
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding argument of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding argument of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-c") {
@@ -74,10 +73,9 @@ int main(int argc, const char* const argv[]) {
           h = Utility::val<real>(std::string(argv[++m]));
           timeset = false;
           circle = true;
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding argument of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding argument of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-r")
@@ -88,8 +86,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -97,20 +94,18 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           tguard = Utility::val<real>(std::string(argv[m]));
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding argument of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding argument of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-H") {
         if (++m == argc) return usage(1, true);
         try {
           hguard = Utility::val<real>(std::string(argv[m]));
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding argument of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding argument of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-v")
@@ -141,11 +136,10 @@ int main(int argc, const char* const argv[]) {
       } else {
         int retval = usage(!(arg == "-h" || arg == "--help"), arg != "--help");
         if (arg == "-h")
-          std::cout<< "\nDefault magnetic path = \""
-                   << MagneticModel::DefaultMagneticPath()
-                   << "\"\nDefault magnetic name = \""
-                   << MagneticModel::DefaultMagneticName()
-                   << "\"\n";
+          std::cout << "\nDefault magnetic path = \""
+                    << MagneticModel::DefaultMagneticPath()
+                    << "\"\nDefault magnetic name = \""
+                    << MagneticModel::DefaultMagneticName() << "\"\n";
         return retval;
       }
     }
@@ -167,14 +161,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -193,45 +186,37 @@ int main(int argc, const char* const argv[]) {
     int retval = 0;
     try {
       const MagneticModel m(model, dir);
-      if ((timeset || circle)
-          && (!Math::isfinite(time) ||
-              time < m.MinTime() - tguard ||
-              time > m.MaxTime() + tguard))
-        throw GeographicErr("Time " + Utility::str(time) +
-                            " too far outside allowed range [" +
-                            Utility::str(m.MinTime()) + "," +
-                            Utility::str(m.MaxTime()) + "]");
-      if (circle
-          && (!Math::isfinite(h) ||
-              h < m.MinHeight() - hguard ||
-              h > m.MaxHeight() + hguard))
-        throw GeographicErr("Height " + Utility::str(h/1000) +
+      if ((timeset || circle) &&
+          (!Math::isfinite(time) || time < m.MinTime() - tguard ||
+           time > m.MaxTime() + tguard))
+        throw GeographicErr(
+          "Time " + Utility::str(time) + " too far outside allowed range [" +
+          Utility::str(m.MinTime()) + "," + Utility::str(m.MaxTime()) + "]");
+      if (circle && (!Math::isfinite(h) || h < m.MinHeight() - hguard ||
+                     h > m.MaxHeight() + hguard))
+        throw GeographicErr("Height " + Utility::str(h / 1000) +
                             "km too far outside allowed range [" +
-                            Utility::str(m.MinHeight()/1000) + "km," +
-                            Utility::str(m.MaxHeight()/1000) + "km]");
+                            Utility::str(m.MinHeight() / 1000) + "km," +
+                            Utility::str(m.MaxHeight() / 1000) + "km]");
       if (verbose) {
-        std::cerr << "Magnetic file: " << m.MagneticFile()      << "\n"
-                  << "Name: "          << m.MagneticModelName() << "\n"
-                  << "Description: "   << m.Description()       << "\n"
-                  << "Date & Time: "   << m.DateTime()          << "\n"
-                  << "Time range: ["
-                  << m.MinTime() << ","
-                  << m.MaxTime() << "]\n"
-                  << "Height range: ["
-                  << m.MinHeight()/1000 << "km,"
-                  << m.MaxHeight()/1000 << "km]\n";
+        std::cerr << "Magnetic file: " << m.MagneticFile() << "\n"
+                  << "Name: " << m.MagneticModelName() << "\n"
+                  << "Description: " << m.Description() << "\n"
+                  << "Date & Time: " << m.DateTime() << "\n"
+                  << "Time range: [" << m.MinTime() << "," << m.MaxTime()
+                  << "]\n"
+                  << "Height range: [" << m.MinHeight() / 1000 << "km,"
+                  << m.MaxHeight() / 1000 << "km]\n";
       }
       if ((timeset || circle) && (time < m.MinTime() || time > m.MaxTime()))
-        std::cerr << "WARNING: Time " << time
-                  << " outside allowed range ["
+        std::cerr << "WARNING: Time " << time << " outside allowed range ["
                   << m.MinTime() << "," << m.MaxTime() << "]\n";
       if (circle && (h < m.MinHeight() || h > m.MaxHeight()))
-        std::cerr << "WARNING: Height " << h/1000
-                  << "km outside allowed range ["
-                  << m.MinHeight()/1000 << "km,"
-                  << m.MaxHeight()/1000 << "km]\n";
-      const MagneticCircle c(circle ? m.Circle(time, lat, h) :
-                             MagneticCircle());
+        std::cerr << "WARNING: Height " << h / 1000
+                  << "km outside allowed range [" << m.MinHeight() / 1000
+                  << "km," << m.MaxHeight() / 1000 << "km]\n";
+      const MagneticCircle c(circle ? m.Circle(time, lat, h)
+                                    : MagneticCircle());
       std::string s, eol, stra, strb;
       std::istringstream str;
       while (std::getline(*input, s)) {
@@ -244,26 +229,24 @@ int main(int argc, const char* const argv[]) {
               s = s.substr(0, n);
             }
           }
-          str.clear(); str.str(s);
+          str.clear();
+          str.str(s);
           if (!(timeset || circle)) {
-            if (!(str >> stra))
-              throw GeographicErr("Incomplete input: " + s);
+            if (!(str >> stra)) throw GeographicErr("Incomplete input: " + s);
             time = Utility::fractionalyear<real>(stra);
             if (time < m.MinTime() - tguard || time > m.MaxTime() + tguard)
               throw GeographicErr("Time " + Utility::str(time) +
                                   " too far outside allowed range [" +
                                   Utility::str(m.MinTime()) + "," +
-                                  Utility::str(m.MaxTime()) +
-                                  "]");
+                                  Utility::str(m.MaxTime()) + "]");
             if (time < m.MinTime() || time > m.MaxTime())
               std::cerr << "WARNING: Time " << time
-                        << " outside allowed range ["
-                        << m.MinTime() << "," << m.MaxTime() << "]\n";
+                        << " outside allowed range [" << m.MinTime() << ","
+                        << m.MaxTime() << "]\n";
           }
           real lon;
           if (circle) {
-            if (!(str >> strb))
-              throw GeographicErr("Incomplete input: " + s);
+            if (!(str >> strb)) throw GeographicErr("Incomplete input: " + s);
             DMS::flag ind;
             lon = DMS::Decode(strb, ind);
             if (ind == DMS::LATITUDE)
@@ -272,66 +255,58 @@ int main(int argc, const char* const argv[]) {
             if (!(str >> stra >> strb))
               throw GeographicErr("Incomplete input: " + s);
             DMS::DecodeLatLon(stra, strb, lat, lon, longfirst);
-            h = 0;              // h is optional
+            h = 0;  // h is optional
             if (str >> h) {
               if (h < m.MinHeight() - hguard || h > m.MaxHeight() + hguard)
-                throw GeographicErr("Height " + Utility::str(h/1000) +
+                throw GeographicErr("Height " + Utility::str(h / 1000) +
                                     "km too far outside allowed range [" +
-                                    Utility::str(m.MinHeight()/1000) + "km," +
-                                    Utility::str(m.MaxHeight()/1000) + "km]");
+                                    Utility::str(m.MinHeight() / 1000) + "km," +
+                                    Utility::str(m.MaxHeight() / 1000) + "km]");
               if (h < m.MinHeight() || h > m.MaxHeight())
-                std::cerr << "WARNING: Height " << h/1000
+                std::cerr << "WARNING: Height " << h / 1000
                           << "km outside allowed range ["
-                          << m.MinHeight()/1000 << "km,"
-                          << m.MaxHeight()/1000 << "km]\n";
-            }
-            else
+                          << m.MinHeight() / 1000 << "km,"
+                          << m.MaxHeight() / 1000 << "km]\n";
+            } else
               str.clear();
           }
-          if (str >> stra)
-            throw GeographicErr("Extra junk in input: " + s);
+          if (str >> stra) throw GeographicErr("Extra junk in input: " + s);
           real bx, by, bz, bxt, byt, bzt;
           if (circle)
             c(lon, bx, by, bz, bxt, byt, bzt);
           else
             m(time, lat, lon, h, bx, by, bz, bxt, byt, bzt);
           real H, F, D, I, Ht, Ft, Dt, It;
-          MagneticModel::FieldComponents(bx, by, bz, bxt, byt, bzt,
-                                         H, F, D, I, Ht, Ft, Dt, It);
+          MagneticModel::FieldComponents(bx, by, bz, bxt, byt, bzt, H, F, D, I,
+                                         Ht, Ft, Dt, It);
 
           *output << DMS::Encode(D, prec + 1, DMS::NUMBER) << " "
                   << DMS::Encode(I, prec + 1, DMS::NUMBER) << " "
-                  << Utility::str(H, prec) << " "
-                  << Utility::str(by, prec) << " "
-                  << Utility::str(bx, prec) << " "
-                  << Utility::str(-bz, prec) << " "
-                  << Utility::str(F, prec) << eol;
+                  << Utility::str(H, prec) << " " << Utility::str(by, prec)
+                  << " " << Utility::str(bx, prec) << " "
+                  << Utility::str(-bz, prec) << " " << Utility::str(F, prec)
+                  << eol;
           if (rate)
             *output << DMS::Encode(Dt, prec + 1, DMS::NUMBER) << " "
                     << DMS::Encode(It, prec + 1, DMS::NUMBER) << " "
-                    << Utility::str(Ht, prec) << " "
-                    << Utility::str(byt, prec) << " "
-                    << Utility::str(bxt, prec) << " "
-                    << Utility::str(-bzt, prec) << " "
-                    << Utility::str(Ft, prec) << eol;
-        }
-        catch (const std::exception& e) {
+                    << Utility::str(Ht, prec) << " " << Utility::str(byt, prec)
+                    << " " << Utility::str(bxt, prec) << " "
+                    << Utility::str(-bzt, prec) << " " << Utility::str(Ft, prec)
+                    << eol;
+        } catch (const std::exception& e) {
           *output << "ERROR: " << e.what() << "\n";
           retval = 1;
         }
       }
-    }
-    catch (const std::exception& e) {
+    } catch (const std::exception& e) {
       std::cerr << "Error reading " << model << ": " << e.what() << "\n";
       retval = 1;
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

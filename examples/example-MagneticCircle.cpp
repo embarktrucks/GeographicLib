@@ -1,9 +1,9 @@
 // Example of using the GeographicLib::MagneticCircle class
 
-#include <iostream>
-#include <exception>
-#include <GeographicLib/MagneticModel.hpp>
 #include <GeographicLib/MagneticCircle.hpp>
+#include <GeographicLib/MagneticModel.hpp>
+#include <exception>
+#include <iostream>
 
 using namespace std;
 using namespace GeographicLib;
@@ -11,10 +11,10 @@ using namespace GeographicLib;
 int main() {
   try {
     MagneticModel mag("wmm2010");
-    double lat = 27.99, lon0 = 86.93, h = 8820, t = 2012; // Mt Everest
+    double lat = 27.99, lon0 = 86.93, h = 8820, t = 2012;  // Mt Everest
     {
-      // Slow method of evaluating the values at several points on a circle of
-      // latitude.
+      // Slow method of evaluating the values at several points on a
+      // circle of latitude.
       for (int i = -5; i <= 5; ++i) {
         double lon = lon0 + i * 0.2;
         double Bx, By, Bz;
@@ -23,8 +23,8 @@ int main() {
       }
     }
     {
-      // Fast method of evaluating the values at several points on a circle of
-      // latitude using MagneticCircle.
+      // Fast method of evaluating the values at several points on a
+      // circle of latitude using MagneticCircle.
       MagneticCircle circ = mag.Circle(t, lat, h);
       for (int i = -5; i <= 5; ++i) {
         double lon = lon0 + i * 0.2;
@@ -33,8 +33,7 @@ int main() {
         cout << lon << " " << Bx << " " << By << " " << Bz << "\n";
       }
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

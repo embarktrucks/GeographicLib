@@ -9,20 +9,20 @@
  * See the <a href="RhumbSolve.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <fstream>
 #include <cmath>
-#include <limits>
-#include <geographic_lib/Rhumb.hpp>
+#include <fstream>
 #include <geographic_lib/DMS.hpp>
+#include <geographic_lib/Rhumb.hpp>
 #include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <limits>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
 // uninitialized local variables
-#  pragma warning (disable: 4127 4701)
+#pragma warning(disable : 4127 4701)
 #endif
 
 #include "RhumbSolve.usage"
@@ -33,28 +33,24 @@ typedef Math::real real;
 std::string LatLonString(real lat, real lon, int prec, bool dms, char dmssep,
                          bool longfirst) {
   using namespace geographic_lib;
-  std::string
-    latstr = dms ? DMS::Encode(lat, prec + 5, DMS::LATITUDE, dmssep) :
-    DMS::Encode(lat, prec + 5, DMS::NUMBER),
-    lonstr = dms ? DMS::Encode(lon, prec + 5, DMS::LONGITUDE, dmssep) :
-    DMS::Encode(lon, prec + 5, DMS::NUMBER);
-  return
-    (longfirst ? lonstr : latstr) + " " + (longfirst ? latstr : lonstr);
+  std::string latstr = dms ? DMS::Encode(lat, prec + 5, DMS::LATITUDE, dmssep)
+                           : DMS::Encode(lat, prec + 5, DMS::NUMBER),
+              lonstr = dms ? DMS::Encode(lon, prec + 5, DMS::LONGITUDE, dmssep)
+                           : DMS::Encode(lon, prec + 5, DMS::NUMBER);
+  return (longfirst ? lonstr : latstr) + " " + (longfirst ? latstr : lonstr);
 }
 
 std::string AzimuthString(real azi, int prec, bool dms, char dmssep) {
-  return dms ? DMS::Encode(azi, prec + 5, DMS::AZIMUTH, dmssep) :
-    DMS::Encode(azi, prec + 5, DMS::NUMBER);
+  return dms ? DMS::Encode(azi, prec + 5, DMS::AZIMUTH, dmssep)
+             : DMS::Encode(azi, prec + 5, DMS::NUMBER);
 }
 
 int main(int argc, const char* const argv[]) {
   try {
     Utility::set_digits();
     bool linecalc = false, inverse = false, dms = false, exact = true,
-      longfirst = false;
-    real
-      a = Constants::WGS84_a(),
-      f = Constants::WGS84_f();
+         longfirst = false;
+    real a = Constants::WGS84_a(), f = Constants::WGS84_f();
     real lat1, lon1, azi12 = Math::NaN(), lat2, lon2, s12, S12;
     int prec = 3;
     std::string istring, ifile, ofile, cdelim;
@@ -65,7 +61,7 @@ int main(int argc, const char* const argv[]) {
       if (arg == "-i") {
         inverse = true;
         linecalc = false;
-      } else if (arg == "-L" || arg == "-l") { // -l is DEPRECATED
+      } else if (arg == "-L" || arg == "-l") {  // -l is DEPRECATED
         inverse = false;
         linecalc = true;
         if (m + 3 >= argc) return usage(1, true);
@@ -73,8 +69,7 @@ int main(int argc, const char* const argv[]) {
           DMS::DecodeLatLon(std::string(argv[m + 1]), std::string(argv[m + 2]),
                             lat1, lon1, longfirst);
           azi12 = DMS::DecodeAzimuth(std::string(argv[m + 3]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -L: " << e.what() << "\n";
           return 1;
         }
@@ -84,14 +79,12 @@ int main(int argc, const char* const argv[]) {
         try {
           a = Utility::val<real>(std::string(argv[m + 1]));
           f = Utility::fract<real>(std::string(argv[m + 2]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -e: " << e.what() << "\n";
           return 1;
         }
         m += 2;
-      }
-      else if (arg == "-d") {
+      } else if (arg == "-d") {
         dms = true;
         dmssep = '\0';
       } else if (arg == "-:") {
@@ -103,8 +96,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -154,14 +146,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -175,8 +166,8 @@ int main(int argc, const char* const argv[]) {
     std::ostream* output = !ofile.empty() ? &outfile : &std::cout;
 
     const Rhumb rh(a, f, exact);
-    const RhumbLine rhl(linecalc ? rh.Line(lat1, lon1, azi12) :
-                        rh.Line(0, 0, 90));
+    const RhumbLine rhl(linecalc ? rh.Line(lat1, lon1, azi12)
+                                 : rh.Line(0, 0, 90));
     // Max precision = 10: 0.1 nm in distance, 10^-15 deg (= 0.11 nm),
     // 10^-11 sec (= 0.3 nm).
     prec = std::min(10 + Math::extra_digits(), std::max(0, prec));
@@ -193,51 +184,45 @@ int main(int argc, const char* const argv[]) {
             s = s.substr(0, m);
           }
         }
-        str.clear(); str.str(s);
+        str.clear();
+        str.str(s);
         if (linecalc) {
-          if (!(str >> s12))
-            throw GeographicErr("Incomplete input: " + s);
-          if (str >> strc)
-            throw GeographicErr("Extraneous input: " + strc);
+          if (!(str >> s12)) throw GeographicErr("Incomplete input: " + s);
+          if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
           rhl.Position(s12, lat2, lon2, S12);
           *output << LatLonString(lat2, lon2, prec, dms, dmssep, longfirst)
-                  << " " << Utility::str(S12, std::max(prec-7, 0)) << eol;
+                  << " " << Utility::str(S12, std::max(prec - 7, 0)) << eol;
         } else if (inverse) {
           if (!(str >> slat1 >> slon1 >> slat2 >> slon2))
             throw GeographicErr("Incomplete input: " + s);
-          if (str >> strc)
-            throw GeographicErr("Extraneous input: " + strc);
+          if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
           DMS::DecodeLatLon(slat1, slon1, lat1, lon1, longfirst);
           DMS::DecodeLatLon(slat2, slon2, lat2, lon2, longfirst);
           rh.Inverse(lat1, lon1, lat2, lon2, s12, azi12, S12);
           *output << AzimuthString(azi12, prec, dms, dmssep) << " "
                   << Utility::str(s12, prec) << " "
-                  << Utility::str(S12, std::max(prec-7, 0)) << eol;
-        } else {                // direct
+                  << Utility::str(S12, std::max(prec - 7, 0)) << eol;
+        } else {  // direct
           if (!(str >> slat1 >> slon1 >> sazi >> s12))
             throw GeographicErr("Incomplete input: " + s);
-          if (str >> strc)
-            throw GeographicErr("Extraneous input: " + strc);
+          if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
           DMS::DecodeLatLon(slat1, slon1, lat1, lon1, longfirst);
           azi12 = DMS::DecodeAzimuth(sazi);
           rh.Direct(lat1, lon1, azi12, s12, lat2, lon2, S12);
           *output << LatLonString(lat2, lon2, prec, dms, dmssep, longfirst)
-                  << " " << Utility::str(S12, std::max(prec-7, 0)) << eol;
+                  << " " << Utility::str(S12, std::max(prec - 7, 0)) << eol;
         }
-      }
-      catch (const std::exception& e) {
+      } catch (const std::exception& e) {
         // Write error message cout so output lines match input lines
         *output << "ERROR: " << e.what() << "\n";
         retval = 1;
       }
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

@@ -1,8 +1,8 @@
 // Example of using the GeographicLib::GeoCoords class
 
-#include <iostream>
-#include <exception>
 #include <GeographicLib/GeoCoords.hpp>
+#include <exception>
+#include <iostream>
 
 using namespace std;
 using namespace GeographicLib;
@@ -18,8 +18,7 @@ int main() {
     cout << c.Latitude() << " " << c.Longitude() << "\n";
     c.Reset("1d38'W 55d30'N");
     cout << c.GeoRepresentation() << "\n";
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

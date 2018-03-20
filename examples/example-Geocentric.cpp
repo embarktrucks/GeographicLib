@@ -1,9 +1,9 @@
 // Example of using the GeographicLib::Geocentric class
 
-#include <iostream>
-#include <exception>
-#include <cmath>
 #include <GeographicLib/Geocentric.hpp>
+#include <cmath>
+#include <exception>
+#include <iostream>
 
 using namespace std;
 using namespace GeographicLib;
@@ -14,11 +14,10 @@ int main() {
     // Alternatively: const Geocentric& earth = Geocentric::WGS84();
     {
       // Sample forward calculation
-      double lat = 27.99, lon = 86.93, h = 8820; // Mt Everest
+      double lat = 27.99, lon = 86.93, h = 8820;  // Mt Everest
       double X, Y, Z;
       earth.Forward(lat, lon, h, X, Y, Z);
-      cout << floor(X / 1000 + 0.5) << " "
-           << floor(Y / 1000 + 0.5) << " "
+      cout << floor(X / 1000 + 0.5) << " " << floor(Y / 1000 + 0.5) << " "
            << floor(Z / 1000 + 0.5) << "\n";
     }
     {
@@ -28,8 +27,7 @@ int main() {
       earth.Reverse(X, Y, Z, lat, lon, h);
       cout << lat << " " << lon << " " << h << "\n";
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

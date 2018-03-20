@@ -9,19 +9,19 @@
  * See the <a href="CartConvert.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
+#include <geographic_lib/DMS.hpp>
 #include <geographic_lib/Geocentric.hpp>
 #include <geographic_lib/LocalCartesian.hpp>
-#include <geographic_lib/DMS.hpp>
 #include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
 // uninitialized local variables
-#  pragma warning (disable: 4127 4701)
+#pragma warning(disable : 4127 4701)
 #endif
 
 #include "CartConvert.usage"
@@ -32,9 +32,7 @@ int main(int argc, const char* const argv[]) {
     typedef Math::real real;
     Utility::set_digits();
     bool localcartesian = false, reverse = false, longfirst = false;
-    real
-      a = Constants::WGS84_a(),
-      f = Constants::WGS84_f();
+    real a = Constants::WGS84_a(), f = Constants::WGS84_f();
     int prec = 6;
     real lat0 = 0, lon0 = 0, h0 = 0;
     std::string istring, ifile, ofile, cdelim;
@@ -51,8 +49,7 @@ int main(int argc, const char* const argv[]) {
           DMS::DecodeLatLon(std::string(argv[m + 1]), std::string(argv[m + 2]),
                             lat0, lon0, longfirst);
           h0 = Utility::val<real>(std::string(argv[m + 3]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -l: " << e.what() << "\n";
           return 1;
         }
@@ -62,8 +59,7 @@ int main(int argc, const char* const argv[]) {
         try {
           a = Utility::val<real>(std::string(argv[m + 1]));
           f = Utility::fract<real>(std::string(argv[m + 2]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -e: " << e.what() << "\n";
           return 1;
         }
@@ -74,12 +70,11 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
-      }  else if (arg == "--input-string") {
+      } else if (arg == "--input-string") {
         if (++m == argc) return usage(1, true);
         istring = argv[m];
       } else if (arg == "--input-file") {
@@ -98,7 +93,7 @@ int main(int argc, const char* const argv[]) {
       } else if (arg == "--comment-delimiter") {
         if (++m == argc) return usage(1, true);
         cdelim = argv[m];
-     } else if (arg == "--version") {
+      } else if (arg == "--version") {
         std::cout << argv[0] << ": geographic_lib version "
                   << GEOGRAPHICLIB_VERSION_STRING << "\n";
         return 0;
@@ -123,14 +118,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -162,7 +156,8 @@ int main(int argc, const char* const argv[]) {
             s = s.substr(0, m);
           }
         }
-        str.clear(); str.str(s);
+        str.clear();
+        str.str(s);
         // initial values to suppress warnings
         real lat, lon, h, x = 0, y = 0, z = 0;
         if (!(str >> stra >> strb >> strc))
@@ -175,8 +170,7 @@ int main(int argc, const char* const argv[]) {
           DMS::DecodeLatLon(stra, strb, lat, lon, longfirst);
           h = Utility::val<real>(strc);
         }
-        if (str >> strd)
-          throw GeographicErr("Extraneous input: " + strd);
+        if (str >> strd) throw GeographicErr("Extraneous input: " + strd);
         if (reverse) {
           if (localcartesian)
             lc.Reverse(x, y, z, lat, lon, h);
@@ -190,23 +184,19 @@ int main(int argc, const char* const argv[]) {
             lc.Forward(lat, lon, h, x, y, z);
           else
             ec.Forward(lat, lon, h, x, y, z);
-          *output << Utility::str(x, prec) << " "
-                  << Utility::str(y, prec) << " "
-                  << Utility::str(z, prec) << eol;
+          *output << Utility::str(x, prec) << " " << Utility::str(y, prec)
+                  << " " << Utility::str(z, prec) << eol;
         }
-      }
-      catch (const std::exception& e) {
+      } catch (const std::exception& e) {
         *output << "ERROR: " << e.what() << "\n";
         retval = 1;
       }
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

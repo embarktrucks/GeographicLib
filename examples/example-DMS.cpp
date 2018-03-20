@@ -1,9 +1,9 @@
 // Example of using the GeographicLib::DMS class
 
+#include <GeographicLib/DMS.hpp>
+#include <exception>
 #include <iostream>
 #include <string>
-#include <exception>
-#include <GeographicLib/DMS.hpp>
 
 using namespace std;
 using namespace GeographicLib;
@@ -21,8 +21,7 @@ int main() {
       string dms = DMS::Encode(ang, 6, DMS::LATITUDE);
       cout << dms << "\n";
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

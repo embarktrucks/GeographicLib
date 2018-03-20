@@ -1,10 +1,10 @@
 // Example of using the GeographicLib::UTMUPS class
 
-#include <iostream>
-#include <iomanip>
-#include <exception>
-#include <string>
 #include <GeographicLib/UTMUPS.hpp>
+#include <exception>
+#include <iomanip>
+#include <iostream>
+#include <string>
 
 using namespace std;
 using namespace GeographicLib;
@@ -14,14 +14,14 @@ int main() {
     // See also example-GeoCoords.cpp
     {
       // Sample forward calculation
-      double lat = 33.3, lon = 44.4; // Baghdad
+      double lat = 33.3, lon = 44.4;  // Baghdad
       int zone;
       bool northp;
       double x, y;
       UTMUPS::Forward(lat, lon, zone, northp, x, y);
       string zonestr = UTMUPS::EncodeZone(zone, northp);
-      cout << fixed << setprecision(2)
-           << zonestr << " " << x << " " << y << "\n";
+      cout << fixed << setprecision(2) << zonestr << " " << x << " " << y
+           << "\n";
     }
     {
       // Sample reverse calculation
@@ -34,8 +34,7 @@ int main() {
       UTMUPS::Reverse(zone, northp, x, y, lat, lon);
       cout << lat << " " << lon << "\n";
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

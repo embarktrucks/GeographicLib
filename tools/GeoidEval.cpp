@@ -9,19 +9,19 @@
  * See the <a href="GeoidEval.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/Geoid.hpp>
 #include <geographic_lib/DMS.hpp>
-#include <geographic_lib/Utility.hpp>
 #include <geographic_lib/GeoCoords.hpp>
+#include <geographic_lib/Geoid.hpp>
+#include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
 // uninitialized local variables
-#  pragma warning (disable: 4127 4701)
+#pragma warning(disable : 4127 4701)
 #endif
 
 #include "GeoidEval.usage"
@@ -46,8 +46,7 @@ int main(int argc, const char* const argv[]) {
       if (arg == "-a") {
         cacheall = true;
         cachearea = false;
-      }
-      else if (arg == "-c") {
+      } else if (arg == "-c") {
         if (m + 4 >= argc) return usage(1, true);
         cacheall = false;
         cachearea = true;
@@ -56,8 +55,7 @@ int main(int argc, const char* const argv[]) {
                             caches, cachew, longfirst);
           DMS::DecodeLatLon(std::string(argv[m + 3]), std::string(argv[m + 4]),
                             cachen, cachee, longfirst);
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding argument of -c: " << e.what() << "\n";
           return 1;
         }
@@ -73,8 +71,7 @@ int main(int argc, const char* const argv[]) {
         std::string zone = argv[m];
         try {
           UTMUPS::DecodeZone(zone, zonenum, northp);
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding zone: " << e.what() << "\n";
           return 1;
         }
@@ -118,10 +115,9 @@ int main(int argc, const char* const argv[]) {
       } else {
         int retval = usage(!(arg == "-h" || arg == "--help"), arg != "--help");
         if (arg == "-h")
-          std::cout
-            << "\nDefault geoid path = \""   << Geoid::DefaultGeoidPath()
-            << "\"\nDefault geoid name = \"" << Geoid::DefaultGeoidName()
-            << "\"\n";
+          std::cout << "\nDefault geoid path = \"" << Geoid::DefaultGeoidPath()
+                    << "\"\nDefault geoid name = \""
+                    << Geoid::DefaultGeoidName() << "\"\n";
         return retval;
       }
     }
@@ -143,14 +139,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -171,30 +166,28 @@ int main(int argc, const char* const argv[]) {
           g.CacheAll();
         else if (cachearea)
           g.CacheArea(caches, cachew, cachen, cachee);
-      }
-      catch (const std::exception& e) {
+      } catch (const std::exception& e) {
         std::cerr << "ERROR: " << e.what() << "\nProceeding without a cache\n";
       }
       if (verbose) {
-        std::cerr << "Geoid file: "    << g.GeoidFile()     << "\n"
-                  << "Description: "   << g.Description()   << "\n"
+        std::cerr << "Geoid file: " << g.GeoidFile() << "\n"
+                  << "Description: " << g.Description() << "\n"
                   << "Interpolation: " << g.Interpolation() << "\n"
-                  << "Date & Time: "   << g.DateTime()      << "\n"
-                  << "Offset (m): "    << g.Offset()        << "\n"
-                  << "Scale (m): "     << g.Scale()         << "\n"
-                  << "Max error (m): " << g.MaxError()      << "\n"
-                  << "RMS error (m): " << g.RMSError()      << "\n";
+                  << "Date & Time: " << g.DateTime() << "\n"
+                  << "Offset (m): " << g.Offset() << "\n"
+                  << "Scale (m): " << g.Scale() << "\n"
+                  << "Max error (m): " << g.MaxError() << "\n"
+                  << "RMS error (m): " << g.RMSError() << "\n";
         if (g.Cache())
-          std::cerr
-            << "Caching:"
-            << "\n SW Corner: " << g.CacheSouth() << " " << g.CacheWest()
-            << "\n NE Corner: " << g.CacheNorth() << " " << g.CacheEast()
-            << "\n";
+          std::cerr << "Caching:"
+                    << "\n SW Corner: " << g.CacheSouth() << " "
+                    << g.CacheWest() << "\n NE Corner: " << g.CacheNorth()
+                    << " " << g.CacheEast() << "\n";
       }
 
       GeoCoords p;
       std::string s, eol, suff;
-      const char* spaces = " \t\n\v\f\r,"; // Include comma as space
+      const char* spaces = " \t\n\v\f\r,";  // Include comma as space
       while (std::getline(*input, s)) {
         try {
           eol = "\n";
@@ -223,8 +216,8 @@ int main(int argc, const char* const argv[]) {
               // End of i'th token
               pb = s.find_first_of(spaces, pa);
               (i == 2 ? height : (i == 0 ? easting : northing)) =
-                Utility::val<real>(s.substr(pa, (pb == std::string::npos ?
-                                                 pb : pb - pa)));
+                Utility::val<real>(
+                  s.substr(pa, (pb == std::string::npos ? pb : pb - pa)));
             }
             p.Reset(zonenum, northp, easting, northing);
             if (heightmult) {
@@ -248,31 +241,26 @@ int main(int argc, const char* const argv[]) {
           }
           if (heightmult) {
             real h = g(p.Latitude(), p.Longitude());
-            *output << s
-                    << Utility::str(height + real(heightmult) * h, 4)
+            *output << s << Utility::str(height + real(heightmult) * h, 4)
                     << suff << eol;
           } else {
             real h = g(p.Latitude(), p.Longitude());
             *output << Utility::str(h, 4) << eol;
           }
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           *output << "ERROR: " << e.what() << "\n";
           retval = 1;
         }
       }
-    }
-    catch (const std::exception& e) {
+    } catch (const std::exception& e) {
       std::cerr << "Error reading " << geoid << ": " << e.what() << "\n";
       retval = 1;
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

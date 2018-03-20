@@ -14,11 +14,11 @@
 //   nlong = number of longitude columns (integer)
 //   nlat * nlong geoid heights (meters float)
 
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <string>
 #include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 
 #if defined(_OPENMP)
 #define HAVE_OPENMP 1
@@ -27,11 +27,11 @@
 #endif
 
 #if HAVE_OPENMP
-#  include <omp.h>
+#include <omp.h>
 #endif
 
-#include <GeographicLib/GravityModel.hpp>
 #include <GeographicLib/GravityCircle.hpp>
+#include <GeographicLib/GravityModel.hpp>
 #include <GeographicLib/Utility.hpp>
 
 using namespace std;
@@ -55,13 +55,9 @@ int main(int argc, const char* const argv[]) {
     int ndeg = Utility::val<int>(string(argv[2]));
     string filename(argv[3]);
     GravityModel g(model);
-    int
-      nlat = 180 * ndeg + 1,
-      nlon = 360 * ndeg;
-    Math::real
-      delta = 1 / Math::real(ndeg), // Grid spacing
-      latorg = -90,
-      lonorg = -180;
+    int nlat = 180 * ndeg + 1, nlon = 360 * ndeg;
+    Math::real delta = 1 / Math::real(ndeg),  // Grid spacing
+      latorg = -90, lonorg = -180;
     // Write results as floats in binary mode
     ofstream file(filename.c_str(), ios::binary);
 
@@ -75,36 +71,34 @@ int main(int argc, const char* const argv[]) {
 
     // Compute and store results for nbatch latitudes at a time
     const int nbatch = 64;
-    vector< vector<float> > N(nbatch, vector<float>(nlon));
+    vector<vector<float> > N(nbatch, vector<float>(nlon));
 
-    for (int ilat0 = 0; ilat0 < nlat; ilat0 += nbatch) { // Loop over batches
+    for (int ilat0 = 0; ilat0 < nlat; ilat0 += nbatch) {  // Loop over batches
       int nlat0 = min(nlat, ilat0 + nbatch);
 
 #if HAVE_OPENMP
-#  pragma omp parallel for
+#pragma omp parallel for
 #endif
-      for (int ilat = ilat0; ilat < nlat0; ++ilat) { // Loop over latitudes
-        Utility::set_digits(ndigits);                // Set the precision
-        Math::real
-          lat = latorg + (ilat / ndeg) + delta * (ilat - ndeg * (ilat / ndeg)),
-          h = 0;
+      for (int ilat = ilat0; ilat < nlat0; ++ilat) {  // Loop over latitudes
+        Utility::set_digits(ndigits);                 // Set the precision
+        Math::real lat = latorg + (ilat / ndeg) +
+                         delta * (ilat - ndeg * (ilat / ndeg)),
+                   h = 0;
         GravityCircle c(g.Circle(lat, h, GravityModel::GEOID_HEIGHT));
-        for (int ilon = 0; ilon < nlon; ++ilon) { // Loop over longitudes
-          Math::real lon = lonorg
-            + (ilon / ndeg) + delta * (ilon - ndeg * (ilon / ndeg));
+        for (int ilon = 0; ilon < nlon; ++ilon) {  // Loop over longitudes
+          Math::real lon =
+            lonorg + (ilon / ndeg) + delta * (ilon - ndeg * (ilon / ndeg));
           N[ilat - ilat0][ilon] = float(c.GeoidHeight(lon));
-        } // longitude loop
-      }   // latitude loop -- end of parallel section
+        }  // longitude loop
+      }    // latitude loop -- end of parallel section
 
-      for (int ilat = ilat0; ilat < nlat0; ++ilat) // write out data
+      for (int ilat = ilat0; ilat < nlat0; ++ilat)  // write out data
         Utility::writearray<float, float, true>(file, N[ilat - ilat0]);
-    } // batch loop
-  }
-  catch (const exception& e) {
+    }  // batch loop
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     cerr << "Caught unknown exception\n";
     return 1;
   }

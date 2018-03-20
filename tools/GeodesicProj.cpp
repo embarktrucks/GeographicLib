@@ -9,21 +9,21 @@
  * See the <a href="GeodesicProj.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/Geodesic.hpp>
 #include <geographic_lib/AzimuthalEquidistant.hpp>
 #include <geographic_lib/CassiniSoldner.hpp>
-#include <geographic_lib/Gnomonic.hpp>
 #include <geographic_lib/DMS.hpp>
+#include <geographic_lib/Geodesic.hpp>
+#include <geographic_lib/Gnomonic.hpp>
 #include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
 // uninitialized local variables
-#  pragma warning (disable: 4127 4701)
+#pragma warning(disable : 4127 4701)
 #endif
 
 #include "GeodesicProj.usage"
@@ -34,11 +34,9 @@ int main(int argc, const char* const argv[]) {
     typedef Math::real real;
     Utility::set_digits();
     bool azimuthal = false, cassini = false, gnomonic = false, reverse = false,
-      longfirst = false;
+         longfirst = false;
     real lat0 = 0, lon0 = 0;
-    real
-      a = Constants::WGS84_a(),
-      f = Constants::WGS84_f();
+    real a = Constants::WGS84_a(), f = Constants::WGS84_f();
     int prec = 6;
     std::string istring, ifile, ofile, cdelim;
     char lsep = ';';
@@ -48,7 +46,7 @@ int main(int argc, const char* const argv[]) {
       if (arg == "-r")
         reverse = true;
       else if (arg == "-c" || arg == "-z" || arg == "-g") {
-        cassini = azimuthal =  gnomonic = false;
+        cassini = azimuthal = gnomonic = false;
         cassini = arg == "-c";
         azimuthal = arg == "-z";
         gnomonic = arg == "-g";
@@ -56,10 +54,9 @@ int main(int argc, const char* const argv[]) {
         try {
           DMS::DecodeLatLon(std::string(argv[m + 1]), std::string(argv[m + 2]),
                             lat0, lon0, longfirst);
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding arguments of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding arguments of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
         m += 2;
@@ -68,8 +65,7 @@ int main(int argc, const char* const argv[]) {
         try {
           a = Utility::val<real>(std::string(argv[m + 1]));
           f = Utility::fract<real>(std::string(argv[m + 2]));
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           std::cerr << "Error decoding arguments of -e: " << e.what() << "\n";
           return 1;
         }
@@ -80,8 +76,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -129,14 +124,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -156,8 +150,8 @@ int main(int argc, const char* const argv[]) {
     }
 
     const Geodesic geod(a, f);
-    const CassiniSoldner cs = cassini ?
-      CassiniSoldner(lat0, lon0, geod) : CassiniSoldner(geod);
+    const CassiniSoldner cs =
+      cassini ? CassiniSoldner(lat0, lon0, geod) : CassiniSoldner(geod);
     const AzimuthalEquidistant az(geod);
     const Gnomonic gn(geod);
 
@@ -178,7 +172,8 @@ int main(int argc, const char* const argv[]) {
             s = s.substr(0, m);
           }
         }
-        str.clear(); str.str(s);
+        str.clear();
+        str.str(s);
         real lat, lon, x, y, azi, rk;
         if (!(str >> stra >> strb))
           throw GeographicErr("Incomplete input: " + s);
@@ -187,8 +182,7 @@ int main(int argc, const char* const argv[]) {
           y = Utility::val<real>(strb);
         } else
           DMS::DecodeLatLon(stra, strb, lat, lon, longfirst);
-        if (str >> strc)
-          throw GeographicErr("Extraneous input: " + strc);
+        if (str >> strc) throw GeographicErr("Extraneous input: " + strc);
         if (reverse) {
           if (cassini)
             cs.Reverse(x, y, lat, lon, azi, rk);
@@ -207,24 +201,20 @@ int main(int argc, const char* const argv[]) {
             az.Forward(lat0, lon0, lat, lon, x, y, azi, rk);
           else
             gn.Forward(lat0, lon0, lat, lon, x, y, azi, rk);
-          *output << Utility::str(x, prec) << " "
-                  << Utility::str(y, prec) << " "
-                  << Utility::str(azi, prec + 5) << " "
+          *output << Utility::str(x, prec) << " " << Utility::str(y, prec)
+                  << " " << Utility::str(azi, prec + 5) << " "
                   << Utility::str(rk, prec + 6) << eol;
         }
-      }
-      catch (const std::exception& e) {
+      } catch (const std::exception& e) {
         *output << "ERROR: " << e.what() << "\n";
         retval = 1;
       }
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }

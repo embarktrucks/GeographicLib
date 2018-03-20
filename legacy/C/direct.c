@@ -8,7 +8,7 @@
 
 #if defined(_MSC_VER)
 /* Squelch warnings about scanf */
-#  pragma warning (disable: 4996)
+#pragma warning(disable : 4996)
 #endif
 
 /**
@@ -19,7 +19,7 @@
  **********************************************************************/
 
 int main() {
-  double a = 6378137, f = 1/298.257223563; /* WGS84 */
+  double a = 6378137, f = 1 / 298.257223563; /* WGS84 */
   double lat1, lon1, azi1, lat2, lon2, azi2, s12;
   struct geod_geodesic g;
 

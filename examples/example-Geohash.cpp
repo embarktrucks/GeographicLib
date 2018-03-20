@@ -1,10 +1,10 @@
 // Example of using the GeographicLib::Geohash class
 
-#include <iostream>
-#include <iomanip>
-#include <exception>
-#include <string>
 #include <GeographicLib/Geohash.hpp>
+#include <exception>
+#include <iomanip>
+#include <iostream>
+#include <string>
 
 using namespace std;
 using namespace GeographicLib;
@@ -13,7 +13,8 @@ int main() {
   try {
     {
       // Sample forward calculation
-      double lat = 57.64911, lon = 10.40744; // Jutland (the wikipedia example)
+      double lat = 57.64911,
+             lon = 10.40744;  // Jutland (the wikipedia example)
       string geohash;
       int maxlen = Geohash::GeohashLength(1.0e-5);
       for (int len = 0; len <= maxlen; ++len) {
@@ -29,12 +30,11 @@ int main() {
       for (unsigned i = 0; i <= geohash.length(); ++i) {
         int len;
         Geohash::Reverse(geohash.substr(0, i), lat, lon, len);
-        cout << setprecision(max(0, Geohash::DecimalPrecision(len)))
-             << len << " " << lat << " " << lon << "\n";
+        cout << setprecision(max(0, Geohash::DecimalPrecision(len))) << len
+             << " " << lat << " " << lon << "\n";
       }
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

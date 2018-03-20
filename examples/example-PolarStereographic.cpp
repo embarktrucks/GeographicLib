@@ -1,9 +1,9 @@
 // Example of using the GeographicLib::PolarStereographic class
 
-#include <iostream>
-#include <iomanip>
-#include <exception>
 #include <GeographicLib/PolarStereographic.hpp>
+#include <exception>
+#include <iomanip>
+#include <iostream>
 
 using namespace std;
 using namespace GeographicLib;
@@ -17,7 +17,7 @@ int main() {
     bool northp = true;
     {
       // Sample forward calculation
-      double lat = 61.2, lon = -149.9; // Anchorage
+      double lat = 61.2, lon = -149.9;  // Anchorage
       double x, y;
       proj.Forward(northp, lat, lon, x, y);
       cout << x << " " << y << "\n";
@@ -29,8 +29,7 @@ int main() {
       proj.Reverse(northp, x, y, lat, lon);
       cout << lat << " " << lon << "\n";
     }
-  }
-  catch (const exception& e) {
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

@@ -11,13 +11,13 @@
 
 namespace geographic_lib {
 
-  /// \cond SKIP
+/// \cond SKIP
 
-  // Need to instantiate Accumulator to get the code into the shared library
-  // (without this, NETGeographic complains about not finding the == and !=
-  // operators).
-  template class GEOGRAPHICLIB_EXPORT Accumulator<Math::real>;
+// Need to instantiate Accumulator to get the code into the shared library
+// (without this, NETGeographic complains about not finding the == and !=
+// operators).
+template class GEOGRAPHICLIB_EXPORT Accumulator<Math::real>;
 
-  /// \endcond
+/// \endcond
 
-} // namespace geographic_lib
+}  // namespace geographic_lib

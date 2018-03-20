@@ -5,11 +5,11 @@
 // closest location and the distance to it.  Print statistics to standard error
 // at the end.
 
-#include <iostream>
 #include <exception>
-#include <vector>
 #include <fstream>
+#include <iostream>
 #include <string>
+#include <vector>
 
 #if !defined(GEOGRAPHICLIB_HAVE_BOOST_SERIALIZATION)
 #define GEOGRAPHICLIB_HAVE_BOOST_SERIALIZATION 0
@@ -21,9 +21,9 @@
 #include <boost/archive/xml_oarchive.hpp>
 #endif
 
-#include <GeographicLib/NearestNeighbor.hpp>
-#include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/DMS.hpp>
+#include <GeographicLib/Geodesic.hpp>
+#include <GeographicLib/NearestNeighbor.hpp>
 
 using namespace std;
 using namespace GeographicLib;
@@ -36,14 +36,15 @@ struct pos {
 
 // A class to compute the distance between 2 positions.
 class DistanceCalculator {
-private:
+ private:
   Geodesic _geod;
-public:
+
+ public:
   explicit DistanceCalculator(const Geodesic& geod) : _geod(geod) {}
-  double operator() (const pos& a, const pos& b) const {
+  double operator()(const pos& a, const pos& b) const {
     double d;
     _geod.Inverse(a._lat, a._lon, b._lat, b._lon, d);
-    if ( !(d >= 0) )
+    if (!(d >= 0))
       // Catch illegal positions which result in d = NaN
       throw GeographicErr("distance doesn't satisfy d >= 0");
     return d;
@@ -58,14 +59,12 @@ int main() {
     string sa, sb;
     {
       ifstream is("locations.txt");
-      if (!is.good())
-        throw GeographicErr("locations.txt not readable");
+      if (!is.good()) throw GeographicErr("locations.txt not readable");
       while (is >> sa >> sb) {
         DMS::DecodeLatLon(sa, sb, lat, lon);
         locs.push_back(pos(lat, lon));
       }
-      if (locs.size() == 0)
-        throw GeographicErr("need at least one location");
+      if (locs.size() == 0) throw GeographicErr("need at least one location");
     }
 
     // Define a distance function object
@@ -84,8 +83,7 @@ int main() {
       }
 #else
       ifstream is("pointset.txt");
-      if (is.good())
-        is >> pointset;
+      if (is.good()) is >> pointset;
 #endif
     }
     // Is the saved pointset up-to-date?
@@ -95,14 +93,12 @@ int main() {
       // and save it
 #if GEOGRAPHICLIB_HAVE_BOOST_SERIALIZATION
       ofstream os("pointset.xml");
-      if (!os.good())
-        throw GeographicErr("cannot write to pointset.xml");
+      if (!os.good()) throw GeographicErr("cannot write to pointset.xml");
       boost::archive::xml_oarchive oa(os);
       oa << BOOST_SERIALIZATION_NVP(pointset);
 #else
       ofstream os("pointset.txt");
-      if (!os.good())
-        throw GeographicErr("cannot write to pointset.txt");
+      if (!os.good()) throw GeographicErr("cannot write to pointset.txt");
       os << pointset << "\n";
 #endif
     }
@@ -115,25 +111,21 @@ int main() {
       ++count;
       DMS::DecodeLatLon(sa, sb, lat, lon);
       d = pointset.Search(locs, distance, pos(lat, lon), k);
-      if (k.size() != 1)
-          throw GeographicErr("unexpected number of results");
+      if (k.size() != 1) throw GeographicErr("unexpected number of results");
       cout << k[0] << " " << d << "\n";
     }
     int setupcost, numsearches, searchcost, mincost, maxcost;
     double mean, sd;
-    pointset.Statistics(setupcost, numsearches, searchcost,
-                        mincost, maxcost, mean, sd);
-    int
-      totcost = setupcost + searchcost,
-      exhaustivecost = count * pointset.NumPoints();
-    cerr
-      << "Number of distance calculations = " << totcost << "\n"
-      << "With an exhaustive search = " << exhaustivecost << "\n"
-      << "Ratio = " << double(totcost) / exhaustivecost << "\n"
-      << "Efficiency improvement = "
-      << 100 * (1 - double(totcost) / exhaustivecost) << "%\n";
-  }
-  catch (const exception& e) {
+    pointset.Statistics(setupcost, numsearches, searchcost, mincost, maxcost,
+                        mean, sd);
+    int totcost = setupcost + searchcost,
+        exhaustivecost = count * pointset.NumPoints();
+    cerr << "Number of distance calculations = " << totcost << "\n"
+         << "With an exhaustive search = " << exhaustivecost << "\n"
+         << "Ratio = " << double(totcost) / exhaustivecost << "\n"
+         << "Efficiency improvement = "
+         << 100 * (1 - double(totcost) / exhaustivecost) << "%\n";
+  } catch (const exception& e) {
     cerr << "Caught exception: " << e.what() << "\n";
     return 1;
   }

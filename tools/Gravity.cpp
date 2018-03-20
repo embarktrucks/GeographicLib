@@ -9,19 +9,19 @@
  * See the <a href="Gravity.1.html">man page</a> for usage information.
  **********************************************************************/
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
-#include <geographic_lib/GravityModel.hpp>
-#include <geographic_lib/GravityCircle.hpp>
 #include <geographic_lib/DMS.hpp>
+#include <geographic_lib/GravityCircle.hpp>
+#include <geographic_lib/GravityModel.hpp>
 #include <geographic_lib/Utility.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #if defined(_MSC_VER)
 // Squelch warnings about constant conditional expressions and potentially
 // uninitialized local variables
-#  pragma warning (disable: 4127 4701)
+#pragma warning(disable : 4127 4701)
 #endif
 
 #include "Gravity.usage"
@@ -74,10 +74,9 @@ int main(int argc, const char* const argv[]) {
             throw GeographicErr("Latitude not in [-90d, 90d]");
           h = Utility::val<real>(std::string(argv[++m]));
           circle = true;
-        }
-        catch (const std::exception& e) {
-          std::cerr << "Error decoding argument of " << arg << ": "
-                    << e.what() << "\n";
+        } catch (const std::exception& e) {
+          std::cerr << "Error decoding argument of " << arg << ": " << e.what()
+                    << "\n";
           return 1;
         }
       } else if (arg == "-w")
@@ -86,8 +85,7 @@ int main(int argc, const char* const argv[]) {
         if (++m == argc) return usage(1, true);
         try {
           prec = Utility::val<int>(std::string(argv[m]));
-        }
-        catch (const std::exception&) {
+        } catch (const std::exception&) {
           std::cerr << "Precision " << argv[m] << " is not a number\n";
           return 1;
         }
@@ -119,11 +117,10 @@ int main(int argc, const char* const argv[]) {
       } else {
         int retval = usage(!(arg == "-h" || arg == "--help"), arg != "--help");
         if (arg == "-h")
-          std::cout<< "\nDefault gravity path = \""
-                   << GravityModel::DefaultGravityPath()
-                   << "\"\nDefault gravity name = \""
-                   << GravityModel::DefaultGravityName()
-                   << "\"\n";
+          std::cout << "\nDefault gravity path = \""
+                    << GravityModel::DefaultGravityPath()
+                    << "\"\nDefault gravity name = \""
+                    << GravityModel::DefaultGravityName() << "\"\n";
         return retval;
       }
     }
@@ -145,14 +142,13 @@ int main(int argc, const char* const argv[]) {
       std::string::size_type m = 0;
       while (true) {
         m = istring.find(lsep, m);
-        if (m == std::string::npos)
-          break;
+        if (m == std::string::npos) break;
         istring[m] = '\n';
       }
       instring.str(istring);
     }
-    std::istream* input = !ifile.empty() ? &infile :
-      (!istring.empty() ? &instring : &std::cin);
+    std::istream* input =
+      !ifile.empty() ? &infile : (!istring.empty() ? &instring : &std::cin);
 
     std::ofstream outfile;
     if (ofile == "-") ofile.clear();
@@ -166,17 +162,17 @@ int main(int argc, const char* const argv[]) {
     std::ostream* output = !ofile.empty() ? &outfile : &std::cout;
 
     switch (mode) {
-    case GRAVITY:
-      prec = std::min(16 + Math::extra_digits(), prec < 0 ? 5 : prec);
-      break;
-    case DISTURBANCE:
-    case ANOMALY:
-      prec = std::min(14 + Math::extra_digits(), prec < 0 ? 3 : prec);
-      break;
-    case UNDULATION:
-    default:
-      prec = std::min(12 + Math::extra_digits(), prec < 0 ? 4 : prec);
-      break;
+      case GRAVITY:
+        prec = std::min(16 + Math::extra_digits(), prec < 0 ? 5 : prec);
+        break;
+      case DISTURBANCE:
+      case ANOMALY:
+        prec = std::min(14 + Math::extra_digits(), prec < 0 ? 3 : prec);
+        break;
+      case UNDULATION:
+      default:
+        prec = std::min(12 + Math::extra_digits(), prec < 0 ? 4 : prec);
+        break;
     }
     int retval = 0;
     try {
@@ -188,15 +184,19 @@ int main(int argc, const char* const argv[]) {
           throw GeographicErr("Height should be zero for geoid undulations");
       }
       if (verbose) {
-        std::cerr << "Gravity file: " << g.GravityFile()      << "\n"
-                  << "Name: "         << g.GravityModelName() << "\n"
-                  << "Description: "  << g.Description()      << "\n"
-                  << "Date & Time: "  << g.DateTime()         << "\n";
+        std::cerr << "Gravity file: " << g.GravityFile() << "\n"
+                  << "Name: " << g.GravityModelName() << "\n"
+                  << "Description: " << g.Description() << "\n"
+                  << "Date & Time: " << g.DateTime() << "\n";
       }
-      unsigned mask = (mode == GRAVITY ? GravityModel::GRAVITY :
-                       (mode == DISTURBANCE ? GravityModel::DISTURBANCE :
-                        (mode == ANOMALY ? GravityModel::SPHERICAL_ANOMALY :
-                         GravityModel::GEOID_HEIGHT))); // mode == UNDULATION
+      unsigned mask =
+        (mode == GRAVITY
+           ? GravityModel::GRAVITY
+           : (mode == DISTURBANCE
+                ? GravityModel::DISTURBANCE
+                : (mode == ANOMALY
+                     ? GravityModel::SPHERICAL_ANOMALY
+                     : GravityModel::GEOID_HEIGHT)));  // mode == UNDULATION
       const GravityCircle c(circle ? g.Circle(lat, h, mask) : GravityCircle());
       std::string s, eol, stra, strb;
       std::istringstream str;
@@ -210,11 +210,11 @@ int main(int argc, const char* const argv[]) {
               s = s.substr(0, m);
             }
           }
-          str.clear(); str.str(s);
+          str.clear();
+          str.str(s);
           real lon;
           if (circle) {
-            if (!(str >> strb))
-              throw GeographicErr("Incomplete input: " + s);
+            if (!(str >> strb)) throw GeographicErr("Incomplete input: " + s);
             DMS::flag ind;
             lon = DMS::Decode(strb, ind);
             if (ind == DMS::LATITUDE)
@@ -224,29 +224,24 @@ int main(int argc, const char* const argv[]) {
               throw GeographicErr("Incomplete input: " + s);
             DMS::DecodeLatLon(stra, strb, lat, lon, longfirst);
             h = 0;
-            if (!(str >> h))    // h is optional
+            if (!(str >> h))  // h is optional
               str.clear();
             if (mode == UNDULATION && h != 0)
-                throw GeographicErr("Height must be zero for geoid heights");
+              throw GeographicErr("Height must be zero for geoid heights");
           }
-          if (str >> stra)
-            throw GeographicErr("Extra junk in input: " + s);
+          if (str >> stra) throw GeographicErr("Extra junk in input: " + s);
           switch (mode) {
-          case GRAVITY:
-            {
+            case GRAVITY: {
               real gx, gy, gz;
               if (circle) {
                 c.Gravity(lon, gx, gy, gz);
               } else {
                 g.Gravity(lat, lon, h, gx, gy, gz);
               }
-              *output << Utility::str(gx, prec) << " "
-                      << Utility::str(gy, prec) << " "
-                      << Utility::str(gz, prec) << eol;
-            }
-            break;
-          case DISTURBANCE:
-            {
+              *output << Utility::str(gx, prec) << " " << Utility::str(gy, prec)
+                      << " " << Utility::str(gz, prec) << eol;
+            } break;
+            case DISTURBANCE: {
               real deltax, deltay, deltaz;
               if (circle) {
                 c.Disturbance(lon, deltax, deltay, deltaz);
@@ -256,51 +251,41 @@ int main(int argc, const char* const argv[]) {
               // Convert to mGals
               *output << Utility::str(deltax * 100000, prec) << " "
                       << Utility::str(deltay * 100000, prec) << " "
-                      << Utility::str(deltaz * 100000, prec)
-                      << eol;
-            }
-            break;
-          case ANOMALY:
-            {
+                      << Utility::str(deltaz * 100000, prec) << eol;
+            } break;
+            case ANOMALY: {
               real Dg01, xi, eta;
               if (circle)
                 c.SphericalAnomaly(lon, Dg01, xi, eta);
               else
                 g.SphericalAnomaly(lat, lon, h, Dg01, xi, eta);
-              Dg01 *= 100000;      // Convert to mGals
-              xi *= 3600;       // Convert to arcsecs
+              Dg01 *= 100000;  // Convert to mGals
+              xi *= 3600;      // Convert to arcsecs
               eta *= 3600;
               *output << Utility::str(Dg01, prec) << " "
                       << Utility::str(xi, prec) << " "
                       << Utility::str(eta, prec) << eol;
-            }
-            break;
-          case UNDULATION:
-          default:
-            {
+            } break;
+            case UNDULATION:
+            default: {
               real N = circle ? c.GeoidHeight(lon) : g.GeoidHeight(lat, lon);
               *output << Utility::str(N, prec) << eol;
-            }
-            break;
+            } break;
           }
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
           *output << "ERROR: " << e.what() << "\n";
           retval = 1;
         }
       }
-    }
-    catch (const std::exception& e) {
+    } catch (const std::exception& e) {
       std::cerr << "Error reading " << model << ": " << e.what() << "\n";
       retval = 1;
     }
     return retval;
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cerr << "Caught exception: " << e.what() << "\n";
     return 1;
-  }
-  catch (...) {
+  } catch (...) {
     std::cerr << "Caught unknown exception\n";
     return 1;
   }
